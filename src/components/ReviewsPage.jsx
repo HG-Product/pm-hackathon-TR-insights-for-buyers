@@ -2,6 +2,7 @@ import { useState } from 'react'
 import Header from './Header'
 import ProductHeader from './ProductHeader'
 import CommunityInsights from './CommunityInsights'
+import BuyerPersonas from './BuyerPersonas'
 import ReviewCard from './ReviewCard'
 import './ReviewsPage.css'
 
@@ -105,6 +106,8 @@ function ReviewsPage() {
         <div className="content-container">
           <div className="primary-content">
             <CommunityInsights pros={communityPros} cons={communityCons} />
+
+            <BuyerPersonas />
 
             <section className="reviews-section">
               <div className="reviews-header">
