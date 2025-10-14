@@ -1,0 +1,174 @@
+.review-card {
+  background-color: white;
+  border-radius: 8px;
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.review-header {
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 1rem;
+}
+
+.review-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.review-card h2 {
+  font-size: 1.3rem;
+  color: #0066cc;
+  cursor: pointer;
+}
+
+.review-card h2:hover {
+  text-decoration: underline;
+}
+
+.review-rating {
+  display: flex;
+  align-items: baseline;
+  gap: 0.3rem;
+  background-color: #f0f7ff;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+}
+
+.rating-number {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #0066cc;
+}
+
+.rating-max {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.review-date {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.review-body {
+  margin-bottom: 1.5rem;
+}
+
+.review-section {
+  margin-bottom: 1.5rem;
+}
+
+.review-section h3 {
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 0.75rem;
+}
+
+.review-section p {
+  color: #444;
+  line-height: 1.6;
+}
+
+.pros-list,
+.cons-list {
+  list-style: none;
+}
+
+.pros-list li,
+.cons-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+  color: #444;
+  line-height: 1.5;
+}
+
+.check-icon {
+  color: #28a745;
+  font-weight: bold;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.minus-icon {
+  color: #dc3545;
+  font-weight: bold;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.review-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1rem;
+  border-top: 1px solid #e0e0e0;
+}
+
+.reviewer-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.reviewer-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0066cc, #00a6ff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.reviewer-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.reviewer-name {
+  font-weight: 600;
+  color: #333;
+}
+
+.reviewer-role {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.badges {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.badge {
+  background-color: #e8f4fd;
+  color: #0066cc;
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.badge.experience {
+  background-color: #f0f0f0;
+  color: #666;
+}
+
+.read-more {
+  color: #0066cc;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.read-more:hover {
+  text-decoration: underline;
+}

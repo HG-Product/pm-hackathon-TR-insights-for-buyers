@@ -1,0 +1,98 @@
+.product-header {
+  background-color: white;
+  padding: 2rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.product-header-container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.back-link {
+  color: #0066cc;
+  text-decoration: none;
+  font-size: 0.9rem;
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+.product-info {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.product-logo .logo-placeholder {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #0066cc, #00a6ff);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.product-details {
+  flex: 1;
+}
+
+.product-details h1 {
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.rating-display {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.rating-box {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: #f8f9fa;
+  border-radius: 6px;
+}
+
+.rating-label {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.rating-value {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #0066cc;
+}
+
+.rating-max {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.cta-button {
+  background-color: #0066cc;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.cta-button:hover {
+  background-color: #0052a3;
+}
