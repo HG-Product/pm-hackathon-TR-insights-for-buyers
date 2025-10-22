@@ -1,6 +1,7 @@
 .reviews-page {
   min-height: 100vh;
   background-color: #f5f5f5;
+  scroll-behavior: smooth;
 }
 
 .main-content {
@@ -16,8 +17,16 @@
   gap: 2rem;
 }
 
+.left-column {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  min-width: 0;
+}
+
 .primary-content {
   min-width: 0;
+  margin-top: 2rem;
 }
 
 .reviews-section {
@@ -101,6 +110,64 @@
   position: sticky;
   top: 2rem;
   height: fit-content;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.sidebar-navigation {
+  background-color: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.nav-title {
+  font-size: 1rem;
+  color: #1a1a1a;
+  margin: 0 0 1rem 0;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.nav-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.nav-links li {
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.nav-links li:last-child {
+  border-bottom: none;
+}
+
+.nav-links a {
+  display: block;
+  padding: 0.75rem 0;
+  color: #0066cc;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.nav-links a:hover {
+  color: #0052a3;
+  padding-left: 0.5rem;
+  font-weight: 600;
+}
+
+.nav-links a:active {
+  color: #003d7a;
 }
 
 .sidebar-card {

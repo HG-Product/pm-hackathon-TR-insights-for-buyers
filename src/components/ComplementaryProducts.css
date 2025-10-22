@@ -1,0 +1,310 @@
+.complementary-products-section {
+  background: white;
+  border-radius: 8px;
+  padding: 40px;
+  margin-bottom: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.complementary-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+  padding-bottom: 24px;
+  border-bottom: 2px solid #e5e7eb;
+  gap: 20px;
+}
+
+.header-content h2 {
+  font-size: 28px;
+  color: #1a1a1a;
+  margin: 0 0 8px 0;
+  font-weight: 700;
+}
+
+.complementary-description {
+  font-size: 15px;
+  color: #666;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.hg-branding-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+  padding: 12px 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(30, 41, 59, 0.3);
+  flex-shrink: 0;
+}
+
+.hg-icon {
+  font-size: 24px;
+}
+
+.hg-badge-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.hg-badge-title {
+  font-size: 14px;
+  font-weight: 800;
+  color: white;
+}
+
+.hg-badge-subtitle {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+/* Quick Facts Box */
+.quick-facts-box {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border: 2px solid #f59e0b;
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 32px;
+}
+
+.quick-facts-box h3 {
+  font-size: 16px;
+  color: #92400e;
+  margin: 0 0 8px 0;
+  font-weight: 800;
+}
+
+.quick-facts-box p {
+  font-size: 15px;
+  color: #78350f;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.quick-facts-box strong {
+  color: #92400e;
+  font-weight: 800;
+}
+
+/* Products Grid */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.product-card {
+  background: linear-gradient(135deg, #f8f9fa 0%, #f1f5f9 100%);
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 24px;
+  transition: all 0.3s ease;
+}
+
+.product-card:hover {
+  border-color: #1e293b;
+  box-shadow: 0 8px 24px rgba(30, 41, 59, 0.15);
+  transform: translateY(-4px);
+}
+
+.product-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.product-info {
+  flex: 1;
+}
+
+.product-name {
+  font-size: 20px;
+  color: #1a1a1a;
+  margin: 0 0 6px 0;
+  font-weight: 800;
+}
+
+.product-category {
+  display: inline-block;
+  background: #e2e8f0;
+  color: #475569;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.co-occurrence-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+  color: white;
+  padding: 12px 16px;
+  border-radius: 10px;
+  min-width: 80px;
+}
+
+.co-occurrence-badge .percentage {
+  font-size: 28px;
+  font-weight: 900;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.co-occurrence-badge .label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  text-align: center;
+}
+
+/* Product Details */
+.product-details {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0 0 16px 0;
+}
+
+.detail-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.detail-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.detail-value {
+  font-size: 14px;
+  color: #1f2937;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.integration-text {
+  color: #1e40af;
+  font-weight: 600;
+}
+
+/* HG Install Stat */
+.hg-install-stat {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: white;
+  border: 2px solid #1e293b;
+  border-radius: 8px;
+  padding: 12px;
+  margin-top: 16px;
+}
+
+.stat-icon {
+  font-size: 20px;
+}
+
+.stat-value {
+  font-size: 18px;
+  font-weight: 900;
+  color: #1e293b;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: #475569;
+  font-weight: 600;
+}
+
+/* Tech Stack Insight */
+.tech-stack-insight {
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+  border: 2px solid #3b82f6;
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.insight-icon {
+  font-size: 36px;
+  flex-shrink: 0;
+}
+
+.insight-content h3 {
+  font-size: 18px;
+  color: #1e40af;
+  margin: 0 0 8px 0;
+  font-weight: 800;
+}
+
+.insight-content p {
+  font-size: 15px;
+  color: #1e40af;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.insight-content strong {
+  font-weight: 800;
+  color: #1e3a8a;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .products-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .complementary-products-section {
+    padding: 24px;
+  }
+
+  .complementary-header {
+    flex-direction: column;
+  }
+
+  .header-content h2 {
+    font-size: 24px;
+  }
+
+  .products-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .product-header {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .co-occurrence-badge {
+    align-self: flex-start;
+  }
+
+  .tech-stack-insight {
+    flex-direction: column;
+  }
+}
+

@@ -1,8 +1,12 @@
 import { useState } from 'react'
 import Header from './Header'
 import ProductHeader from './ProductHeader'
-import CommunityInsights from './CommunityInsights'
+import VendorPersonaCTA from './VendorPersonaCTA'
 import BuyerPersonas from './BuyerPersonas'
+import ComplementaryProducts from './ComplementaryProducts'
+import MarketIntelligence from './MarketIntelligence'
+import WhatBuyersDiscussing from './WhatBuyersDiscussing'
+import CompetitiveDisplacementPreview from './CompetitiveDisplacementPreview'
 import ReviewCard from './ReviewCard'
 import './ReviewsPage.css'
 
@@ -95,21 +99,45 @@ function ReviewsPage() {
   const [sortBy, setSortBy] = useState('newest')
 
   return (
-    <div className="reviews-page">
+    <article className="reviews-page" itemScope itemType="https://schema.org/Product">
       <Header />
-      <ProductHeader
-        productName="Zoom Workplace"
-        rating={8.4}
-      />
-
-      <main className="main-content">
+      
+      <main className="main-content" role="main">
         <div className="content-container">
-          <div className="primary-content">
-            <CommunityInsights pros={communityPros} cons={communityCons} />
+          <div className="left-column">
+            <ProductHeader
+              productName="Zoom Workplace"
+              rating={8.4}
+            />
 
-            <BuyerPersonas />
+            {/* Vendor CTA - Aligned with left content */}
+            <VendorPersonaCTA />
 
-            <section className="reviews-section">
+            <div className="primary-content">
+            {/* Removed CommunityInsights per request */}
+
+            <div id="buyer-personas">
+              <BuyerPersonas />
+            </div>
+
+            <div id="complementary-products">
+              <ComplementaryProducts />
+            </div>
+
+            <div id="market-intelligence">
+              <MarketIntelligence />
+            </div>
+
+            <div id="buyers-discussing">
+              <WhatBuyersDiscussing />
+            </div>
+
+            <div id="competitive-displacement">
+              <CompetitiveDisplacementPreview />
+            </div>
+
+            {/* Reviews section hidden per request */}
+            <section className="reviews-section" style={{ display: 'none' }}>
               <div className="reviews-header">
                 <h2>Reviews</h2>
                 <div className="reviews-controls">
@@ -138,9 +166,21 @@ function ReviewsPage() {
                 <button className="page-btn">Next →</button>
               </div>
             </section>
+            </div>
           </div>
 
           <aside className="sidebar">
+            <nav className="sidebar-navigation">
+              <h4 className="nav-title">Navigate</h4>
+              <ul className="nav-links">
+                <li><a href="#buyer-personas">Buyer Personas</a></li>
+                <li><a href="#complementary-products">Complementary Products</a></li>
+                <li><a href="#market-intelligence">Market Intelligence</a></li>
+                <li><a href="#buyers-discussing">What Buyers Are Discussing</a></li>
+                <li><a href="#competitive-displacement">Competitive Intelligence</a></li>
+              </ul>
+            </nav>
+
             <div className="sidebar-card">
               <div className="sidebar-product-info">
                 <div className="sidebar-logo">Z</div>
@@ -164,7 +204,7 @@ function ReviewsPage() {
           </aside>
         </div>
       </main>
-    </div>
+    </article>
   )
 }
 

@@ -217,6 +217,238 @@
 }
 
 /* Responsive design */
+/* Personas Header with Data Sources */
+.personas-header {
+  text-align: center;
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.personas-header h2 {
+  font-size: 28px;
+  margin-bottom: 16px;
+  color: #1a1a1a;
+  font-weight: 700;
+}
+
+.data-sources {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.sources-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.source-badges {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.source-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.source-badge.hg-badge {
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+}
+
+.source-badge.tr-badge {
+  background: linear-gradient(135deg, #ff6b35 0%, #f04f28 100%);
+}
+
+.source-badge .badge-text {
+  font-size: 14px;
+  font-weight: 800;
+  color: white;
+}
+
+.source-badge .badge-detail {
+  font-size: 10px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.badge-plus {
+  font-weight: 700;
+  color: #94a3b8;
+  font-size: 16px;
+}
+
+/* Category Header with HG Badge */
+.category-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.hg-badge-inline {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.hg-icon {
+  font-size: 14px;
+}
+
+.tr-badge-inline {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, #ff6b35 0%, #f04f28 100%);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.tr-icon {
+  font-size: 14px;
+}
+
+/* HG Stats */
+.hg-stat {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+  border: 2px solid #1e293b;
+  border-radius: 8px;
+  padding: 12px;
+  margin-top: 12px;
+}
+
+.hg-stat-icon {
+  font-size: 20px;
+}
+
+.hg-stat-value {
+  font-size: 18px;
+  font-weight: 900;
+  color: #1e293b;
+}
+
+.hg-stat-label {
+  font-size: 11px;
+  color: #475569;
+  font-weight: 600;
+}
+
+/* TrustRadius Review Snippet */
+.tr-review-snippet {
+  background: linear-gradient(135deg, #fff5f3 0%, #ffe9e5 100%);
+  border: 2px solid #ff6b35;
+  border-radius: 8px;
+  padding: 12px;
+  margin-top: 12px;
+  display: flex;
+  gap: 10px;
+}
+
+.tr-quote-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.tr-quote-content {
+  flex: 1;
+}
+
+.review-quote {
+  font-size: 13px;
+  line-height: 1.5;
+  color: #78350f;
+  font-style: italic;
+  margin: 0 0 6px 0;
+}
+
+.review-author {
+  font-size: 11px;
+  color: #92400e;
+  font-weight: 600;
+  margin: 0 0 6px 0;
+}
+
+.tr-logo-small {
+  display: inline-block;
+  background: #ff6b35;
+  color: white;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.3px;
+}
+
+/* User Review Quotes */
+.user-review-quotes {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 2px solid #e5e7eb;
+}
+
+.quotes-header {
+  font-size: 12px;
+  font-weight: 700;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.user-quote-card {
+  background: linear-gradient(135deg, #fff5f3 0%, #ffe9e5 100%);
+  border-left: 3px solid #ff6b35;
+  border-radius: 6px;
+  padding: 12px;
+}
+
+.user-quote-card .quote-text {
+  font-size: 13px;
+  line-height: 1.5;
+  color: #78350f;
+  font-style: italic;
+  margin: 0 0 6px 0;
+}
+
+.user-quote-card .quote-author {
+  font-size: 11px;
+  color: #92400e;
+  font-weight: 600;
+  margin: 0;
+}
+
 @media (max-width: 768px) {
   .buyer-personas-section {
     padding: 20px;
@@ -232,5 +464,19 @@
 
   .persona-category h3 {
     font-size: 18px;
+  }
+
+  .category-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .source-badges {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .source-badge {
+    width: 100%;
   }
 }
