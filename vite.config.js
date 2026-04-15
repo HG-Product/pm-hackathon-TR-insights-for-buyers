@@ -19,6 +19,7 @@ export default defineConfig({
         'question-zoom-cost-value': resolve(__dirname, 'question-zoom-cost-value.html'),
         'question-zoom-reliability': resolve(__dirname, 'question-zoom-reliability.html'),
         'competitive-intelligence': resolve(__dirname, 'competitive-intelligence.html'),
+        'geo-dashboard': resolve(__dirname, 'geo-dashboard.html'),
       }
     }
   }
