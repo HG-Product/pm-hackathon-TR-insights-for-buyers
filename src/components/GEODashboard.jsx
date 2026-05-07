@@ -1584,11 +1584,40 @@ function SectionInsightCallout({ heading, items }) {
   )
 }
 
+/** Built by `npm run share:dashboard`; served from `public/` in dev and copied into `dist/` for preview/deploy. */
+function stakeholderZipHref() {
+  const base = import.meta.env.BASE_URL || '/'
+  return base.endsWith('/') ? `${base}geo-dashboard-stakeholders.zip` : `${base}/geo-dashboard-stakeholders.zip`
+}
+
+/** Static Looker-style crawl panels (`public/crawl-analytics-panels.html`). */
+function crawlAnalyticsPanelsHref() {
+  const base = import.meta.env.BASE_URL || '/'
+  return base.endsWith('/') ? `${base}crawl-analytics-panels.html` : `${base}/crawl-analytics-panels.html`
+}
+
 // ============================================
 // COMPONENT
 // ============================================
 
 function GEODashboard() {
+  const stakeholderZipDownloadUrl = stakeholderZipHref()
+  const crawlAnalyticsPanelsUrl = crawlAnalyticsPanelsHref()
+
+  const onStakeholderZipClick = async (e) => {
+    try {
+      const r = await fetch(stakeholderZipDownloadUrl, { method: 'HEAD', cache: 'no-store' })
+      if (!r.ok) {
+        e.preventDefault()
+        window.alert(
+          'Share package not found.\n\nFrom the project folder run:\n\nnpm run share:dashboard\n\nThen refresh this page and try again.'
+        )
+      }
+    } catch {
+      /* allow navigation if HEAD fails */
+    }
+  }
+
   const [activeNav, setActiveNav] = useState('geo-visibility')
   const [activeTab, setActiveTab] = useState('research')
   const [selectedTimeframe, setSelectedTimeframe] = useState('monthly')
@@ -1889,20 +1918,6 @@ function GEODashboard() {
     [roiBundle.baseTrPipeline, roiBundle.deltaTrPipeline]
   )
 
-  const crawlInsightItems = useMemo(
-    () => ({
-      overview: [
-        `What matters: ~${crawlVolumeData.totalCrawls.toLocaleString()} crawls in the window shows how often bots refresh evidence—${crawlVolumeData.byCrawler[0].crawler} leads share, so pages in its path need crisp structure and up-to-date proof.`,
-        'TrustRadius — buyer pages: Keep TrustRadius product, comparison, and category buyer pages metadata-complete and aligned to monitored prompts so crawlers retrieve stable, quotable modules.',
-      ],
-      bots: [
-        'What matters: bots skew toward page types they can parse quickly—when comparison or review surfaces spike, models are likely rebuilding answer bundles for those intents.',
-        'TrustRadius — UGC & questions: Pair crawl-heavy page types with review campaigns and custom TrustRadius questions so new UGC lands where bots already visit; surface winners prominently on TR buyer pages.',
-      ],
-    }),
-    []
-  )
-
   const monitoringHeroInsights = useMemo(
     () => [
       `What matters (${periodLabelPretty}, ${monitoringContextLabel}): ${monitoringSlice.mentions.overall.toLocaleString()} mentions (${monitoringSlice.mentions.deltaPct >= 0 ? '+' : ''}${monitoringSlice.mentions.deltaPct}% vs ${priorPeriodPhrase}), ${monitoringSlice.shareOfVoice.overall}% share of voice, and ${monitoringSlice.citations.overall.toLocaleString()} citations—this triad is the early warning for whether models keep seeing fresh, defensible proof about you.`,
@@ -2132,6 +2147,15 @@ function GEODashboard() {
             <button className="header-btn">📅</button>
             <button className="header-btn">❓</button>
             <button className="header-btn notification">🔔</button>
+            <a
+              href={stakeholderZipDownloadUrl}
+              download="geo-dashboard-stakeholders.zip"
+              className="header-btn header-share-zip"
+              title="Download ZIP for stakeholders (HTML + assets + README). Run npm run share:dashboard first."
+              onClick={onStakeholderZipClick}
+            >
+              Share ZIP
+            </a>
             <div className="user-avatar">G</div>
           </div>
         </header>
@@ -2194,7 +2218,18 @@ function GEODashboard() {
                     <option>UCaaS Platforms</option>
                     <option>Webinar Software</option>
                   </select>
-                  <button className="btn-primary">Export Report</button>
+                  <button type="button" className="btn-primary">
+                    Export Report
+                  </button>
+                  <a
+                    href={stakeholderZipDownloadUrl}
+                    download="geo-dashboard-stakeholders.zip"
+                    className="btn-outline geo-share-zip-btn"
+                    title="ZIP includes geo-dashboard.html, assets folder, and STAKEHOLDER-README. Run npm run share:dashboard first."
+                    onClick={onStakeholderZipClick}
+                  >
+                    Download HTML package
+                  </a>
                 </div>
               </section>
 
@@ -4219,164 +4254,43 @@ function GEODashboard() {
             <>
               <section className="page-header-section">
                 <div className="page-header-content">
-                  <h1 className="page-title">AI Crawl Analytics</h1>
-                  <p className="page-subtitle">See how often AI crawlers visit your TrustRadius profile pages and content.</p>
+                  <h1 className="page-title">Crawl Analytics</h1>
+                  <p className="page-subtitle">
+                    Looker-style grounding intelligence: funnel stages, operators, page types, persona attribution, competitive co-eval,
+                    grounding vs training, and GEO health — with Actions &amp; Alerts and GEO Health Score sub-views.
+                  </p>
                 </div>
                 <div className="page-actions">
-                  <div className="timeframe-selector">
-                    <button 
-                      className={`tf-btn ${selectedTimeframe === 'weekly' ? 'active' : ''}`}
-                      onClick={() => setSelectedTimeframe('weekly')}
-                    >Weekly</button>
-                    <button 
-                      className={`tf-btn ${selectedTimeframe === 'monthly' ? 'active' : ''}`}
-                      onClick={() => setSelectedTimeframe('monthly')}
-                    >Monthly</button>
-                    <button 
-                      className={`tf-btn ${selectedTimeframe === 'yearly' ? 'active' : ''}`}
-                      onClick={() => setSelectedTimeframe('yearly')}
-                    >Yearly</button>
-                  </div>
-                  <button className="btn-primary">Download Data</button>
+                  <a
+                    className="btn-outline"
+                    href={crawlAnalyticsPanelsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Open panels only (new tab)
+                  </a>
                 </div>
               </section>
 
-              {/* Crawl Volume Stats */}
-              <div className="stats-grid four-col">
-                <div className="stat-card highlight-crawl">
-                  <span className="stat-label">Total Crawl Volume</span>
-                  <div className="stat-value">{crawlVolumeData.totalCrawls.toLocaleString()}</div>
-                  <div className="stat-sublabel">This month</div>
-                </div>
-                <div className="stat-card">
-                  <span className="stat-label">Weekly Change</span>
-                  <div className="stat-value change up">+{crawlVolumeData.weeklyChange}%</div>
-                  <div className="stat-sublabel">vs last week</div>
-                </div>
-                <div className="stat-card">
-                  <span className="stat-label">Monthly Change</span>
-                  <div className="stat-value change up">+{crawlVolumeData.monthlyChange}%</div>
-                  <div className="stat-sublabel">vs last month</div>
-                </div>
-                <div className="stat-card">
-                  <span className="stat-label">Yearly Change</span>
-                  <div className="stat-value change up">+{crawlVolumeData.yearlyChange}%</div>
-                  <div className="stat-sublabel">vs last year</div>
-                </div>
+              <p className="crawl-analytics-embed-lead">
+                Full interactive prototype is embedded below (Chart.js + sub-tabs). Scroll inside the frame to explore all sections.
+              </p>
+              <div className="crawl-analytics-embed-wrap">
+                <iframe
+                  title="Crawl Analytics — Looker-style panels"
+                  src={crawlAnalyticsPanelsUrl}
+                  className="crawl-analytics-embed"
+                  loading="lazy"
+                />
               </div>
 
-              <SectionInsightCallout heading="Insights · Crawl health" items={crawlInsightItems.overview} />
-
-              {/* Crawl by AI Crawler */}
-              <CollapsibleDashboardSection
-                title="Volume by AI Crawler"
-                subtitle="Breakdown of crawl activity by major AI bots from Cloudflare logs."
-              >
-                <div className="crawler-breakdown">
-                  {crawlVolumeData.byCrawler.map((crawler) => (
-                    <div key={crawler.crawler} className="crawler-card">
-                      <div className="crawler-header">
-                        <div className="crawler-icon" style={{ backgroundColor: crawler.color }}>
-                          {crawler.crawler.charAt(0)}
-                        </div>
-                        <div className="crawler-info">
-                          <span className="crawler-name">{crawler.crawler}</span>
-                          <span className="crawler-percentage">{crawler.percentage}% of total</span>
-                        </div>
-                      </div>
-                      <div className="crawler-volume">{crawler.volume.toLocaleString()}</div>
-                      <div className="crawler-bar">
-                        <div 
-                          className="crawler-bar-fill" 
-                          style={{ 
-                            width: `${(crawler.volume / crawlVolumeData.byCrawler[0].volume) * 100}%`,
-                            backgroundColor: crawler.color 
-                          }}
-                        ></div>
-                      </div>
-                      <div className={`crawler-trend ${crawler.weeklyChange >= 0 ? 'up' : 'down'}`}>
-                        {crawler.weeklyChange >= 0 ? '↑' : '↓'} {Math.abs(crawler.weeklyChange)}% this week
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </CollapsibleDashboardSection>
-
-              <SectionInsightCallout heading="Insights · Bots & page focus" items={crawlInsightItems.bots} />
-
-              {/* Two Column: Page Type + Product */}
-              <div className="two-column-grid">
-                {/* By Page Type */}
-                <CollapsibleDashboardSection title="Volume by Page Type">
-                  <div className="page-type-crawl-list">
-                    {crawlVolumeData.byPageType.map((pt, idx) => (
-                      <div key={pt.pageType} className="page-type-crawl-row">
-                        <div className="pt-info">
-                          <span className="pt-color" style={{ backgroundColor: chartColors[idx] }}></span>
-                          <span className="pt-name">{pt.pageType}</span>
-                        </div>
-                        <div className="pt-bar-container">
-                          <div className="pt-bar">
-                            <div 
-                              className="pt-bar-fill" 
-                              style={{ 
-                                width: `${pt.percentage}%`,
-                                backgroundColor: chartColors[idx]
-                              }}
-                            ></div>
-                          </div>
-                        </div>
-                        <div className="pt-stats">
-                          <span className="pt-volume">{pt.volume.toLocaleString()}</span>
-                          <span className={`pt-trend ${pt.trend >= 0 ? 'up' : 'down'}`}>
-                            {pt.trend >= 0 ? '+' : ''}{pt.trend}%
-                          </span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </CollapsibleDashboardSection>
-
-                {/* By Product */}
-                <CollapsibleDashboardSection title="Top Products by Crawl Volume">
-                  <div className="product-crawl-list">
-                    {crawlVolumeData.byProduct.map((product, idx) => (
-                      <div key={product.product} className="product-crawl-row">
-                        <span className="product-rank">#{idx + 1}</span>
-                        <span className="product-name">{product.product}</span>
-                        <span className="product-volume">{product.volume.toLocaleString()}</span>
-                        <span className={`product-trend ${product.weeklyChange >= 0 ? 'up' : 'down'}`}>
-                          {product.weeklyChange >= 0 ? '↑' : '↓'} {Math.abs(product.weeklyChange)}%
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </CollapsibleDashboardSection>
-              </div>
-
-              {/* Timeline Chart */}
-              <CollapsibleDashboardSection title="Crawl Volume Over Time">
-                <div className="timeline-chart">
-                  <div className="timeline-bars">
-                    {crawlVolumeData.timeline.map((point, idx) => (
-                      <div key={idx} className="timeline-bar-group">
-                        <div 
-                          className="timeline-bar" 
-                          style={{ height: `${(point.volume / crawlVolumeData.timeline[3].volume) * 150}px` }}
-                        >
-                          <span className="bar-value">{(point.volume / 1000).toFixed(0)}K</span>
-                        </div>
-                        <span className="timeline-label">{point.period}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </CollapsibleDashboardSection>
-
-              {/* Data Source Note */}
-              <div className="data-source-note">
+              <div className="data-source-note crawl-analytics-source-note">
                 <span className="note-icon">ℹ️</span>
-                <span>Data sourced from Cloudflare CDN logs. Updates daily. Last updated: April 6, 2026, 8:00 AM PST</span>
+                <span>
+                  Embedded asset: <code className="monitoring-code">public/crawl-analytics-panels.html</code> — sourced from TrustRadius Cloudflare
+                  log mock data (Apr 8–May 6). Assistant context still uses sample{' '}
+                  <code className="monitoring-code">crawlVolumeData</code> for natural-language answers.
+                </span>
               </div>
             </>
           )}

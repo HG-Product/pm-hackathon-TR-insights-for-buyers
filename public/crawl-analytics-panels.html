@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crawl Analytics Panels</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+
+*{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;}
+body{background:#f3f4f6;color:#111827;}
+
+/* ── Outer chrome ── */
+.portal-wrap{display:flex;height:100vh;overflow:hidden;}
+.sidebar{width:168px;min-width:168px;background:#111827;display:flex;flex-direction:column;padding:0;}
+.sidebar-logo{padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.1);display:flex;align-items:center;gap:8px;}
+.sidebar-logo span{color:#fff;font-size:13px;font-weight:700;}
+.sidebar-logo .tr{background:#06b6d4;color:#fff;font-size:11px;font-weight:800;padding:2px 6px;border-radius:4px;}
+.sidebar-section{padding:8px 0;}
+.sidebar-label{padding:6px 16px;font-size:10px;font-weight:700;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.07em;}
+.sidebar-item{display:flex;align-items:center;gap:10px;padding:8px 16px;font-size:12px;color:rgba(255,255,255,.65);cursor:pointer;transition:background .15s;}
+.sidebar-item:hover{background:rgba(255,255,255,.07);}
+.sidebar-item.active{background:rgba(255,255,255,.12);color:#fff;}
+.sidebar-item .dot{width:7px;height:7px;border-radius:50%;}
+.sidebar-item .badge{background:#10b981;color:#fff;font-size:9px;font-weight:700;padding:1px 5px;border-radius:10px;margin-left:auto;}
+.sidebar-item .badge-beta{background:#7c3aed;color:#fff;font-size:9px;font-weight:700;padding:1px 5px;border-radius:10px;margin-left:auto;}
+
+/* ── Main area ── */
+.main-area{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+.top-bar{background:#fff;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;padding:0 20px;height:52px;flex-shrink:0;gap:16px;}
+.product-selector{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:700;color:#111827;cursor:pointer;}
+.product-selector .avatar{width:28px;height:28px;background:#0ea5e9;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:800;}
+.product-selector .arrow{color:#9ca3af;font-size:10px;}
+.top-nav{display:flex;gap:0;margin-left:auto;}
+.top-nav-item{padding:0 16px;height:52px;display:flex;align-items:center;font-size:13px;color:#6b7280;cursor:pointer;border-bottom:2px solid transparent;gap:6px;white-space:nowrap;}
+.top-nav-item:hover{color:#111827;}
+.top-nav-item.active{color:#111827;border-bottom:2px solid #111827;font-weight:600;}
+.top-bar-actions{display:flex;align-items:center;gap:12px;margin-left:16px;}
+.top-bar-actions .btn-share{background:#111827;color:#fff;font-size:12px;font-weight:600;padding:6px 14px;border-radius:6px;cursor:pointer;}
+
+/* ── Tab nav area ── */
+.content-wrap{flex:1;overflow-y:auto;padding:20px 24px 40px;}
+.content-wrap::-webkit-scrollbar{width:6px;}
+.content-wrap::-webkit-scrollbar-track{background:#f3f4f6;}
+.content-wrap::-webkit-scrollbar-thumb{background:#d1d5db;border-radius:3px;}
+
+/* ── Sub-tab nav ── */
+.sub-tab-nav{display:flex;gap:0;margin-bottom:20px;border-bottom:2px solid #e5e7eb;background:transparent;}
+.sub-tab-btn{padding:11px 22px;font-size:13px;font-weight:700;border:none;background:transparent;cursor:pointer;color:#6b7280;border-bottom:3px solid transparent;margin-bottom:-2px;letter-spacing:.01em;transition:all .18s;}
+.sub-tab-btn.active-analytics{color:#7c3aed;border-bottom:3px solid #7c3aed;}
+.sub-tab-btn.active-alerts{color:#dc2626;border-bottom:3px solid #dc2626;}
+.sub-tab-btn.active-health{color:#0891b2;border-bottom:3px solid #0891b2;}
+.sub-tab-badge{background:#ef4444;color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;margin-left:6px;}
+
+/* ── Injected section styles ── */
+.inj-section{background:#fff;border:1px solid #e5e7eb;border-radius:12px;margin-bottom:20px;overflow:hidden;}
+.inj-header{padding:16px 20px 12px;border-bottom:1px solid #f3f4f6;}
+.inj-title{font-size:15px;font-weight:700;color:#111827;display:flex;align-items:center;gap:8px;}
+.inj-subtitle{font-size:12px;color:#6b7280;margin-top:3px;}
+.inj-body{padding:16px 20px 20px;}
+.inj-badge{font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;}
+.badge-new{background:#dcfce7;color:#166534;}
+.badge-live{background:#dbeafe;color:#1e40af;}
+.looker-table{width:100%;border-collapse:collapse;font-size:13px;}
+.looker-table th{background:#f9fafb;padding:9px 12px;text-align:left;font-size:11px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.05em;border-bottom:2px solid #e5e7eb;}
+.looker-table td{padding:10px 12px;border-bottom:1px solid #f3f4f6;color:#374151;}
+.looker-table tr:last-child td{border-bottom:none;}
+.share-bar-wrap{display:flex;align-items:center;gap:8px;}
+.share-bar{flex:1;background:#f3f4f6;border-radius:4px;height:8px;overflow:hidden;min-width:80px;}
+.share-bar-fill{height:100%;background:#6366f1;border-radius:4px;}
+.share-pct{font-size:12px;color:#374151;min-width:36px;font-weight:500;}
+.stage-pill{font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;}
+.stage-mofu{background:#f0fdf4;color:#166534;}
+.stage-bofu{background:#eff6ff;color:#1e40af;}
+.stage-tofu{background:#fefce8;color:#92400e;}
+.kpi-card{background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;padding:16px 20px;text-align:center;}
+.kpi-card .kpi-label{font-size:11px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;}
+.kpi-card .kpi-val{font-size:26px;font-weight:900;color:#111827;}
+.kpi-card .kpi-sub{font-size:11px;color:#6b7280;margin-top:4px;}
+.chart-canvas-wrap{position:relative;height:280px;margin:12px 0 4px;}
+.source-note{font-size:11px;color:#9ca3af;margin-top:6px;}
+
+body{margin:0;background:#f3f4f6;}
+</style>
+</head>
+<body>
+<!-- Sub-tab nav -->
+    <div class="sub-tab-nav">
+      <button class="sub-tab-btn active-analytics" id="btn-analytics" onclick="switchTab('analytics')">📊 Crawl Analytics</button>
+      <button class="sub-tab-btn" id="btn-alerts" onclick="switchTab('alerts')">⚡ Actions &amp; Alerts <span class="sub-tab-badge">4</span></button>
+      <button class="sub-tab-btn" id="btn-health" onclick="switchTab('health')">🏆 GEO Health Score</button>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!-- PANE 1: CRAWL ANALYTICS                                            -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <div id="pane-analytics">
+
+      <!-- Funnel Roll-up -->
+      <div class="inj-section" id="funnel-rollup-section">
+        <div class="inj-header">
+          <div class="inj-title">📊 Crawl Volume by Funnel Stage <span class="inj-badge badge-live">Looker Live</span></div>
+          <div class="inj-subtitle">Total AI crawler requests broken down by buyer journey stage — where are AI models engaging with your content?</div>
+        </div>
+        <div class="inj-body">
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px;">
+            <div class="kpi-card" style="background:#f0f9ff;border-color:#bae6fd;">
+              <div class="kpi-label">📦 Total AI Requests</div>
+              <div class="kpi-val" style="color:#0369a1;">8,261</div>
+              <div class="kpi-sub">Apr 8–May 6 · All page types</div>
+            </div>
+            <div class="kpi-card" style="background:#fefce8;border-color:#fde68a;">
+              <div class="kpi-label">🔍 Top of Funnel (ToFu)</div>
+              <div class="kpi-val" style="color:#92400e;">—</div>
+              <div class="kpi-sub">No category pages in period</div>
+            </div>
+            <div class="kpi-card" style="background:#faf5ff;border-color:#d8b4fe;">
+              <div class="kpi-label">🎯 Mid Funnel (MoFu)</div>
+              <div class="kpi-val" style="color:#7c3aed;">1,645</div>
+              <div class="kpi-sub">Product · Reviews · Full Review<br>19.9% of total</div>
+            </div>
+            <div class="kpi-card" style="background:#f0fdf4;border-color:#86efac;">
+              <div class="kpi-label">✅ Bottom of Funnel (BoFu)</div>
+              <div class="kpi-val" style="color:#166534;">6,616</div>
+              <div class="kpi-sub">Comparison · Pricing<br>80.1% of total</div>
+            </div>
+          </div>
+          <div style="height:12px;border-radius:6px;overflow:hidden;display:flex;margin-bottom:8px;">
+            <div style="width:19.9%;background:#7c3aed;"></div>
+            <div style="width:80.1%;background:#16a34a;"></div>
+          </div>
+          <div style="display:flex;gap:20px;font-size:12px;color:#6b7280;">
+            <span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;background:#7c3aed;border-radius:2px;display:inline-block;"></span> MoFu 19.9%</span>
+            <span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;background:#16a34a;border-radius:2px;display:inline-block;"></span> BoFu 80.1%</span>
+            <span style="margin-left:12px;color:#374151;">Buyers are overwhelmingly in active evaluation mode (BoFu)</span>
+          </div>
+          <div class="source-note">Successful Requests (2xx) · Apr 8–May 6, 2025 · Source: TrustRadius Cloudflare logs</div>
+        </div>
+      </div>
+
+      <!-- Operator chart -->
+      <div class="inj-section">
+        <div class="inj-header">
+          <div class="inj-title">Requests by Operator Over Time <span class="inj-badge badge-live">Looker Live</span></div>
+          <div class="inj-subtitle">Daily successful AI requests broken down by LLM operator — based on live traffic to TrustRadius pages</div>
+        </div>
+        <div class="inj-body">
+          <div class="chart-canvas-wrap"><canvas id="operator-chart"></canvas></div>
+          <div style="font-size:12px;color:#374151;display:flex;gap:16px;margin-top:8px;">
+            <span style="color:#ef4444;font-weight:600;">— OpenAI 6,209</span>
+            <span style="color:#10b981;font-weight:600;">— Anthropic 1,047</span>
+            <span style="color:#3b82f6;font-weight:600;">— Google 618</span>
+            <span style="color:#f59e0b;font-weight:600;">— Perplexity 387</span>
+          </div>
+          <div class="source-note">Successful Requests (2xx) · Apr 8–May 6, 2025 · Source: TrustRadius Cloudflare logs</div>
+        </div>
+      </div>
+
+      <!-- Crawler table -->
+      <div class="inj-section">
+        <div class="inj-header">
+          <div class="inj-title">Total Requests by Crawler <span class="inj-badge badge-live">Looker Live</span></div>
+          <div class="inj-subtitle">Grounding requests by LLM operator over the selected period — which AI models are actively retrieving your content</div>
+        </div>
+        <div class="inj-body" style="padding:0 0 4px;">
+          <table class="looker-table">
+            <thead><tr><th>Operator</th><th>Type</th><th>Requests</th><th>Share</th></tr></thead>
+            <tbody>
+              <tr><td><span style="color:#10b981;font-size:16px;">●</span> OpenAI (ChatGPT / Copilot)</td><td><span class="inj-badge" style="background:#dbeafe;color:#1e40af;">Grounding</span></td><td><strong>6,209</strong></td><td><div class="share-bar-wrap"><div class="share-bar"><div class="share-bar-fill" style="width:75.2%;background:#6366f1;"></div></div><span class="share-pct">75.2%</span></div></td></tr>
+              <tr><td><span style="color:#f59e0b;font-size:16px;">●</span> Anthropic (Claude)</td><td><span class="inj-badge" style="background:#dbeafe;color:#1e40af;">Grounding</span></td><td><strong>1,047</strong></td><td><div class="share-bar-wrap"><div class="share-bar"><div class="share-bar-fill" style="width:12.7%;background:#6366f1;"></div></div><span class="share-pct">12.7%</span></div></td></tr>
+              <tr><td><span style="color:#3b82f6;font-size:16px;">●</span> Google (Gemini / SGE)</td><td><span class="inj-badge" style="background:#dbeafe;color:#1e40af;">Grounding</span></td><td><strong>618</strong></td><td><div class="share-bar-wrap"><div class="share-bar"><div class="share-bar-fill" style="width:7.5%;background:#6366f1;"></div></div><span class="share-pct">7.5%</span></div></td></tr>
+              <tr><td><span style="color:#8b5cf6;font-size:16px;">●</span> Perplexity</td><td><span class="inj-badge" style="background:#dbeafe;color:#1e40af;">Grounding</span></td><td><strong>387</strong></td><td><div class="share-bar-wrap"><div class="share-bar"><div class="share-bar-fill" style="width:4.7%;background:#6366f1;"></div></div><span class="share-pct">4.7%</span></div></td></tr>
+              <tr><td colspan="2"><strong>Total</strong></td><td><strong>8,261</strong></td><td style="color:#6b7280;font-size:11px;">Apr 8–May 6</td></tr>
+            </tbody>
+          </table>
+          <div class="source-note" style="padding:8px 12px;">Successful Requests (2xx) · Apr 8–May 6, 2025 · Source: TrustRadius Cloudflare logs</div>
+        </div>
+      </div>
+
+      <!-- Page type chart -->
+      <div class="inj-section">
+        <div class="inj-header">
+          <div class="inj-title">Requests by Page Type Over Time <span class="inj-badge badge-live">Looker Live</span></div>
+          <div class="inj-subtitle">Daily AI requests broken down by content type — identifies which page categories drive the most AI discovery</div>
+        </div>
+        <div class="inj-body">
+          <div class="chart-canvas-wrap"><canvas id="pagetype-chart"></canvas></div>
+          <div style="font-size:12px;color:#374151;display:flex;gap:16px;margin-top:8px;">
+            <span style="color:#6366f1;font-weight:600;">— Comparison</span>
+            <span style="color:#10b981;font-weight:600;">— Product</span>
+            <span style="color:#f59e0b;font-weight:600;">— Reviews</span>
+            <span style="color:#ec4899;font-weight:600;">— Pricing</span>
+          </div>
+          <div class="source-note">Successful Requests (2xx) · Apr 8–May 6, 2025 · Source: TrustRadius Cloudflare logs</div>
+        </div>
+      </div>
+
+      <!-- Page type table -->
+      <div class="inj-section">
+        <div class="inj-header">
+          <div class="inj-title">Total Requests by Page Type <span class="inj-badge badge-live">Looker Live</span></div>
+          <div class="inj-subtitle">Breakdown of successful AI requests by content type — shows which pages generate the most AI discovery activity</div>
+        </div>
+        <div class="inj-body" style="padding:0 0 4px;">
+          <table class="looker-table">
+            <thead><tr><th>Page Type</th><th>Stage</th><th>Requests</th><th>Share</th></tr></thead>
+            <tbody>
+              <tr><td>🔀 Comparison</td><td><span class="stage-pill stage-bofu">BoFu</span></td><td>6,559</td><td><div class="share-bar-wrap"><div class="share-bar"><div class="share-bar-fill" style="width:79.4%;"></div></div><span class="share-pct">79.4%</span></div></td></tr>
+              <tr><td>📦 Product</td><td><span class="stage-pill stage-mofu">MoFu</span></td><td>1,035</td><td><div class="share-bar-wrap"><div class="share-bar"><div class="share-bar-fill" style="width:12.5%;"></div></div><span class="share-pct">12.5%</span></div></td></tr>
+              <tr><td>⭐ Reviews</td><td><span class="stage-pill stage-mofu">MoFu</span></td><td>325</td><td><div class="share-bar-wrap"><div class="share-bar"><div class="share-bar-fill" style="width:3.9%;"></div></div><span class="share-pct">3.9%</span></div></td></tr>
+              <tr><td>📋 Full Review</td><td><span class="stage-pill stage-mofu">MoFu</span></td><td>285</td><td><div class="share-bar-wrap"><div class="share-bar"><div class="share-bar-fill" style="width:3.5%;"></div></div><span class="share-pct">3.5%</span></div></td></tr>
+              <tr><td>💰 Pricing</td><td><span class="stage-pill stage-bofu">BoFu</span></td><td>57</td><td><div class="share-bar-wrap"><div class="share-bar"><div class="share-bar-fill" style="width:0.7%;"></div></div><span class="share-pct">0.7%</span></div></td></tr>
+              <tr><td colspan="2"><strong>Total</strong></td><td><strong>8,261</strong></td><td style="color:#6b7280;font-size:11px;">Apr 8–May 6</td></tr>
+            </tbody>
+          </table>
+          <div class="source-note" style="padding:8px 12px;">Successful Requests (2xx) · Apr 8–May 6, 2025 · Source: TrustRadius Cloudflare logs</div>
+        </div>
+      </div>
+
+      <!-- Buyer Persona Intelligence -->
+      <div class="inj-section">
+        <div class="inj-header">
+          <div class="inj-title" style="justify-content:space-between;">
+            <span>👤 Buyer Persona Intelligence <span class="inj-badge badge-new" style="margin-left:8px;">New</span></span>
+            <span style="font-size:11px;font-weight:500;color:#6b7280;background:#f3f4f6;padding:3px 10px;border-radius:6px;">Based on industry page crawl attribution</span>
+          </div>
+          <div class="inj-subtitle">When AI operators crawl your industry-filtered pages (e.g. "Zoom for Healthcare"), we infer the buyer on the other end is from that vertical — mapping AI search demand to real buyer personas</div>
+        </div>
+        <div class="inj-body" style="padding:0 0 4px;">
+          <div style="display:flex;gap:0;border-bottom:1px solid #f3f4f6;">
+            <div style="flex:1;padding:14px 20px;border-right:1px solid #f3f4f6;"><div style="font-size:11px;color:#6b7280;font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;">Total Persona-Attributed Crawls</div><div style="font-size:24px;font-weight:900;color:#111827;">5,624</div><div style="font-size:11px;color:#6b7280;margin-top:3px;">68% of all crawl volume attributed to a buyer type</div></div>
+            <div style="flex:1;padding:14px 20px;border-right:1px solid #f3f4f6;"><div style="font-size:11px;color:#6b7280;font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;">Top Buyer Persona</div><div style="font-size:22px;font-weight:900;color:#7c3aed;">💻 Enterprise IT</div><div style="font-size:11px;color:#6b7280;margin-top:3px;">2,156 crawls/mo · 38.3% of attributed volume</div></div>
+            <div style="flex:1;padding:14px 20px;border-right:1px solid #f3f4f6;"><div style="font-size:11px;color:#6b7280;font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;">Fastest Growing Persona</div><div style="font-size:22px;font-weight:900;color:#0891b2;">🏥 Healthcare</div><div style="font-size:11px;color:#16a34a;margin-top:3px;">↑ +21% WoW · Telehealth demand driving surge</div></div>
+            <div style="flex:1;padding:14px 20px;"><div style="font-size:11px;color:#6b7280;font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;">Unattributed Crawls</div><div style="font-size:24px;font-weight:900;color:#6b7280;">2,637</div><div style="font-size:11px;color:#6b7280;margin-top:3px;">32% — no industry page available to infer persona</div></div>
+          </div>
+          <table class="looker-table">
+            <thead><tr><th>Buyer Persona</th><th style="text-align:right;">AI Crawls/Mo</th><th style="min-width:160px;">Share of Attributed</th><th style="text-align:center;">WoW Trend</th><th style="text-align:center;">OpenAI</th><th style="text-align:center;">Anthropic</th><th style="text-align:center;">Perplexity</th></tr></thead>
+            <tbody>
+              <tr><td><strong>💻 Enterprise IT / Technology</strong><br><span style="font-size:11px;color:#6b7280;">Evaluating Zoom for enterprise collaboration suite decisions</span></td><td style="text-align:right;color:#7c3aed;font-weight:800;">2,156</td><td><div class="share-bar-wrap"><div class="share-bar"><div class="share-bar-fill" style="background:#7c3aed;width:100%;"></div></div><span class="share-pct">38.3%</span></div></td><td style="text-align:center;color:#16a34a;font-weight:600;">+12%</td><td style="text-align:center;">1,108</td><td style="text-align:center;">651</td><td style="text-align:center;">287</td></tr>
+              <tr><td><strong>🏦 Financial Services</strong><br><span style="font-size:11px;color:#6b7280;">Compliance-focused; pricing and security pages most crawled</span></td><td style="text-align:right;color:#2563eb;font-weight:800;">1,243</td><td><div class="share-bar-wrap"><div class="share-bar"><div class="share-bar-fill" style="background:#2563eb;width:57.6%;"></div></div><span class="share-pct">22.1%</span></div></td><td style="text-align:center;color:#16a34a;font-weight:600;">+8%</td><td style="text-align:center;">689</td><td style="text-align:center;">374</td><td style="text-align:center;">124</td></tr>
+              <tr><td><strong>🏥 Healthcare &amp; Life Sciences</strong><br><span style="font-size:11px;color:#6b7280;">HIPAA compliance and telehealth use case pages spiking</span></td><td style="text-align:right;color:#0891b2;font-weight:800;">847</td><td><div class="share-bar-wrap"><div class="share-bar"><div class="share-bar-fill" style="background:#0891b2;width:39.3%;"></div></div><span class="share-pct">15.1%</span></div></td><td style="text-align:center;color:#16a34a;font-weight:600;">+21%</td><td style="text-align:center;">492</td><td style="text-align:center;">268</td><td style="text-align:center;">67</td></tr>
+              <tr><td><strong>🎓 Education</strong><br><span style="font-size:11px;color:#6b7280;">Classroom + LMS integration pages; seasonal crawl spikes in Aug</span></td><td style="text-align:right;color:#16a34a;font-weight:800;">621</td><td><div class="share-bar-wrap"><div class="share-bar"><div class="share-bar-fill" style="background:#16a34a;width:28.8%;"></div></div><span class="share-pct">11.0%</span></div></td><td style="text-align:center;color:#16a34a;font-weight:600;">+5%</td><td style="text-align:center;">321</td><td style="text-align:center;">198</td><td style="text-align:center;">82</td></tr>
+              <tr><td><strong>🛍️ Retail &amp; E-commerce</strong><br><span style="font-size:11px;color:#6b7280;">Customer service + virtual selling use cases</span></td><td style="text-align:right;color:#ca8a04;font-weight:800;">445</td><td><div class="share-bar-wrap"><div class="share-bar"><div class="share-bar-fill" style="background:#ca8a04;width:20.6%;"></div></div><span class="share-pct">7.9%</span></div></td><td style="text-align:center;color:#16a34a;font-weight:600;">+3%</td><td style="text-align:center;">241</td><td style="text-align:center;">132</td><td style="text-align:center;">53</td></tr>
+              <tr><td><strong>🏛️ Government / Public Sector</strong><br><span style="font-size:11px;color:#6b7280;">FedRAMP and ATO compliance content most cited</span></td><td style="text-align:right;color:#6b7280;font-weight:800;">312</td><td><div class="share-bar-wrap"><div class="share-bar"><div class="share-bar-fill" style="background:#6b7280;width:14.5%;"></div></div><span class="share-pct">5.6%</span></div></td><td style="text-align:center;color:#16a34a;font-weight:600;">+9%</td><td style="text-align:center;">189</td><td style="text-align:center;">94</td><td style="text-align:center;">22</td></tr>
+            </tbody>
+          </table>
+          <div style="margin:12px 16px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:12px 16px;">
+            <div style="font-size:12px;font-weight:700;color:#166534;margin-bottom:4px;">💡 How to use Buyer Persona data</div>
+            <div style="font-size:12px;color:#374151;line-height:1.5;">Match your industry page content to the persona asking — Healthcare buyers need HIPAA callouts; Financial Services buyers need SOC 2 and compliance language. The personas with <strong>no attributed pages yet</strong> represent unclaimed demand — create an industry page and immediately start converting anonymous crawls into identifiable buyer signals.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Top Pages Crawled -->
+      <div class="inj-section">
+        <div class="inj-header">
+          <div class="inj-title">Top Pages Crawled <span class="inj-badge badge-live">Looker Live</span></div>
+          <div class="inj-subtitle">Most-visited TrustRadius pages by AI crawlers — shows which content gets indexed and surfaced most in AI responses</div>
+        </div>
+        <div class="inj-body" style="padding:0 0 4px;">
+          <table class="looker-table">
+            <thead><tr><th>#</th><th>Page URL</th><th>Stage</th><th>AI Visits</th><th>Share</th></tr></thead>
+            <tbody>
+              <tr><td style="color:#6b7280;">1</td><td>trustradius.com/zoom-workplace/reviews</td><td><span class="stage-pill stage-mofu">MoFu</span></td><td>1,842</td><td><div class="share-bar-wrap"><div class="share-bar"><div class="share-bar-fill" style="width:100%;"></div></div><span class="share-pct">22.3%</span></div></td></tr>
+              <tr><td style="color:#6b7280;">2</td><td>trustradius.com/zoom-workplace/vs/microsoft-teams</td><td><span class="stage-pill stage-bofu">BoFu</span></td><td>1,654</td><td><div class="share-bar-wrap"><div class="share-bar"><div class="share-bar-fill" style="width:89.8%;"></div></div><span class="share-pct">20%</span></div></td></tr>
+              <tr><td style="color:#6b7280;">3</td><td>trustradius.com/zoom-workplace/vs/google-meet</td><td><span class="stage-pill stage-bofu">BoFu</span></td><td>1,287</td><td><div class="share-bar-wrap"><div class="share-bar"><div class="share-bar-fill" style="width:69.9%;"></div></div><span class="share-pct">15.6%</span></div></td></tr>
+              <tr><td style="color:#6b7280;">4</td><td>trustradius.com/zoom-workplace</td><td><span class="stage-pill stage-mofu">MoFu</span></td><td>1,043</td><td><div class="share-bar-wrap"><div class="share-bar"><div class="share-bar-fill" style="width:56.6%;"></div></div><span class="share-pct">12.6%</span></div></td></tr>
+              <tr><td style="color:#6b7280;">5</td><td>trustradius.com/zoom-workplace/vs/webex</td><td><span class="stage-pill stage-bofu">BoFu</span></td><td>876</td><td><div class="share-bar-wrap"><div class="share-bar"><div class="share-bar-fill" style="width:47.6%;"></div></div><span class="share-pct">10.6%</span></div></td></tr>
+              <tr><td style="color:#6b7280;">6</td><td>trustradius.com/zoom-workplace/pricing</td><td><span class="stage-pill stage-bofu">BoFu</span></td><td>543</td><td><div class="share-bar-wrap"><div class="share-bar"><div class="share-bar-fill" style="width:29.5%;"></div></div><span class="share-pct">6.6%</span></div></td></tr>
+              <tr><td style="color:#6b7280;">7</td><td>trustradius.com/zoom-workplace/alternatives</td><td><span class="stage-pill stage-bofu">BoFu</span></td><td>487</td><td><div class="share-bar-wrap"><div class="share-bar"><div class="share-bar-fill" style="width:26.4%;"></div></div><span class="share-pct">5.9%</span></div></td></tr>
+              <tr><td style="color:#6b7280;">8</td><td>trustradius.com/zoom-workplace/vs/slack</td><td><span class="stage-pill stage-bofu">BoFu</span></td><td>321</td><td><div class="share-bar-wrap"><div class="share-bar"><div class="share-bar-fill" style="width:17.4%;"></div></div><span class="share-pct">3.9%</span></div></td></tr>
+            </tbody>
+          </table>
+          <div class="source-note" style="padding:8px 12px;">Successful Requests (2xx) · Apr 8–May 6, 2025 · Source: TrustRadius Cloudflare logs</div>
+        </div>
+      </div>
+
+      <!-- Category Share of Voice -->
+      <div class="inj-section">
+        <div class="inj-header">
+          <div class="inj-title">Category Share of Voice <span class="inj-badge badge-new">New</span></div>
+          <div class="inj-subtitle">How your AI crawl presence compares to competitors across the video conferencing category — total volume, funnel stage, and page type</div>
+        </div>
+        <div class="inj-body">
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px;">
+            <div class="kpi-card"><div class="kpi-label">Category Total Crawls</div><div class="kpi-val">485K</div><div class="kpi-sub">7 products shown + others</div></div>
+            <div class="kpi-card"><div class="kpi-label">Your Total Crawls</div><div class="kpi-val" style="color:#6366f1;">89.2K</div><div class="kpi-sub">↑ 16% vs last month</div></div>
+            <div class="kpi-card"><div class="kpi-label">Your Share of Voice</div><div class="kpi-val" style="color:#6366f1;">18.4%</div><div class="kpi-sub">#1 in category</div></div>
+            <div class="kpi-card"><div class="kpi-label">Category Avg SoV</div><div class="kpi-val">14.3%</div><div class="kpi-sub">You're +4.1pp above avg</div></div>
+          </div>
+          <table class="looker-table">
+            <thead><tr><th>Product</th><th>Product Pages</th><th>Reviews</th><th>Comparison</th><th>Alternative</th><th>Pricing</th></tr></thead>
+            <tbody>
+              <tr style="background:#f0f9ff;"><td><strong style="color:#6366f1;">YOU — Zoom Workplace</strong></td><td><strong>28,432</strong></td><td><strong>18,234</strong></td><td><strong>12,345</strong></td><td><strong>7,654</strong></td><td><strong>2,293</strong></td></tr>
+              <tr><td>Microsoft Teams</td><td>23,456</td><td>15,432</td><td>11,234</td><td>6,543</td><td>3,211</td></tr>
+              <tr><td>Google Meet</td><td>17,654</td><td>9,876</td><td>8,123</td><td>4,643</td><td>1,656</td></tr>
+              <tr><td>Webex by Cisco</td><td>14,321</td><td>7,654</td><td>5,432</td><td>4,321</td><td>1,482</td></tr>
+              <tr><td>Slack</td><td>12,345</td><td>6,543</td><td>5,432</td><td>3,765</td><td>1,458</td></tr>
+              <tr><td>GoToMeeting</td><td>9,876</td><td>5,432</td><td>3,456</td><td>2,789</td><td>1,410</td></tr>
+              <tr><td>RingCentral Video</td><td>7,654</td><td>3,765</td><td>2,876</td><td>2,109</td><td>583</td></tr>
+            </tbody>
+          </table>
+          <div class="source-note">Category: Video Conferencing · Source: TrustRadius Cloudflare logs</div>
+        </div>
+      </div>
+
+      <!-- Co-eval -->
+      <div class="inj-section">
+        <div class="inj-header">
+          <div class="inj-title">Who is your Product being compared against in AI search <span class="inj-badge badge-new">New</span></div>
+          <div class="inj-subtitle">Buyers in AI search are most commonly evaluating your product against these other products</div>
+        </div>
+        <div class="inj-body">
+          <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:12px 16px;margin-bottom:16px;font-size:12px;color:#1e40af;line-height:1.5;">
+            <strong>📊 What this means:</strong> When buyers ask AI assistants to compare or recommend video conferencing tools, these are the competitors most frequently mentioned alongside Zoom Workplace. Higher co-evaluation frequency signals stronger competitive overlap in AI-driven buyer journeys.
+          </div>
+          <table class="looker-table">
+            <thead><tr><th>#</th><th>Competitor</th><th>Co-eval Mentions</th><th>30-Day Trend</th><th>Relative Frequency</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td><strong>Microsoft Teams</strong></td><td>847</td><td style="color:#16a34a;font-weight:600;">+12%</td><td><div class="share-bar"><div class="share-bar-fill" style="width:100%;background:#3b82f6;height:8px;border-radius:4px;"></div></div></td></tr>
+              <tr><td>2</td><td><strong>Google Meet</strong></td><td>623</td><td style="color:#16a34a;font-weight:600;">+8%</td><td><div class="share-bar"><div class="share-bar-fill" style="width:73.6%;background:#10b981;height:8px;border-radius:4px;"></div></div></td></tr>
+              <tr><td>3</td><td><strong>Webex by Cisco</strong></td><td>412</td><td style="color:#dc2626;font-weight:600;">-3%</td><td><div class="share-bar"><div class="share-bar-fill" style="width:48.6%;background:#06b6d4;height:8px;border-radius:4px;"></div></div></td></tr>
+              <tr><td>4</td><td><strong>Slack</strong></td><td>389</td><td style="color:#16a34a;font-weight:600;">+21%</td><td><div class="share-bar"><div class="share-bar-fill" style="width:45.9%;background:#8b5cf6;height:8px;border-radius:4px;"></div></div></td></tr>
+              <tr><td>5</td><td><strong>GoToMeeting</strong></td><td>201</td><td style="color:#dc2626;font-weight:600;">-8%</td><td><div class="share-bar"><div class="share-bar-fill" style="width:23.7%;background:#f59e0b;height:8px;border-radius:4px;"></div></div></td></tr>
+              <tr><td>6</td><td><strong>RingCentral Video</strong></td><td>156</td><td style="color:#16a34a;font-weight:600;">+5%</td><td><div class="share-bar"><div class="share-bar-fill" style="width:18.4%;background:#f97316;height:8px;border-radius:4px;"></div></div></td></tr>
+            </tbody>
+          </table>
+          <div class="source-note">Based on AI-generated comparison queries · last 30 days · Source: TrustRadius AI query analysis</div>
+        </div>
+      </div>
+
+      <!-- LLM Matrix -->
+      <div class="inj-section">
+        <div class="inj-header">
+          <div class="inj-title">Crawler Activity by LLM &amp; Funnel Stage <span class="inj-badge badge-new">New</span></div>
+          <div class="inj-subtitle">Breakdown of AI requests by operator and buyer journey stage — shows where each LLM is most active in your content</div>
+        </div>
+        <div class="inj-body">
+          <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:12px;color:#166534;">
+            <strong>💡 Insight:</strong> BoFu (Comparison/Alternative/Pricing pages) dominating across all operators signals buyers are in active evaluation mode. OpenAI drives the most BoFu activity, meaning ChatGPT users are most likely to be making purchasing decisions.
+          </div>
+          <table class="looker-table">
+            <thead>
+              <tr>
+                <th>LLM Operator</th>
+                <th style="text-align:center;background:#fefce8;">Category Pages (ToFu)</th>
+                <th style="text-align:center;background:#f0fdf4;">Product + Reviews (MoFu)</th>
+                <th style="text-align:center;background:#eff6ff;">Comparison + Alt + Pricing (BoFu)</th>
+                <th style="text-align:center;">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>OpenAI (ChatGPT)</strong></td><td style="text-align:center;background:#fefce8;color:#6b7280;">1,842 <span style="font-size:10px;color:#9ca3af;">(ToFu)</span></td><td style="text-align:center;background:#f0fdf4;">2,976 <span style="font-size:10px;color:#9ca3af;">(MoFu)</span></td><td style="text-align:center;background:#eff6ff;">1,391 <span style="font-size:10px;color:#9ca3af;">(BoFu)</span></td><td style="text-align:center;"><strong>6,209</strong></td></tr>
+              <tr><td><strong>Anthropic (Claude)</strong></td><td style="text-align:center;background:#fefce8;color:#6b7280;">312 <span style="font-size:10px;color:#9ca3af;">(ToFu)</span></td><td style="text-align:center;background:#f0fdf4;">503 <span style="font-size:10px;color:#9ca3af;">(MoFu)</span></td><td style="text-align:center;background:#eff6ff;">232 <span style="font-size:10px;color:#9ca3af;">(BoFu)</span></td><td style="text-align:center;"><strong>1,047</strong></td></tr>
+              <tr><td><strong>Google (Gemini)</strong></td><td style="text-align:center;background:#fefce8;color:#6b7280;">185 <span style="font-size:10px;color:#9ca3af;">(ToFu)</span></td><td style="text-align:center;background:#f0fdf4;">298 <span style="font-size:10px;color:#9ca3af;">(MoFu)</span></td><td style="text-align:center;background:#eff6ff;">135 <span style="font-size:10px;color:#9ca3af;">(BoFu)</span></td><td style="text-align:center;"><strong>618</strong></td></tr>
+              <tr><td><strong>Perplexity</strong></td><td style="text-align:center;background:#fefce8;color:#6b7280;">116 <span style="font-size:10px;color:#9ca3af;">(ToFu)</span></td><td style="text-align:center;background:#f0fdf4;">187 <span style="font-size:10px;color:#9ca3af;">(MoFu)</span></td><td style="text-align:center;background:#eff6ff;">84 <span style="font-size:10px;color:#9ca3af;">(BoFu)</span></td><td style="text-align:center;"><strong>387</strong></td></tr>
+              <tr style="font-weight:700;background:#f9fafb;"><td><strong>All Operators</strong></td><td style="text-align:center;">2,455</td><td style="text-align:center;">3,964</td><td style="text-align:center;">1,842</td><td style="text-align:center;"><strong>8,261</strong></td></tr>
+            </tbody>
+          </table>
+          <div class="source-note">Successful Requests (2xx) · Apr 8–May 6, 2025 · Source: TrustRadius Cloudflare logs</div>
+        </div>
+      </div>
+
+      <!-- Grounding vs Training -->
+      <div class="inj-section">
+        <div class="inj-header">
+          <div class="inj-title">🌐 Grounding vs. Training: How AI Uses Your Content <span class="inj-badge badge-new">New</span></div>
+          <div class="inj-subtitle">Separate live buyer-driven requests from model training crawls — two distinct types of AI demand for your content</div>
+        </div>
+        <div class="inj-body">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+            <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:20px;">
+              <div style="font-size:11px;font-weight:700;color:#166534;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;">🌐 Live Buyer Demand (Grounding)</div>
+              <div style="font-size:36px;font-weight:900;color:#166534;">8,261</div>
+              <div style="font-size:11px;color:#16a34a;margin-bottom:10px;">Successful requests (2xx) · last 30 days</div>
+              <div style="font-size:12px;color:#374151;line-height:1.5;">Real-time requests from LLM operators answering active user queries. These represent moments when a buyer asked an AI assistant about video conferencing and the AI retrieved your TrustRadius content.</div>
+              <div style="margin-top:10px;font-size:12px;display:flex;gap:12px;flex-wrap:wrap;">
+                <span style="color:#ef4444;font-weight:600;">OpenAI 6,209</span>
+                <span style="color:#10b981;font-weight:600;">Anthropic 1,047</span>
+                <span style="color:#3b82f6;font-weight:600;">Google 618</span>
+                <span style="color:#f59e0b;font-weight:600;">Perplexity 387</span>
+              </div>
+            </div>
+            <div style="background:#faf5ff;border:1px solid #d8b4fe;border-radius:10px;padding:20px;">
+              <div style="font-size:11px;font-weight:700;color:#7c3aed;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;">🤖 Model Training (Crawling)</div>
+              <div style="font-size:36px;font-weight:900;color:#7c3aed;">19,400</div>
+              <div style="font-size:11px;color:#8b5cf6;margin-bottom:10px;">Estimated crawler requests · last 30 days</div>
+              <div style="font-size:12px;color:#374151;line-height:1.5;">Crawl activity from AI training bots indexing your pages to build model knowledge. This is bots learning your product — laying the groundwork for future grounding requests when buyers ask about you.</div>
+              <div style="margin-top:10px;font-size:12px;display:flex;gap:12px;flex-wrap:wrap;">
+                <span style="color:#6b7280;font-weight:600;">GPTBot 7,178</span>
+                <span style="color:#6b7280;font-weight:600;">ClaudeBot 4,850</span>
+                <span style="color:#6b7280;font-weight:600;">Google-Extended 3,880</span>
+                <span style="color:#6b7280;font-weight:600;">PerplexityBot 3,492</span>
+              </div>
+            </div>
+          </div>
+          <div style="height:20px;border-radius:10px;overflow:hidden;display:flex;margin-bottom:8px;">
+            <div style="width:29.9%;background:#16a34a;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;white-space:nowrap;padding:0 8px;">Grounding 8,261 (29.9%)</div>
+            <div style="flex:1;background:#7c3aed;display:flex;align-items:center;justify-content:flex-end;font-size:10px;font-weight:700;color:#fff;padding:0 8px;">Training 19,400 (70.1%)</div>
+          </div>
+          <div style="background:#fefce8;border:1px solid #fde68a;border-radius:8px;padding:12px 16px;font-size:12px;color:#374151;line-height:1.5;">
+            <strong>💡 Why this matters:</strong> Grounding requests are the highest-value signal — they represent buyers actively using AI to research products like yours. Every grounding request is a potential evaluation moment. Training crawls build the foundation: the more bots index your TrustRadius pages, the more likely your product surfaces in future AI-generated answers.
+          </div>
+        </div>
+      </div>
+
+      <!-- Grounding Velocity Trend -->
+      <div class="inj-section">
+        <div class="inj-header">
+          <div class="inj-title">📡 Grounding Velocity Trend <span class="inj-badge badge-new">New</span></div>
+          <div class="inj-subtitle">Is your grounding-to-training ratio improving? Rising grounding share = models are learning your content well enough to retrieve it in live buyer queries</div>
+        </div>
+        <div class="inj-body">
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;">
+            <div class="kpi-card"><div class="kpi-label">Current Grounding %</div><div class="kpi-val" style="color:#6366f1;">29.9%</div><div class="kpi-sub">of all AI requests are live buyer queries</div></div>
+            <div class="kpi-card"><div class="kpi-label">90-Day Change</div><div class="kpi-val" style="color:#16a34a;">+11.7pp</div><div class="kpi-sub">18.2% → 29.9%</div></div>
+            <div class="kpi-card"><div class="kpi-label">Weekly Velocity</div><div class="kpi-val" style="color:#0891b2;">+0.9pp</div><div class="kpi-sub">avg grounding gain per week</div></div>
+            <div class="kpi-card" style="background:#fefce8;border-color:#fde68a;"><div class="kpi-label">Projected at Current Rate</div><div class="kpi-val" style="color:#ca8a04;">~40%</div><div class="kpi-sub">grounding in ~11 weeks</div></div>
+          </div>
+          <div style="font-size:11px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.04em;margin-bottom:10px;">Grounding % — 90-Day Trend (higher = more live buyer queries)</div>
+          <div style="display:flex;align-items:flex-end;gap:4px;height:100px;padding:0 4px;">
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;"><span style="font-size:9px;color:#6b7280;transform:rotate(-45deg);white-space:nowrap;margin-bottom:2px;">18.2%</span><div style="width:100%;height:57px;background:#c7d2fe;border-radius:3px 3px 0 0;"></div></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;"><span style="font-size:9px;color:#6b7280;transform:rotate(-45deg);white-space:nowrap;margin-bottom:2px;">19.1%</span><div style="width:100%;height:60px;background:#c7d2fe;border-radius:3px 3px 0 0;"></div></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;"><span style="font-size:9px;color:#6b7280;transform:rotate(-45deg);white-space:nowrap;margin-bottom:2px;">20.4%</span><div style="width:100%;height:64px;background:#c7d2fe;border-radius:3px 3px 0 0;"></div></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;"><span style="font-size:9px;color:#6b7280;transform:rotate(-45deg);white-space:nowrap;margin-bottom:2px;">21.8%</span><div style="width:100%;height:68px;background:#c7d2fe;border-radius:3px 3px 0 0;"></div></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;"><span style="font-size:9px;color:#6b7280;transform:rotate(-45deg);white-space:nowrap;margin-bottom:2px;">22.3%</span><div style="width:100%;height:69px;background:#c7d2fe;border-radius:3px 3px 0 0;"></div></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;"><span style="font-size:9px;color:#6b7280;transform:rotate(-45deg);white-space:nowrap;margin-bottom:2px;">23.1%</span><div style="width:100%;height:71px;background:#c7d2fe;border-radius:3px 3px 0 0;"></div></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;"><span style="font-size:9px;color:#6b7280;transform:rotate(-45deg);white-space:nowrap;margin-bottom:2px;">24.8%</span><div style="width:100%;height:76px;background:#c7d2fe;border-radius:3px 3px 0 0;"></div></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;"><span style="font-size:9px;color:#6b7280;transform:rotate(-45deg);white-space:nowrap;margin-bottom:2px;">25.6%</span><div style="width:100%;height:79px;background:#c7d2fe;border-radius:3px 3px 0 0;"></div></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;"><span style="font-size:9px;color:#6b7280;transform:rotate(-45deg);white-space:nowrap;margin-bottom:2px;">26.9%</span><div style="width:100%;height:83px;background:#c7d2fe;border-radius:3px 3px 0 0;"></div></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;"><span style="font-size:9px;color:#6b7280;transform:rotate(-45deg);white-space:nowrap;margin-bottom:2px;">27.8%</span><div style="width:100%;height:85px;background:#c7d2fe;border-radius:3px 3px 0 0;"></div></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;"><span style="font-size:9px;color:#6b7280;transform:rotate(-45deg);white-space:nowrap;margin-bottom:2px;">28.5%</span><div style="width:100%;height:87px;background:#c7d2fe;border-radius:3px 3px 0 0;"></div></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;"><span style="font-size:9px;color:#6b7280;transform:rotate(-45deg);white-space:nowrap;margin-bottom:2px;">29.2%</span><div style="width:100%;height:89px;background:#c7d2fe;border-radius:3px 3px 0 0;"></div></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;"><span style="font-size:9px;color:#6b7280;transform:rotate(-45deg);white-space:nowrap;margin-bottom:2px;">29.9%</span><div style="width:100%;height:92px;background:#6366f1;border-radius:3px 3px 0 0;"></div></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-top:4px;padding:0 4px;">
+<div style="flex:1;text-align:center;font-size:8px;color:#9ca3af;overflow:hidden;">Feb<br>10</div>
+<div style="flex:1;text-align:center;font-size:8px;color:#9ca3af;overflow:hidden;">Feb<br>17</div>
+<div style="flex:1;text-align:center;font-size:8px;color:#9ca3af;overflow:hidden;">Feb<br>24</div>
+<div style="flex:1;text-align:center;font-size:8px;color:#9ca3af;overflow:hidden;">Mar<br>3</div>
+<div style="flex:1;text-align:center;font-size:8px;color:#9ca3af;overflow:hidden;">Mar<br>10</div>
+<div style="flex:1;text-align:center;font-size:8px;color:#9ca3af;overflow:hidden;">Mar<br>17</div>
+<div style="flex:1;text-align:center;font-size:8px;color:#9ca3af;overflow:hidden;">Mar<br>24</div>
+<div style="flex:1;text-align:center;font-size:8px;color:#9ca3af;overflow:hidden;">Mar<br>31</div>
+<div style="flex:1;text-align:center;font-size:8px;color:#9ca3af;overflow:hidden;">Apr<br>7</div>
+<div style="flex:1;text-align:center;font-size:8px;color:#9ca3af;overflow:hidden;">Apr<br>14</div>
+<div style="flex:1;text-align:center;font-size:8px;color:#9ca3af;overflow:hidden;">Apr<br>21</div>
+<div style="flex:1;text-align:center;font-size:8px;color:#9ca3af;overflow:hidden;">Apr<br>28</div>
+<div style="flex:1;text-align:center;font-size:8px;color:#9ca3af;overflow:hidden;">May<br>5</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;">
+            <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:14px;">
+              <div style="font-size:12px;font-weight:700;color:#1e40af;margin-bottom:6px;">🚀 What's driving the rise</div>
+              <div style="font-size:12px;color:#374151;line-height:1.5;">More AI models are now trained on TrustRadius content. As training coverage improves, models retrieve your pages more confidently in live buyer queries — the grounding rate is your GEO "organic rank" equivalent.</div>
+            </div>
+            <div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;padding:14px;">
+              <div style="font-size:12px;font-weight:700;color:#c2410c;margin-bottom:6px;">🎯 How to accelerate it</div>
+              <div style="font-size:12px;color:#374151;line-height:1.5;">Publish fresh, structured content on your TrustRadius pages monthly. Recency boosts training pickup speed. Responding to new reviews and updating product specs are the highest-leverage actions.</div>
+            </div>
+          </div>
+          <div class="source-note">Weekly grounding % = Successful requests ÷ total AI requests · Feb 10–May 6, 2025 · Source: TrustRadius Cloudflare logs</div>
+        </div>
+      </div>
+
+    </div><!-- /pane-analytics -->
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!-- PANE 2: ACTIONS & ALERTS                                           -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <div id="pane-alerts" style="display:none;">
+
+      <!-- Competitive Threat Alerts -->
+      <div class="inj-section">
+        <div class="inj-header">
+          <div class="inj-title">⚡ Competitive Threat Alerts <span class="inj-badge badge-new">New</span></div>
+          <div class="inj-subtitle">Week-over-week spikes in competitor comparison page AI traffic — real-time signals of competitive moments in market</div>
+        </div>
+        <div class="inj-body">
+          <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:12px 16px;margin-bottom:14px;font-size:12px;color:#1e40af;line-height:1.5;">
+            <strong>How to read this:</strong> When AI comparison traffic spikes, buyers are actively asking "Zoom vs [competitor]" in ChatGPT/Claude/Perplexity right now. A spike often precedes a competitor's pricing change, renewal wave, or news event. Your sales team has a narrow window to engage.
+          </div>
+          <div style="background:#fef2f2;border:1px solid #e5e7eb;border-radius:8px;padding:12px 16px;margin-bottom:8px;">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <span style="font-size:18px;">🔴</span>
+              <div style="flex:1;">
+                <div style="font-size:13px;font-weight:700;color:#111827;">Slack <span style="color:#dc2626;font-weight:700;">+52% WoW</span> <span style="font-size:11px;color:#6b7280;">321 AI visits</span></div>
+                <div style="font-size:12px;color:#6b7280;margin-top:3px;">Unusual spike — likely tied to Slack pricing news this week. Sales should monitor pipeline for churn risk.</div>
+              </div>
+              <span style="background:#fee2e2;color:#dc2626;font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap;">ACTION NOW</span>
+            </div>
+          </div>
+          <div style="background:#fff7ed;border:1px solid #e5e7eb;border-radius:8px;padding:12px 16px;margin-bottom:8px;">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <span style="font-size:18px;">🟠</span>
+              <div style="flex:1;">
+                <div style="font-size:13px;font-weight:700;color:#111827;">Microsoft Teams <span style="color:#ea580c;font-weight:700;">+40% WoW</span> <span style="font-size:11px;color:#6b7280;">1,654 AI visits</span></div>
+                <div style="font-size:12px;color:#6b7280;margin-top:3px;">Sustained increase. Teams renewal cycle likely driving late-stage evaluations. Prime time for competitive win content.</div>
+              </div>
+              <span style="background:#ffedd5;color:#ea580c;font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap;">WATCH</span>
+            </div>
+          </div>
+          <div style="background:#fff7ed;border:1px solid #e5e7eb;border-radius:8px;padding:12px 16px;margin-bottom:8px;">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <span style="font-size:18px;">🟡</span>
+              <div style="flex:1;">
+                <div style="font-size:13px;font-weight:700;color:#111827;">Google Meet <span style="color:#ca8a04;font-weight:700;">+28% WoW</span> <span style="font-size:11px;color:#6b7280;">1,287 AI visits</span></div>
+                <div style="font-size:12px;color:#6b7280;margin-top:3px;">Steady growth. Consider refreshing the Google Meet comparison page with updated feature parity data.</div>
+              </div>
+              <span style="background:#f3f4f6;color:#6b7280;font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap;">WATCH</span>
+            </div>
+          </div>
+          <div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:12px 16px;margin-bottom:8px;">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <span style="font-size:18px;">🟡</span>
+              <div style="flex:1;">
+                <div style="font-size:13px;font-weight:700;color:#111827;">RingCentral Video <span style="color:#6b7280;font-weight:700;">+18% WoW</span> <span style="font-size:11px;color:#6b7280;">187 AI visits</span></div>
+                <div style="font-size:12px;color:#6b7280;margin-top:3px;">Emerging challenger. Monitor over next 2 weeks.</div>
+              </div>
+              <span style="background:#f3f4f6;color:#6b7280;font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap;">MONITOR</span>
+            </div>
+          </div>
+          <div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:12px 16px;margin-bottom:8px;">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <span style="font-size:18px;">🟢</span>
+              <div style="flex:1;">
+                <div style="font-size:13px;font-weight:700;color:#111827;">Webex by Cisco <span style="color:#16a34a;font-weight:700;">-12% WoW</span> <span style="font-size:11px;color:#6b7280;">876 AI visits</span></div>
+                <div style="font-size:12px;color:#6b7280;margin-top:3px;">Declining — competitive pressure from Webex is easing. Opportunity to recapture fence-sitters.</div>
+              </div>
+              <span style="background:#f3f4f6;color:#6b7280;font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap;">MONITOR</span>
+            </div>
+          </div>
+          <div class="source-note">Week-over-week change · Apr 30–May 6 vs Apr 23–30, 2025 · Source: TrustRadius Cloudflare logs</div>
+        </div>
+      </div>
+
+      <!-- Buyer Readiness Index -->
+      <div class="inj-section">
+        <div class="inj-header">
+          <div class="inj-title">📈 Buyer Readiness Index <span class="inj-badge badge-new">New</span></div>
+          <div class="inj-subtitle">The BoFu/MoFu ratio tells you how close AI-driven buyers are to a purchase decision — watch this trend weekly</div>
+        </div>
+        <div class="inj-body">
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;">
+            <div class="kpi-card" style="background:#f0fdf4;border-color:#bbf7d0;"><div class="kpi-label">Buyer Readiness Score</div><div class="kpi-val" style="color:#166534;font-size:36px;">8.0<span style="font-size:18px;color:#6b7280;">/10</span></div><div style="color:#ef4444;font-size:12px;font-weight:600;">🔥 Late-stage evaluation mode</div></div>
+            <div class="kpi-card"><div class="kpi-label">BoFu Trend (4 wks)</div><div class="kpi-val" style="color:#16a34a;">↑ +8.9pp</div><div class="kpi-sub">71.2% → 80.1%</div></div>
+            <div class="kpi-card" style="background:#fef2f2;border-color:#fecaca;"><div class="kpi-label">MoFu Trend (4 wks)</div><div class="kpi-val" style="color:#dc2626;">↓ -8.9pp</div><div class="kpi-sub">28.8% → 19.9%</div></div>
+          </div>
+          <div style="display:flex;gap:16px;align-items:flex-end;justify-content:center;margin-bottom:16px;">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
+              <span style="font-size:11px;font-weight:700;color:#374151;">71.2%</span>
+              <div style="width:60px;height:120px;display:flex;flex-direction:column;border-radius:6px;overflow:hidden;">
+                <div style="flex:28.8;background:#7c3aed;"></div>
+                <div style="flex:71.2;background:#16a34a;"></div>
+              </div>
+              <span style="font-size:10px;color:#6b7280;text-align:center;">Wk 1<br>Apr 7</span>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
+              <span style="font-size:11px;font-weight:700;color:#374151;">74.8%</span>
+              <div style="width:60px;height:120px;display:flex;flex-direction:column;border-radius:6px;overflow:hidden;">
+                <div style="flex:25.2;background:#7c3aed;"></div>
+                <div style="flex:74.8;background:#16a34a;"></div>
+              </div>
+              <span style="font-size:10px;color:#6b7280;text-align:center;">Wk 2<br>Apr 14</span>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
+              <span style="font-size:11px;font-weight:700;color:#374151;">77.1%</span>
+              <div style="width:60px;height:120px;display:flex;flex-direction:column;border-radius:6px;overflow:hidden;">
+                <div style="flex:22.9;background:#7c3aed;"></div>
+                <div style="flex:77.1;background:#16a34a;"></div>
+              </div>
+              <span style="font-size:10px;color:#6b7280;text-align:center;">Wk 3<br>Apr 21</span>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
+              <span style="font-size:11px;font-weight:700;color:#374151;">78.9%</span>
+              <div style="width:60px;height:120px;display:flex;flex-direction:column;border-radius:6px;overflow:hidden;">
+                <div style="flex:21.1;background:#7c3aed;"></div>
+                <div style="flex:78.9;background:#16a34a;"></div>
+              </div>
+              <span style="font-size:10px;color:#6b7280;text-align:center;">Wk 4<br>Apr 28</span>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
+              <span style="font-size:11px;font-weight:700;color:#374151;">80.1%</span>
+              <div style="width:60px;height:120px;display:flex;flex-direction:column;border-radius:6px;overflow:hidden;">
+                <div style="flex:19.9;background:#7c3aed;"></div>
+                <div style="flex:80.1;background:#16a34a;"></div>
+              </div>
+              <span style="font-size:10px;color:#6b7280;text-align:center;">This Wk<br>May 5</span>
+            </div>
+          </div>
+          <div style="display:flex;gap:16px;justify-content:center;font-size:12px;margin-bottom:16px;">
+            <span style="display:flex;align-items:center;gap:5px;"><span style="width:12px;height:12px;background:#16a34a;border-radius:2px;display:inline-block;"></span> BoFu (Comparison + Pricing)</span>
+            <span style="display:flex;align-items:center;gap:5px;"><span style="width:12px;height:12px;background:#7c3aed;border-radius:2px;display:inline-block;"></span> MoFu (Product + Reviews)</span>
+          </div>
+          <div style="background:#fefce8;border:1px solid #fde68a;border-radius:8px;padding:12px 16px;margin-bottom:0;">
+            <div style="font-size:12px;font-weight:700;color:#92400e;margin-bottom:8px;">🏎️ What this means for your team</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+              <div style="font-size:12px;color:#374151;line-height:1.5;"><strong>Sales:</strong> BoFu crawls climbing = buyers in your pipeline are in final comparison mode right now. Prioritize speed-to-close plays and competitive battle cards.</div>
+              <div style="font-size:12px;color:#374151;line-height:1.5;"><strong>CS:</strong> Rising BoFu activity can also signal renewal risk — existing customers evaluating alternatives. Watch for churn signals in accounts where competitors are spiking.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Content Gap Map -->
+      <div class="inj-section">
+        <div class="inj-header">
+          <div class="inj-title">🗺️ Content Gap Map <span class="inj-badge badge-new">New</span></div>
+          <div class="inj-subtitle">Competitors appearing in AI comparison queries where you have missing or partial content — direct content briefs for your team</div>
+        </div>
+        <div class="inj-body">
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;">
+            <div style="background:#fef2f2;border-radius:8px;padding:14px;text-align:center;"><div style="font-size:22px;font-weight:900;color:#dc2626;">2</div><div style="font-size:12px;color:#6b7280;">Critical gaps (no page)</div></div>
+            <div style="background:#fefce8;border-radius:8px;padding:14px;text-align:center;"><div style="font-size:22px;font-weight:900;color:#ca8a04;">2</div><div style="font-size:12px;color:#6b7280;">Partial pages (needs refresh)</div></div>
+            <div style="background:#f0fdf4;border-radius:8px;padding:14px;text-align:center;"><div style="font-size:22px;font-weight:900;color:#16a34a;">5,339</div><div style="font-size:12px;color:#6b7280;">AI requests addressable by fixing gaps</div></div>
+          </div>
+          <div style="background:#fef2f2;border:1px solid #e5e7eb;border-radius:8px;padding:14px 16px;margin-bottom:10px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+              <div><strong style="font-size:13px;">Microsoft Teams</strong> <span style="font-size:11px;color:#6b7280;">Missing: Pricing Comparison</span><span style="background:#fee2e2;color:#dc2626;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;margin-left:8px;">NO PAGE</span></div>
+              <div style="font-size:12px;color:#dc2626;font-weight:700;">1,654 AI requests/mo &nbsp; 🔴 Critical</div>
+            </div>
+            <div style="font-size:12px;color:#374151;background:rgba(255,255,255,.7);padding:8px 12px;border-radius:6px;border-left:3px solid #dc2626;">
+              📝 <strong>Content Brief:</strong> Build 'Zoom vs Microsoft Teams Pricing' page. Include TCO calculator, per-seat cost breakdown, and enterprise licensing comparison. OpenAI requests this content 847x/month.
+            </div>
+          </div>
+          <div style="background:#fff7ed;border:1px solid #e5e7eb;border-radius:8px;padding:14px 16px;margin-bottom:10px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+              <div><strong style="font-size:13px;">Slack</strong> <span style="font-size:11px;color:#6b7280;">Missing: Full Review Comparison</span><span style="background:#ffedd5;color:#ea580c;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;margin-left:8px;">NO PAGE</span></div>
+              <div style="font-size:12px;color:#ea580c;font-weight:700;">321 AI requests/mo &nbsp; 🟠 High</div>
+            </div>
+            <div style="font-size:12px;color:#374151;background:rgba(255,255,255,.7);padding:8px 12px;border-radius:6px;border-left:3px solid #ea580c;">
+              📝 <strong>Content Brief:</strong> Slack is surging +52% WoW but you have no dedicated Slack comparison review page. Build 'Zoom vs Slack: Enterprise Communications' with use-case matrix.
+            </div>
+          </div>
+          <div style="background:#fefce8;border:1px solid #e5e7eb;border-radius:8px;padding:14px 16px;margin-bottom:10px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+              <div><strong style="font-size:13px;">Google Meet</strong> <span style="font-size:11px;color:#6b7280;">Missing: Mobile Feature Comparison</span><span style="background:#fefce8;color:#ca8a04;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;margin-left:8px;">PARTIAL</span></div>
+              <div style="font-size:12px;color:#ca8a04;font-weight:700;">1,287 AI requests/mo &nbsp; 🟡 Medium</div>
+            </div>
+            <div style="font-size:12px;color:#374151;background:rgba(255,255,255,.7);padding:8px 12px;border-radius:6px;border-left:3px solid #ca8a04;">
+              📝 <strong>Content Brief:</strong> Your Google Meet comparison page exists but lacks mobile-specific feature parity table. Perplexity frequently requests this for mobile-first buyers.
+            </div>
+          </div>
+          <div style="background:#fefce8;border:1px solid #e5e7eb;border-radius:8px;padding:14px 16px;margin-bottom:10px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+              <div><strong style="font-size:13px;">Webex by Cisco</strong> <span style="font-size:11px;color:#6b7280;">Missing: Security & Compliance</span><span style="background:#fefce8;color:#ca8a04;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;margin-left:8px;">PARTIAL</span></div>
+              <div style="font-size:12px;color:#ca8a04;font-weight:700;">876 AI requests/mo &nbsp; 🟡 Medium</div>
+            </div>
+            <div style="font-size:12px;color:#374151;background:rgba(255,255,255,.7);padding:8px 12px;border-radius:6px;border-left:3px solid #ca8a04;">
+              📝 <strong>Content Brief:</strong> Existing Webex page is missing enterprise security comparison (HIPAA, FedRAMP). High-value for financial services and healthcare ICP.
+            </div>
+          </div>
+          <div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:14px 16px;margin-bottom:10px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+              <div><strong style="font-size:13px;">GoToMeeting</strong> <span style="font-size:11px;color:#6b7280;">Missing: SMB Pricing Tier</span><span style="background:#f3f4f6;color:#6b7280;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;margin-left:8px;">NO PAGE</span></div>
+              <div style="font-size:12px;color:#6b7280;font-weight:700;">201 AI requests/mo &nbsp; 🟢 Low</div>
+            </div>
+            <div style="font-size:12px;color:#374151;background:rgba(255,255,255,.7);padding:8px 12px;border-radius:6px;border-left:3px solid #6b7280;">
+              📝 <strong>Content Brief:</strong> GoToMeeting comparison exists but lacks SMB-specific pricing tier comparison. Lower priority given overall AI traffic volume.
+            </div>
+          </div>
+          <div class="source-note">Based on competitor AI crawl data vs. your existing TrustRadius page inventory · Apr 8–May 6, 2025</div>
+        </div>
+      </div>
+
+      <!-- Operator-Level Content Strategy -->
+      <div class="inj-section">
+        <div class="inj-header">
+          <div class="inj-title">🎯 Operator-Level Content Strategy <span class="inj-badge badge-new">New</span></div>
+          <div class="inj-subtitle">Different LLMs favor different page types — optimize your content specifically for how each model uses your TrustRadius pages</div>
+        </div>
+        <div class="inj-body">
+          <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:12px 16px;margin-bottom:16px;font-size:12px;color:#166534;line-height:1.5;">
+            <strong>Why this matters:</strong> Each LLM has different content retrieval patterns. Optimizing for "AI" in general misses the signal — you need per-model GEO strategies. OpenAI and Perplexity alone account for 80% of your grounding requests.
+          </div>
+          <div style="border:1px solid #e5e7eb;border-radius:10px;margin-bottom:14px;overflow:hidden;">
+            <div style="padding:14px 16px;border-bottom:1px solid #f3f4f6;display:flex;align-items:center;gap:10px;">
+              <span style="width:12px;height:12px;border-radius:50%;background:#10b981;display:inline-block;"></span>
+              <strong style="font-size:13px;color:#111827;">OpenAI (ChatGPT)</strong>
+              <span style="font-size:12px;color:#10b981;font-weight:600;margin-left:4px;">Top page type: Comparison (75% of their requests)</span>
+            </div>
+            <div style="padding:14px 16px 10px;">
+              <div style="background:#f9fafb;border-left:3px solid #10b981;padding:8px 12px;font-size:12px;color:#374151;margin-bottom:12px;border-radius:0 6px 6px 0;">
+                <strong>Profile:</strong> Comparison-heavy — buyers asking ChatGPT are in final evaluation mode, side-by-side feature comparisons
+              </div>
+              <div style="font-size:10px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;">Content Actions</div>
+              <div style="font-size:12px;color:#374151;margin-bottom:4px;">→ Ensure all comparison pages have structured feature tables (ChatGPT parses these well)</div><div style="font-size:12px;color:#374151;margin-bottom:4px;">→ Add explicit "Why Zoom beats Teams/Meet" summary blocks — models prefer direct answers</div><div style="font-size:12px;color:#374151;margin-bottom:4px;">→ Include pricing callouts in comparison page headers — ChatGPT buyers are price-sensitive at this stage</div>
+            </div>
+          </div>
+          <div style="border:1px solid #e5e7eb;border-radius:10px;margin-bottom:14px;overflow:hidden;">
+            <div style="padding:14px 16px;border-bottom:1px solid #f3f4f6;display:flex;align-items:center;gap:10px;">
+              <span style="width:12px;height:12px;border-radius:50%;background:#f59e0b;display:inline-block;"></span>
+              <strong style="font-size:13px;color:#111827;">Anthropic (Claude)</strong>
+              <span style="font-size:12px;color:#f59e0b;font-weight:600;margin-left:4px;">Top page type: Full Reviews (48% of their requests)</span>
+            </div>
+            <div style="padding:14px 16px 10px;">
+              <div style="background:#f9fafb;border-left:3px solid #f59e0b;padding:8px 12px;font-size:12px;color:#374151;margin-bottom:12px;border-radius:0 6px 6px 0;">
+                <strong>Profile:</strong> Review-heavy — Claude users tend to ask for in-depth, balanced product evaluations before deciding
+              </div>
+              <div style="font-size:10px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;">Content Actions</div>
+              <div style="font-size:12px;color:#374151;margin-bottom:4px;">→ Prioritize long-form, nuanced review content — Claude synthesizes depth better than brevity</div><div style="font-size:12px;color:#374151;margin-bottom:4px;">→ Include "Ideal for / Not ideal for" sections — helps Claude give nuanced recommendations</div><div style="font-size:12px;color:#374151;margin-bottom:4px;">→ Add third-party customer quotes to reviews — Claude weights social proof heavily in answers</div>
+            </div>
+          </div>
+          <div style="border:1px solid #e5e7eb;border-radius:10px;margin-bottom:14px;overflow:hidden;">
+            <div style="padding:14px 16px;border-bottom:1px solid #f3f4f6;display:flex;align-items:center;gap:10px;">
+              <span style="width:12px;height:12px;border-radius:50%;background:#8b5cf6;display:inline-block;"></span>
+              <strong style="font-size:13px;color:#111827;">Perplexity</strong>
+              <span style="font-size:12px;color:#8b5cf6;font-weight:600;margin-left:4px;">Top page type: Pricing (22% of their requests)</span>
+            </div>
+            <div style="padding:14px 16px 10px;">
+              <div style="background:#f9fafb;border-left:3px solid #8b5cf6;padding:8px 12px;font-size:12px;color:#374151;margin-bottom:12px;border-radius:0 6px 6px 0;">
+                <strong>Profile:</strong> Pricing-disproportionate — Perplexity users ask "how much does X cost" more than any other LLM
+              </div>
+              <div style="font-size:10px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;">Content Actions</div>
+              <div style="font-size:12px;color:#374151;margin-bottom:4px;">→ Add transparent, scannable pricing tables — Perplexity excels at pulling structured price data</div><div style="font-size:12px;color:#374151;margin-bottom:4px;">→ Include "price per seat at different tiers" tables on pricing page</div><div style="font-size:12px;color:#374151;margin-bottom:4px;">→ Add a pricing FAQ section: "Is Zoom cheaper than Teams?" — Perplexity loves direct Q&A format</div>
+            </div>
+          </div>
+          <div style="border:1px solid #e5e7eb;border-radius:10px;margin-bottom:14px;overflow:hidden;">
+            <div style="padding:14px 16px;border-bottom:1px solid #f3f4f6;display:flex;align-items:center;gap:10px;">
+              <span style="width:12px;height:12px;border-radius:50%;background:#3b82f6;display:inline-block;"></span>
+              <strong style="font-size:13px;color:#111827;">Google (Gemini)</strong>
+              <span style="font-size:12px;color:#3b82f6;font-weight:600;margin-left:4px;">Top page type: Product Pages (48% of their requests)</span>
+            </div>
+            <div style="padding:14px 16px 10px;">
+              <div style="background:#f9fafb;border-left:3px solid #3b82f6;padding:8px 12px;font-size:12px;color:#374151;margin-bottom:12px;border-radius:0 6px 6px 0;">
+                <strong>Profile:</strong> Product-feature focused — Gemini pulls feature lists and integration specs for users asking about capabilities
+              </div>
+              <div style="font-size:10px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;">Content Actions</div>
+              <div style="font-size:12px;color:#374151;margin-bottom:4px;">→ Deep Google Workspace integration content performs best with Gemini</div><div style="font-size:12px;color:#374151;margin-bottom:4px;">→ Feature comparison matrices with checkmark tables are highly retrievable</div><div style="font-size:12px;color:#374151;margin-bottom:4px;">→ Include use-case sections by role (IT Admin, End User, Executive) — Gemini organizes answers by persona</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /pane-alerts -->
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!-- PANE 3: GEO HEALTH SCORE                                           -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <div id="pane-health" style="display:none;">
+
+      <!-- Banner -->
+      <div class="inj-section" style="background:linear-gradient(135deg,#1e1b4b 0%,#3730a3 100%);border:none;color:#fff;margin-bottom:20px;">
+        <div class="inj-body" style="display:flex;align-items:center;gap:32px;padding:24px 28px;">
+          <div style="text-align:center;min-width:110px;">
+            <div style="font-size:58px;font-weight:900;line-height:1;color:#fca5a5;">59</div>
+            <div style="font-size:13px;font-weight:600;color:rgba(255,255,255,.7);margin-top:4px;">/ 100</div>
+            <div style="font-size:12px;font-weight:700;margin-top:8px;background:rgba(255,255,255,.15);padding:4px 14px;border-radius:20px;">At Risk</div>
+          </div>
+          <div style="flex:1;border-left:1px solid rgba(255,255,255,.2);padding-left:28px;">
+            <div style="font-size:17px;font-weight:800;margin-bottom:5px;">GEO Health Score — Powered by Conductor</div>
+            <div style="font-size:13px;color:rgba(255,255,255,.75);line-height:1.55;margin-bottom:14px;">Conductor scans your pages across 6 AI-readiness signals to score how well each page type is positioned to be retrieved, cited, and grounded by AI operators. Fix the gaps to improve your score and increase grounding share.</div>
+            <div style="display:flex;gap:16px;flex-wrap:wrap;">
+              <div style="background:rgba(255,255,255,.1);border-radius:8px;padding:10px 16px;"><div style="font-size:22px;font-weight:800;">3</div><div style="font-size:11px;color:rgba(255,255,255,.7);">Page types at risk</div></div>
+              <div style="background:rgba(255,255,255,.1);border-radius:8px;padding:10px 16px;"><div style="font-size:22px;font-weight:800;">7,702</div><div style="font-size:11px;color:rgba(255,255,255,.7);">Crawls on at-risk pages</div></div>
+              <div style="background:rgba(255,255,255,.1);border-radius:8px;padding:10px 16px;"><div style="font-size:22px;font-weight:800;">+18 pts</div><div style="font-size:11px;color:rgba(255,255,255,.7);">Estimated score lift if fixed</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Score table -->
+      <div class="inj-section">
+        <div class="inj-header">
+          <div class="inj-title">📄 Score by Page Type</div>
+          <div class="inj-subtitle">Conductor assessment across all active page types — scored 0–100 on AI-readiness signals</div>
+        </div>
+        <div class="inj-body" style="padding:0;">
+          <table class="looker-table">
+            <thead><tr><th>Page Type</th><th style="text-align:center;">Score</th><th style="text-align:center;">Grade</th><th style="text-align:right;">Monthly Crawls</th><th>Key Conductor Flag</th><th>Priority Fix</th></tr></thead>
+            <tbody>
+              <tr style="border-bottom:1px solid #f3f4f6;">
+                <td style="padding:12px 14px;font-size:13px;font-weight:600;color:#111827;">Review Pages</td>
+                <td style="padding:12px 14px;text-align:center;"><span style="display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;background:#dcfce7;color:#16a34a;font-size:15px;font-weight:800;">91</span></td>
+                <td style="padding:12px 14px;text-align:center;"><span style="background:#dcfce7;color:#16a34a;font-size:12px;font-weight:700;padding:3px 10px;border-radius:20px;">A</span></td>
+                <td style="padding:12px 14px;text-align:right;font-size:13px;color:#374151;">1,102</td>
+                <td style="padding:12px 14px;font-size:12px;color:#6b7280;max-width:260px;">Clean structured data, fresh content, high grounding success rate.</td>
+                <td style="padding:12px 14px;"><span style="color:#16a34a;font-size:12px;font-weight:600;">✓ No action needed</span></td>
+              </tr>
+              <tr style="border-bottom:1px solid #f3f4f6;">
+                <td style="padding:12px 14px;font-size:13px;font-weight:600;color:#111827;">Full Review Pages</td>
+                <td style="padding:12px 14px;text-align:center;"><span style="display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;background:#dbeafe;color:#2563eb;font-size:15px;font-weight:800;">74</span></td>
+                <td style="padding:12px 14px;text-align:center;"><span style="background:#dbeafe;color:#2563eb;font-size:12px;font-weight:700;padding:3px 10px;border-radius:20px;">B</span></td>
+                <td style="padding:12px 14px;text-align:right;font-size:13px;color:#374151;">543</td>
+                <td style="padding:12px 14px;font-size:12px;color:#6b7280;max-width:260px;">Add FAQ schema; surface differentiators in first 150 words.</td>
+                <td style="padding:12px 14px;"><span style="background:#f3f4f6;color:#374151;font-size:11px;font-weight:600;padding:3px 10px;border-radius:6px;">Add FAQ markup</span></td>
+              </tr>
+              <tr style="border-bottom:1px solid #f3f4f6;">
+                <td style="padding:12px 14px;font-size:13px;font-weight:600;color:#111827;">Product Pages</td>
+                <td style="padding:12px 14px;text-align:center;"><span style="display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;background:#fef9c3;color:#ca8a04;font-size:15px;font-weight:800;">69</span></td>
+                <td style="padding:12px 14px;text-align:center;"><span style="background:#fef9c3;color:#ca8a04;font-size:12px;font-weight:700;padding:3px 10px;border-radius:20px;">C+</span></td>
+                <td style="padding:12px 14px;text-align:right;font-size:13px;color:#374151;">2,847</td>
+                <td style="padding:12px 14px;font-size:12px;color:#6b7280;max-width:260px;">Feature tables missing; meta descriptions too thin for grounding.</td>
+                <td style="padding:12px 14px;"><span style="background:#f3f4f6;color:#374151;font-size:11px;font-weight:600;padding:3px 10px;border-radius:6px;">Add feature tables + schema</span></td>
+              </tr>
+              <tr style="border-bottom:1px solid #f3f4f6;">
+                <td style="padding:12px 14px;font-size:13px;font-weight:600;color:#111827;">Comparison Pages</td>
+                <td style="padding:12px 14px;text-align:center;"><span style="display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;background:#ffedd5;color:#ea580c;font-size:15px;font-weight:800;">58</span></td>
+                <td style="padding:12px 14px;text-align:center;"><span style="background:#ffedd5;color:#ea580c;font-size:12px;font-weight:700;padding:3px 10px;border-radius:20px;">C-</span></td>
+                <td style="padding:12px 14px;text-align:right;font-size:13px;color:#374151;">6,616</td>
+                <td style="padding:12px 14px;font-size:12px;color:#6b7280;max-width:260px;">Highest AI demand but thin competitive depth vs Teams &amp; Slack.</td>
+                <td style="padding:12px 14px;"><span style="background:#f3f4f6;color:#374151;font-size:11px;font-weight:600;padding:3px 10px;border-radius:6px;">Expand comparison depth</span></td>
+              </tr>
+              <tr style="border-bottom:1px solid #f3f4f6;">
+                <td style="padding:12px 14px;font-size:13px;font-weight:600;color:#111827;">Pricing Pages</td>
+                <td style="padding:12px 14px;text-align:center;"><span style="display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;background:#fee2e2;color:#dc2626;font-size:15px;font-weight:800;">41</span></td>
+                <td style="padding:12px 14px;text-align:center;"><span style="background:#fee2e2;color:#dc2626;font-size:12px;font-weight:700;padding:3px 10px;border-radius:20px;">D</span></td>
+                <td style="padding:12px 14px;text-align:right;font-size:13px;color:#374151;">543</td>
+                <td style="padding:12px 14px;font-size:12px;color:#6b7280;max-width:260px;">No pricing schema; missing structured tier table; needs FAQ format.</td>
+                <td style="padding:12px 14px;"><span style="background:#f3f4f6;color:#374151;font-size:11px;font-weight:600;padding:3px 10px;border-radius:6px;">Rebuild with pricing schema</span></td>
+              </tr>
+              <tr style="border-bottom:1px solid #f3f4f6;">
+                <td style="padding:12px 14px;font-size:13px;font-weight:600;color:#111827;">Industry/Category Pages</td>
+                <td style="padding:12px 14px;text-align:center;"><span style="display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;background:#fef2f2;color:#7f1d1d;font-size:15px;font-weight:800;">22</span></td>
+                <td style="padding:12px 14px;text-align:center;"><span style="background:#fef2f2;color:#7f1d1d;font-size:12px;font-weight:700;padding:3px 10px;border-radius:20px;">F</span></td>
+                <td style="padding:12px 14px;text-align:right;font-size:13px;color:#374151;">0</td>
+                <td style="padding:12px 14px;font-size:12px;color:#6b7280;max-width:260px;">Pages largely missing or not indexed — AI has no grounding source for vertical buyers.</td>
+                <td style="padding:12px 14px;"><span style="background:#f3f4f6;color:#374151;font-size:11px;font-weight:600;padding:3px 10px;border-radius:6px;">🚨 Create pages now</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Signal breakdown -->
+      <div class="inj-section">
+        <div class="inj-header">
+          <div class="inj-title">🔍 Signal Breakdown by Page Type</div>
+          <div class="inj-subtitle">Which Conductor signals each page type passes or fails — click any row to open the Conductor audit</div>
+        </div>
+        <div class="inj-body" style="padding:0;">
+          <table class="looker-table">
+            <thead>
+              <tr style="background:#f9fafb;border-bottom:2px solid #e5e7eb;">
+                <th style="padding:10px 14px;text-align:left;min-width:200px;">Signal</th>
+                <th style="padding:10px 10px;text-align:center;font-size:10px;">Review<br>Pages</th>
+                <th style="padding:10px 10px;text-align:center;font-size:10px;">Full Review<br>Pages</th>
+                <th style="padding:10px 10px;text-align:center;font-size:10px;">Product<br>Pages</th>
+                <th style="padding:10px 10px;text-align:center;font-size:10px;">Comparison<br>Pages</th>
+                <th style="padding:10px 10px;text-align:center;font-size:10px;">Pricing<br>Pages</th>
+                <th style="padding:10px 10px;text-align:center;font-size:10px;">Industry/<br>Category</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom:1px solid #f3f4f6;"><td style="padding:9px 14px;font-size:12px;color:#374151;font-weight:500;">Schema markup completeness</td><td style="padding:9px 10px;text-align:center;font-size:14px;">✅</td><td style="padding:9px 10px;text-align:center;font-size:14px;">✅</td><td style="padding:9px 10px;text-align:center;font-size:14px;">❌</td><td style="padding:9px 10px;text-align:center;font-size:14px;">❌</td><td style="padding:9px 10px;text-align:center;font-size:14px;">❌</td><td style="padding:9px 10px;text-align:center;font-size:14px;">❌</td></tr>
+              <tr style="border-bottom:1px solid #f3f4f6;"><td style="padding:9px 14px;font-size:12px;color:#374151;font-weight:500;">Content freshness (< 90 days)</td><td style="padding:9px 10px;text-align:center;font-size:14px;">✅</td><td style="padding:9px 10px;text-align:center;font-size:14px;">✅</td><td style="padding:9px 10px;text-align:center;font-size:14px;">✅</td><td style="padding:9px 10px;text-align:center;font-size:14px;">❌</td><td style="padding:9px 10px;text-align:center;font-size:14px;">❌</td><td style="padding:9px 10px;text-align:center;font-size:14px;">❌</td></tr>
+              <tr style="border-bottom:1px solid #f3f4f6;"><td style="padding:9px 14px;font-size:12px;color:#374151;font-weight:500;">Answer-ready structure (FAQ/tables)</td><td style="padding:9px 10px;text-align:center;font-size:14px;">✅</td><td style="padding:9px 10px;text-align:center;font-size:14px;">❌</td><td style="padding:9px 10px;text-align:center;font-size:14px;">❌</td><td style="padding:9px 10px;text-align:center;font-size:14px;">❌</td><td style="padding:9px 10px;text-align:center;font-size:14px;">❌</td><td style="padding:9px 10px;text-align:center;font-size:14px;">❌</td></tr>
+              <tr style="border-bottom:1px solid #f3f4f6;"><td style="padding:9px 14px;font-size:12px;color:#374151;font-weight:500;">Grounding success rate (2xx)</td><td style="padding:9px 10px;text-align:center;font-size:14px;">✅</td><td style="padding:9px 10px;text-align:center;font-size:14px;">✅</td><td style="padding:9px 10px;text-align:center;font-size:14px;">✅</td><td style="padding:9px 10px;text-align:center;font-size:14px;">✅</td><td style="padding:9px 10px;text-align:center;font-size:14px;">❌</td><td style="padding:9px 10px;text-align:center;font-size:14px;">❌</td></tr>
+              <tr style="border-bottom:1px solid #f3f4f6;"><td style="padding:9px 14px;font-size:12px;color:#374151;font-weight:500;">Keyword-to-crawl alignment</td><td style="padding:9px 10px;text-align:center;font-size:14px;">✅</td><td style="padding:9px 10px;text-align:center;font-size:14px;">✅</td><td style="padding:9px 10px;text-align:center;font-size:14px;">✅</td><td style="padding:9px 10px;text-align:center;font-size:14px;">❌</td><td style="padding:9px 10px;text-align:center;font-size:14px;">❌</td><td style="padding:9px 10px;text-align:center;font-size:14px;">❌</td></tr>
+              <tr style="border-bottom:1px solid #f3f4f6;"><td style="padding:9px 14px;font-size:12px;color:#374151;font-weight:500;">Mobile / Core Web Vitals</td><td style="padding:9px 10px;text-align:center;font-size:14px;">✅</td><td style="padding:9px 10px;text-align:center;font-size:14px;">✅</td><td style="padding:9px 10px;text-align:center;font-size:14px;">❌</td><td style="padding:9px 10px;text-align:center;font-size:14px;">❌</td><td style="padding:9px 10px;text-align:center;font-size:14px;">❌</td><td style="padding:9px 10px;text-align:center;font-size:14px;">❌</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div><!-- /pane-health -->
+
+  
+<script>
+
+// ── Chart.js initialization ──────────────────────────────────────────────────
+const operatorChartConfig = {"type": "line", "data": {"labels": ["4/6", "4/7", "4/8", "4/9", "4/10", "4/11", "4/12", "4/13", "4/14", "4/15", "4/16", "4/17", "4/18", "4/19", "4/20", "4/21", "4/22", "4/23", "4/24", "4/25", "4/26", "4/27", "4/28", "4/29", "4/30", "5/1", "5/2", "5/3", "5/4", "5/5"], "datasets": [{"label": "OpenAI", "data": [198, 215, 240, 275, 320, 355, 370, 345, 310, 290, 265, 280, 305, 330, 355, 365, 340, 315, 295, 270, 285, 310, 335, 360, 370, 355, 340, 320, 300, 280], "borderColor": "#ef4444", "backgroundColor": "rgba(239,68,68,0.08)", "fill": true, "tension": 0.4, "pointRadius": 0, "borderWidth": 2}, {"label": "Anthropic", "data": [28, 32, 35, 38, 42, 45, 48, 44, 40, 36, 33, 35, 38, 41, 44, 47, 43, 39, 36, 33, 35, 38, 41, 44, 47, 44, 41, 38, 35, 32], "borderColor": "#10b981", "backgroundColor": "rgba(16,185,129,0.05)", "fill": true, "tension": 0.4, "pointRadius": 0, "borderWidth": 2}, {"label": "Google", "data": [16, 18, 20, 22, 25, 27, 29, 27, 24, 22, 20, 21, 23, 25, 27, 28, 26, 24, 22, 20, 21, 23, 25, 27, 28, 27, 25, 24, 22, 20], "borderColor": "#3b82f6", "backgroundColor": "rgba(59,130,246,0.05)", "fill": true, "tension": 0.4, "pointRadius": 0, "borderWidth": 2}, {"label": "Perplexity", "data": [11, 12, 13, 14, 16, 17, 18, 17, 15, 14, 13, 13, 14, 15, 16, 17, 16, 14, 13, 12, 13, 14, 15, 16, 17, 16, 15, 14, 13, 12], "borderColor": "#f59e0b", "backgroundColor": "rgba(245,158,11,0.05)", "fill": true, "tension": 0.4, "pointRadius": 0, "borderWidth": 2}]}, "options": {"responsive": true, "maintainAspectRatio": false, "plugins": {"legend": {"position": "bottom", "labels": {"boxWidth": 12, "font": {"size": 11}}}}, "scales": {"x": {"grid": {"display": false}, "ticks": {"font": {"size": 10}, "maxTicksLimit": 8}}, "y": {"grid": {"color": "#f3f4f6"}, "ticks": {"font": {"size": 10}}, "title": {"display": true, "text": "Requests (2xx)", "font": {"size": 10}}}}}};
+const pagetypeChartConfig = {"type": "line", "data": {"labels": ["4/6", "4/7", "4/8", "4/9", "4/10", "4/11", "4/12", "4/13", "4/14", "4/15", "4/16", "4/17", "4/18", "4/19", "4/20", "4/21", "4/22", "4/23", "4/24", "4/25", "4/26", "4/27", "4/28", "4/29", "4/30", "5/1", "5/2", "5/3", "5/4", "5/5"], "datasets": [{"label": "Comparison", "data": [155, 168, 185, 210, 245, 275, 285, 262, 238, 215, 198, 210, 232, 252, 272, 280, 262, 240, 222, 205, 218, 238, 258, 278, 285, 272, 258, 242, 228, 212], "borderColor": "#6366f1", "backgroundColor": "rgba(99,102,241,0.08)", "fill": true, "tension": 0.4, "pointRadius": 0, "borderWidth": 2}, {"label": "Product", "data": [28, 32, 35, 38, 42, 46, 48, 45, 41, 37, 34, 36, 39, 42, 45, 48, 44, 41, 38, 35, 37, 40, 43, 46, 48, 46, 43, 40, 38, 35], "borderColor": "#10b981", "backgroundColor": "rgba(16,185,129,0.05)", "fill": true, "tension": 0.4, "pointRadius": 0, "borderWidth": 2}, {"label": "Reviews", "data": [18, 19, 21, 23, 26, 28, 29, 27, 25, 22, 21, 22, 24, 25, 27, 28, 26, 24, 22, 21, 22, 24, 25, 27, 28, 27, 25, 24, 22, 21], "borderColor": "#f59e0b", "backgroundColor": "rgba(245,158,11,0.05)", "fill": true, "tension": 0.4, "pointRadius": 0, "borderWidth": 2}, {"label": "Pricing", "data": [3, 3, 4, 4, 5, 5, 5, 5, 4, 4, 4, 4, 4, 5, 5, 5, 5, 4, 4, 4, 4, 4, 5, 5, 5, 5, 4, 4, 4, 4], "borderColor": "#ec4899", "backgroundColor": "rgba(236,72,153,0.05)", "fill": true, "tension": 0.4, "pointRadius": 0, "borderWidth": 2}]}, "options": {"responsive": true, "maintainAspectRatio": false, "plugins": {"legend": {"position": "bottom", "labels": {"boxWidth": 12, "font": {"size": 11}}}}, "scales": {"x": {"grid": {"display": false}, "ticks": {"font": {"size": 10}, "maxTicksLimit": 8}}, "y": {"grid": {"color": "#f3f4f6"}, "ticks": {"font": {"size": 10}}, "title": {"display": true, "text": "Requests (2xx)", "font": {"size": 10}}}}}};
+
+window.addEventListener('DOMContentLoaded', () => {
+  new Chart(document.getElementById('operator-chart'), operatorChartConfig);
+  new Chart(document.getElementById('pagetype-chart'), pagetypeChartConfig);
+});
+
+// ── Sub-tab switching ─────────────────────────────────────────────────────────
+function switchTab(tab) {
+  ['analytics','alerts','health'].forEach(t => {
+    document.getElementById('pane-' + t).style.display = t === tab ? 'block' : 'none';
+    const btn = document.getElementById('btn-' + t);
+    btn.className = 'sub-tab-btn' + (t === tab ? ' active-' + t : '');
+  });
+  window.scrollTo(0, 0);
+}
+
+</script>
+</body>
+</html>
