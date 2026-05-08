@@ -3,6 +3,8 @@ import react from '@vitejs/plugin-react'
 import { resolve } from 'path'
 
 export default defineConfig({
+  // Relative paths so a zipped `dist/` opens correctly from any folder and works on static hosts.
+  base: './',
   plugins: [react()],
   build: {
     rollupOptions: {
@@ -20,6 +22,7 @@ export default defineConfig({
         'question-zoom-reliability': resolve(__dirname, 'question-zoom-reliability.html'),
         'competitive-intelligence': resolve(__dirname, 'competitive-intelligence.html'),
         'geo-dashboard': resolve(__dirname, 'geo-dashboard.html'),
+        'monitoring-dashboard': resolve(__dirname, 'monitoring-dashboard.html'),
       }
     }
   }
