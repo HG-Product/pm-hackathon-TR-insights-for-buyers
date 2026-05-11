@@ -74,7 +74,7 @@ input[type=radio],input[type=checkbox]{display:none;}
 
 /* ── KPI chart toggle ── */
 .chart-kpi-pane{display:none;}
-#kpi-chart-sov:checked ~ .app-shell .layout-body .chartpane-sov{display:none;}
+#kpi-chart-sov:checked ~ .app-shell .layout-body .chartpane-sov{display:block;}
 #kpi-chart-vol:checked ~ .app-shell .layout-body .chartpane-vol{display:block;}
 #kpi-chart-men:checked ~ .app-shell .layout-body .chartpane-men{display:block;}
 #kpi-chart-cit:checked ~ .app-shell .layout-body .chartpane-cit{display:block;}
@@ -261,13 +261,13 @@ details.prompt-dr[open] > summary .p-arrow{transform:rotate(90deg);}
 
 /* ── competitive table ── */
 .comp-table{border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;margin-top:16px;font-size:12px;}
-.comp-thead{display:grid;grid-template-columns:minmax(220px,2fr) 80px repeat(4,1fr) 80px;background:#f9fafb;border-bottom:2px solid #e5e7eb;padding:0 12px;}
+.comp-thead{display:grid;grid-template-columns:minmax(220px,2fr) repeat(4,1fr);background:#f9fafb;border-bottom:2px solid #e5e7eb;padding:0 12px;}
 .comp-thead>div{padding:8px 4px;font-size:10px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.04em;}
 .comp-thead>.ch-brand{text-align:center;}
 details.comp-topic>summary{list-style:none;cursor:pointer;}
 details.comp-topic>summary::-webkit-details-marker{display:none;}
 details.comp-topic>summary::marker{display:none;}
-.row-comp-topic{display:grid;grid-template-columns:minmax(220px,2fr) 80px repeat(4,1fr) 80px;padding:10px 12px;background:#fff;border-bottom:1px solid #f3f4f6;align-items:center;}
+.row-comp-topic{display:grid;grid-template-columns:minmax(220px,2fr) repeat(4,1fr);padding:10px 12px;background:#fff;border-bottom:1px solid #f3f4f6;align-items:center;}
 .row-comp-topic:hover{background:#faf5ff;}
 details.comp-topic[open]>summary .c-arrow{transform:rotate(90deg);}
 .c-arrow{display:inline-block;transition:transform .2s;margin-right:6px;color:#6b7280;font-size:10px;}
@@ -278,7 +278,7 @@ details.comp-topic[open]>summary .c-arrow{transform:rotate(90deg);}
 .comp-kpi-cell.them .cv{color:#374151;}
 .comp-kpi-cell.lag .cv{color:#9ca3af;}
 .comp-prompt-rows{background:#f8fafc;border-bottom:1px solid #e5e7eb;}
-.row-comp-prompt{display:grid;grid-template-columns:minmax(220px,2fr) 80px repeat(4,1fr) 80px;padding:7px 12px 7px 32px;border-bottom:1px solid #f0f0f0;align-items:center;font-size:11px;}
+.row-comp-prompt{display:grid;grid-template-columns:minmax(220px,2fr) repeat(4,1fr);padding:7px 12px 7px 32px;border-bottom:1px solid #f0f0f0;align-items:center;font-size:11px;}
 .row-comp-prompt:last-child{border-bottom:none;}
 .row-comp-prompt:hover{background:#f0f0ff;}
 .fsb{display:inline-block;font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;text-transform:uppercase;letter-spacing:.04em;margin-left:6px;vertical-align:middle;}
@@ -1102,7 +1102,7 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
     <div class="sidebar">
       <div style="padding:12px 10px 6px;"><div style="font-size:12px;font-weight:800;color:#111827;">Vendor Portal</div><div style="font-size:10px;color:#9ca3af;">GEO Visibility</div></div>
       <div class="sb-section">Monitoring</div>
-      <label class="sb-item" for="main-monitoring">Performance</label>
+      <label class="sb-item" for="main-monitoring">GEO Performance</label>
       <div style="flex:1;"></div>
       <div style="padding:12px;border-top:1px solid #f3f4f6;">
         <div style="font-size:10px;color:#9ca3af;">GEO Health Score</div>
@@ -1242,7 +1242,7 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
     </div>
   </div>
   <div class="sub-nav">
-    <label for="mon-perf">Performance</label>
+    <label for="mon-perf">GEO Performance</label>
     <label for="mon-trvalue">TR Value</label>
     <label for="mon-comp">Competitive</label>
     <label for="mon-crawl">Crawl Analytics</label>
@@ -1255,12 +1255,12 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
 
     <!-- KPI summary cards -->
     <div class="kpi-grid">
-      <div class="kpi-card"><div class="kpi-label">Share of Voice</div><div class="kpi-sparkrow"><div><div class="pd-m"><div class="kpi-val" style="color:#10b981;">52%</div><div class="kpi-chg up">↑ +2pts MoM</div></div><div class="pd-q" style="display:none;"><div class="kpi-val" style="color:#10b981;">51%</div><div class="kpi-chg up">↑ +4pts QoQ</div></div><div class="pd-y" style="display:none;"><div class="kpi-val" style="color:#10b981;">48%</div><div class="kpi-chg up">↑ +9pts YoY</div></div></div><div><svg viewBox="0 0 80 28" width="80" height="28" style="display:block"><polyline points="2.0,25.0 8.9,20.1 15.8,17.7 22.7,12.8 29.6,12.8 36.5,12.8 43.5,10.3 50.4,7.9 57.3,7.9 64.2,5.4 71.1,3.0 78.0,5.4" fill="none" stroke="#10b981" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div></div>
-      <div class="kpi-card"><div class="kpi-label">Query Volume</div><div class="kpi-sparkrow"><div><div class="pd-m"><div class="kpi-val">136K</div><div class="kpi-chg up">↑ +2.4% MoM</div></div><div class="pd-q" style="display:none;"><div class="kpi-val">394K</div><div class="kpi-chg up">↑ +11% QoQ</div></div><div class="pd-y" style="display:none;"><div class="kpi-val">1.47M</div><div class="kpi-chg up">↑ +60% YoY</div></div></div><div><svg viewBox="0 0 80 28" width="80" height="28" style="display:block"><polyline points="2.0,25.0 8.9,22.9 15.8,20.7 22.7,17.7 29.6,15.2 36.5,12.2 43.5,10.0 50.4,7.9 57.3,6.6 64.2,5.7 71.1,4.5 78.0,3.0" fill="none" stroke="#0074EF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div></div>
-      <div class="kpi-card"><div class="kpi-label">AI Mentions</div><div class="kpi-sparkrow"><div><div class="pd-m"><div class="kpi-val" style="color:#25C5FE;">128K</div><div class="kpi-chg up">↑ +2.7% MoM</div></div><div class="pd-q" style="display:none;"><div class="kpi-val" style="color:#25C5FE;">363K</div><div class="kpi-chg up">↑ +14% QoQ</div></div><div class="pd-y" style="display:none;"><div class="kpi-val" style="color:#25C5FE;">1.28M</div><div class="kpi-chg up">↑ +78% YoY</div></div></div><div><svg viewBox="0 0 80 28" width="80" height="28" style="display:block"><polyline points="2.0,25.0 8.9,23.4 15.8,21.9 22.7,19.5 29.6,17.2 36.5,14.9 43.5,12.5 50.4,9.4 57.3,7.8 64.2,6.3 71.1,4.3 78.0,3.0" fill="none" stroke="#25C5FE" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div></div>
-      <div class="kpi-card"><div class="kpi-label">Citations</div><div class="kpi-sparkrow"><div><div class="pd-m"><div class="kpi-val" style="color:#f59e0b;">842</div><div class="kpi-chg up">↑ +5.3% MoM</div></div><div class="pd-q" style="display:none;"><div class="kpi-val" style="color:#f59e0b;">2,302</div><div class="kpi-chg up">↑ +21% QoQ</div></div><div class="pd-y" style="display:none;"><div class="kpi-val" style="color:#f59e0b;">7,642</div><div class="kpi-chg up">↑ +100% YoY</div></div></div><div><svg viewBox="0 0 80 28" width="80" height="28" style="display:block"><polyline points="2.0,25.0 8.9,23.4 15.8,21.9 22.7,20.3 29.6,18.7 36.5,16.7 43.5,13.5 50.4,10.4 57.3,8.8 64.2,7.3 71.1,5.2 78.0,3.0" fill="none" stroke="#f59e0b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div></div>
+      <div class="kpi-card"><div class="kpi-label">Share of Voice</div><div class="pd-m"><div class="kpi-val" style="color:#10b981;">52%</div></div><div class="pd-q" style="display:none;"><div class="kpi-val" style="color:#10b981;">51%</div><div class="kpi-chg up">↑ +4pts QoQ</div></div><div class="pd-y" style="display:none;"><div class="kpi-val" style="color:#10b981;">48%</div><div class="kpi-chg up">↑ +9pts YoY</div></div><div class="kpi-sub">Your portion of AI-generated responses that include Zoom across all tracked prompts</div></div>
+      <div class="kpi-card"><div class="kpi-label">Query Volume</div><div class="pd-m"><div class="kpi-val">136K</div></div><div class="pd-q" style="display:none;"><div class="kpi-val">394K</div><div class="kpi-chg up">↑ +11% QoQ</div></div><div class="pd-y" style="display:none;"><div class="kpi-val">1.47M</div><div class="kpi-chg up">↑ +60% YoY</div></div><div class="kpi-sub">Total AI query volume across all tracked topics and prompts this period</div></div>
+      <div class="kpi-card"><div class="kpi-label">AI Mentions</div><div class="pd-m"><div class="kpi-val" style="color:#25C5FE;">128K</div></div><div class="pd-q" style="display:none;"><div class="kpi-val" style="color:#25C5FE;">363K</div><div class="kpi-chg up">↑ +14% QoQ</div></div><div class="pd-y" style="display:none;"><div class="kpi-val" style="color:#25C5FE;">1.28M</div><div class="kpi-chg up">↑ +78% YoY</div></div><div class="kpi-sub">Times Zoom appeared in an AI-generated response across tracked topics</div></div>
+      <div class="kpi-card"><div class="kpi-label">Citations</div><div class="pd-m"><div class="kpi-val" style="color:#f59e0b;">842</div></div><div class="pd-q" style="display:none;"><div class="kpi-val" style="color:#f59e0b;">2,302</div><div class="kpi-chg up">↑ +21% QoQ</div></div><div class="pd-y" style="display:none;"><div class="kpi-val" style="color:#f59e0b;">7,642</div><div class="kpi-chg up">↑ +100% YoY</div></div><div class="kpi-sub">Source links included in AI responses where Zoom content was referenced</div></div>
     
-      <div class="kpi-card"><div class="kpi-label">Avg. Sentiment</div><div class="kpi-sparkrow"><div><div class="pd-m"><div class="kpi-val" style="color:#10b981;">7.6<span style="font-size:11px;color:#9ca3af;">/10</span></div><div class="kpi-chg up">↑ +0.2 MoM</div></div><div class="pd-q" style="display:none;"><div class="kpi-val" style="color:#10b981;">7.4/10</div><div class="kpi-chg up">↑ +0.5 QoQ</div></div><div class="pd-y" style="display:none;"><div class="kpi-val" style="color:#10b981;">6.8/10</div><div class="kpi-chg up">↑ +0.8 YoY</div></div></div></div><div style="font-size:9px;color:#6b7280;margin-top:4px;">Positive: 74% · Neg: 9%</div></div>
+      <div class="kpi-card"><div class="kpi-label">Avg. Sentiment</div><div class="pd-m"><div class="kpi-val" style="color:#10b981;">7.6<span style="font-size:11px;color:#9ca3af;">/10</span></div></div><div class="pd-q" style="display:none;"><div class="kpi-val" style="color:#10b981;">7.4/10</div><div class="kpi-chg up">↑ +0.5 QoQ</div></div><div class="pd-y" style="display:none;"><div class="kpi-val" style="color:#10b981;">6.8/10</div><div class="kpi-chg up">↑ +0.8 YoY</div></div><div class="kpi-sub">Average tone of AI responses mentioning Zoom · 74% positive, 9% negative</div></div>
     </div>
 
     <!-- KPI trend chart toggle -->
@@ -1275,17 +1275,17 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
         </div>
       </div>
       <div class="sec-body">
-        <div class="chart-kpi-pane chartpane-sov"><canvas id="sov-chart" style="max-height:180px;"></canvas></div>
-        <div class="chart-kpi-pane chartpane-vol"><canvas id="vol-chart" style="max-height:180px;"></canvas></div>
-        <div class="chart-kpi-pane chartpane-men"><canvas id="men-chart" style="max-height:180px;"></canvas></div>
-        <div class="chart-kpi-pane chartpane-cit"><canvas id="cit-chart" style="max-height:180px;"></canvas></div>
+        <div class="chart-kpi-pane chartpane-sov" style="height:200px;position:relative;"><canvas id="sov-chart"></canvas></div>
+        <div class="chart-kpi-pane chartpane-vol" style="height:200px;position:relative;"><canvas id="vol-chart"></canvas></div>
+        <div class="chart-kpi-pane chartpane-men" style="height:200px;position:relative;"><canvas id="men-chart"></canvas></div>
+        <div class="chart-kpi-pane chartpane-cit" style="height:200px;position:relative;"><canvas id="cit-chart"></canvas></div>
       </div>
     </div>
 
     <!-- Topic / Prompt table -->
     <div style="margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;">
       <div><div style="font-size:14px;font-weight:700;color:#111827;">Topics &amp; Prompts</div><div style="font-size:11px;color:#6b7280;margin-top:2px;">3 topics · 7 prompts · Click a row to expand</div></div>
-      <label for="main-config" style="font-size:11px;color:#0074EF;font-weight:600;cursor:pointer;">⚙ Manage topics →</label>
+      
     </div>
     <div class="perf-table">
       <div class="perf-thead">
@@ -1295,7 +1295,6 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
         <div class="col-k">Mentions</div>
         <div class="col-k">Citations</div>
         <div class="col-s">Sentiment</div>
-        <div class="col-e">Execution Status</div>
       </div>
 
       <!-- TOPIC 1: Enterprise Video Conferencing -->
@@ -1307,7 +1306,7 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
             <div class="col-k" style="color:#10b981;">51%</div>
             <div class="col-k">74,800</div>
             <div class="col-k">482</div>
-            <div class="col-e"><span class="badge b-yellow">2/3 configured</span></div>
+            <div class="col-s" style="color:#9ca3af;">—</div>
           </div>
         </summary>
         <div class="topic-body">
@@ -1317,8 +1316,8 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
           </div>
           <!-- Prompt 1 -->
           <details class="prompt-dr">
-            <summary><div class="row-prompt"><div class="col-n"><span class="p-arrow">▶</span>What is the best video conferencing software for enterprise?</div><div class="col-k">48,200</div><div class="col-k" style="color:#10b981;">54%</div><div class="col-k">42,400</div><div class="col-k">280</div><div class="col-s"><span class="sent-s s-good">7.7→</span></div>
-            <div class="col-e"><span class="badge b-green" style="font-size:9px;">✓ Live</span><label for="main-alerts" style="display:block;font-size:10px;color:#0074EF;cursor:pointer;margin-top:2px;">→ Coverage</label></div></div></summary>
+            <summary><div class="row-prompt"><div class="col-n"><span class="p-arrow">▶</span>What is the best video conferencing software for enterprise?</div><div class="col-k">48,200</div><div class="col-k" style="color:#10b981;">54%</div><div class="col-k">42,400</div><div class="col-k">280</div><div class="col-s">7.7/10</div>
+            </div></summary>
             <div class="prompt-body">
               <div><div class="src-mini-title">Cited Sources</div><div class="src-row"><span class="src-domain">trustradius.com</span><span class="src-cnt">1,820 cit.</span></div><div class="src-row"><span class="src-domain">g2.com</span><span class="src-cnt">640 cit.</span></div><div class="src-row"><span class="src-domain">forbes.com</span><span class="src-cnt">280 cit.</span></div></div>
               <div><div class="src-mini-title">Driving Activity — Pages</div><div class="src-row"><span class="src-domain">/categories/video-conferencing</span><span class="src-cnt">940</span></div><div class="src-row"><span class="src-domain">/products/zoom-workplace/reviews</span><span class="src-cnt">820</span></div><div class="src-row"><span class="src-domain">/compare/zoom-vs-microsoft-teams</span><span class="src-cnt">380</span></div></div>
@@ -1326,7 +1325,7 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
           </details>
           <!-- Prompt 2 -->
           <details class="prompt-dr">
-            <summary><div class="row-prompt"><div class="col-n"><span class="p-arrow">▶</span>Best enterprise video conferencing platforms 2025</div><div class="col-k">22,000</div><div class="col-k" style="color:#10b981;">49%</div><div class="col-k">19,800</div><div class="col-k">142</div><div class="col-e"><span class="badge b-green" style="font-size:9px;">✓ Live</span><label for="main-alerts" style="display:block;font-size:10px;color:#0074EF;cursor:pointer;margin-top:2px;">→ Coverage</label></div></div></summary>
+            <summary><div class="row-prompt"><div class="col-n"><span class="p-arrow">▶</span>Best enterprise video conferencing platforms 2025</div><div class="col-k">22,000</div><div class="col-k" style="color:#10b981;">49%</div><div class="col-k">19,800</div><div class="col-k">142</div><div class="col-s">7.8/10</div></div></summary>
             <div class="prompt-body">
               <div><div class="src-mini-title">Cited Sources</div><div class="src-row"><span class="src-domain">trustradius.com</span><span class="src-cnt">1,240 cit.</span></div><div class="src-row"><span class="src-domain">techradar.com</span><span class="src-cnt">480 cit.</span></div><div class="src-row"><span class="src-domain">g2.com</span><span class="src-cnt">320 cit.</span></div></div>
               <div><div class="src-mini-title">Driving Activity — Pages</div><div class="src-row"><span class="src-domain">/categories/video-conferencing</span><span class="src-cnt">540</span></div><div class="src-row"><span class="src-domain">/products/zoom-workplace/reviews</span><span class="src-cnt">420</span></div><div class="src-row"><span class="src-domain">/products/teams/reviews</span><span class="src-cnt">260</span></div></div>
@@ -1334,7 +1333,7 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
           </details>
           <!-- Prompt 3 – not set up -->
           <details class="prompt-dr">
-            <summary><div class="row-prompt"><div class="col-n"><span class="p-arrow">▶</span>Best video conferencing for large distributed teams</div><div class="col-k">13,000</div><div class="col-k" style="color:#6b7280;">47%</div><div class="col-k">12,600</div><div class="col-k">60</div><div class="col-e"><span class="badge b-red" style="font-size:9px;">✗ Not set up</span><label for="main-alerts" style="display:block;font-size:10px;color:#ca8a04;cursor:pointer;margin-top:2px;">→ Configure</label></div></div></summary>
+            <summary><div class="row-prompt"><div class="col-n"><span class="p-arrow">▶</span>Best video conferencing for large distributed teams</div><div class="col-k">13,000</div><div class="col-k" style="color:#6b7280;">47%</div><div class="col-k">12,600</div><div class="col-k">60</div><div class="col-s">7.4/10</div></div></summary>
             <div class="prompt-body">
               <div><div class="src-mini-title">Cited Sources</div><div style="font-size:11px;color:#6b7280;font-style:italic;padding:6px 0;">No custom questions configured — TR will surface content once questions are set up.</div></div>
               <div><div class="src-mini-title">Driving Activity — Pages</div><div style="font-size:11px;color:#6b7280;font-style:italic;padding:6px 0;">Content placement pending configuration.</div></div>
@@ -1352,7 +1351,7 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
             <div class="col-k" style="color:#10b981;">53%</div>
             <div class="col-k">53,600</div>
             <div class="col-k">360</div>
-            <div class="col-e"><span class="badge b-green">2/2 configured</span></div>
+            <div class="col-s" style="color:#9ca3af;">—</div>
           </div>
         </summary>
         <div class="topic-body">
@@ -1361,14 +1360,14 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
             <div><div class="src-mini-title">Top Cited Pages — this topic</div><div class="src-row"><span class="src-domain">/compare/zoom-vs-microsoft-teams</span><span class="src-cnt">1,580</span></div><div class="src-row"><span class="src-domain">/products/zoom-workplace/reviews</span><span class="src-cnt">680</span></div><div class="src-row"><span class="src-domain">/categories/video-conferencing</span><span class="src-cnt">420</span></div></div>
           </div>
           <details class="prompt-dr">
-            <summary><div class="row-prompt"><div class="col-n"><span class="p-arrow">▶</span>Zoom vs Microsoft Teams comparison</div><div class="col-k">38,200</div><div class="col-k" style="color:#10b981;">53%</div><div class="col-k">36,400</div><div class="col-k">224</div><div class="col-e"><span class="badge b-green" style="font-size:9px;">✓ Live</span><label for="main-alerts" style="display:block;font-size:10px;color:#0074EF;cursor:pointer;margin-top:2px;">→ Coverage</label></div></div></summary>
+            <summary><div class="row-prompt"><div class="col-n"><span class="p-arrow">▶</span>Zoom vs Microsoft Teams comparison</div><div class="col-k">38,200</div><div class="col-k" style="color:#10b981;">53%</div><div class="col-k">36,400</div><div class="col-k">224</div><div class="col-s">8.1/10</div></div></summary>
             <div class="prompt-body">
               <div><div class="src-mini-title">Cited Sources</div><div class="src-row"><span class="src-domain">trustradius.com</span><span class="src-cnt">1,580 cit.</span></div><div class="src-row"><span class="src-domain">pcmag.com</span><span class="src-cnt">620 cit.</span></div><div class="src-row"><span class="src-domain">techradar.com</span><span class="src-cnt">340 cit.</span></div></div>
               <div><div class="src-mini-title">Driving Activity — Pages</div><div class="src-row"><span class="src-domain">/compare/zoom-vs-microsoft-teams</span><span class="src-cnt">1,240</span></div><div class="src-row"><span class="src-domain">/products/zoom-workplace/reviews</span><span class="src-cnt">480</span></div><div class="src-row"><span class="src-domain">/categories/video-conferencing</span><span class="src-cnt">280</span></div></div>
             </div>
           </details>
           <details class="prompt-dr">
-            <summary><div class="row-prompt"><div class="col-n"><span class="p-arrow">▶</span>Is Zoom or Teams better for enterprise?</div><div class="col-k">14,900</div><div class="col-k" style="color:#10b981;">52%</div><div class="col-k">17,200</div><div class="col-k">136</div><div class="col-e"><span class="badge b-green" style="font-size:9px;">✓ Live</span><label for="main-alerts" style="display:block;font-size:10px;color:#0074EF;cursor:pointer;margin-top:2px;">→ Coverage</label></div></div></summary>
+            <summary><div class="row-prompt"><div class="col-n"><span class="p-arrow">▶</span>Is Zoom or Teams better for enterprise?</div><div class="col-k">14,900</div><div class="col-k" style="color:#10b981;">52%</div><div class="col-k">17,200</div><div class="col-k">136</div><div class="col-s">7.6/10</div></div></summary>
             <div class="prompt-body">
               <div><div class="src-mini-title">Cited Sources</div><div class="src-row"><span class="src-domain">trustradius.com</span><span class="src-cnt">980 cit.</span></div><div class="src-row"><span class="src-domain">g2.com</span><span class="src-cnt">420 cit.</span></div><div class="src-row"><span class="src-domain">businessinsider.com</span><span class="src-cnt">260 cit.</span></div></div>
               <div><div class="src-mini-title">Driving Activity — Pages</div><div class="src-row"><span class="src-domain">/compare/zoom-vs-microsoft-teams</span><span class="src-cnt">680</span></div><div class="src-row"><span class="src-domain">/products/zoom-workplace/reviews</span><span class="src-cnt">340</span></div><div class="src-row"><span class="src-domain">/categories/video-conferencing</span><span class="src-cnt">190</span></div></div>
@@ -1386,7 +1385,7 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
             <div class="col-k" style="color:#ca8a04;">46%</div>
             <div class="col-k">30,600</div>
             <div class="col-k">160</div>
-            <div class="col-e"><span class="badge b-yellow">1/2 configured</span></div>
+            <div class="col-s" style="color:#9ca3af;">—</div>
           </div>
         </summary>
         <div class="topic-body">
@@ -1395,14 +1394,14 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
             <div><div class="src-mini-title">Top Cited Pages — this topic</div><div class="src-row"><span class="src-domain">/products/zoom-workplace/pricing</span><span class="src-cnt">540</span></div><div class="src-row"><span class="src-domain">/compare/zoom-vs-microsoft-teams</span><span class="src-cnt">380</span></div><div class="src-row"><span class="src-domain">/products/zoom-workplace/alternatives</span><span class="src-cnt">260</span></div></div>
           </div>
           <details class="prompt-dr">
-            <summary><div class="row-prompt"><div class="col-n"><span class="p-arrow">▶</span>Zoom pricing for 500 users</div><div class="col-k">22,000</div><div class="col-k" style="color:#ca8a04;">48%</div><div class="col-k">21,800</div><div class="col-k">98</div><div class="col-e"><span class="badge b-yellow" style="font-size:9px;">⚠ Degraded</span><label for="main-alerts" style="display:block;font-size:10px;color:#0074EF;cursor:pointer;margin-top:2px;">→ Coverage</label></div></div></summary>
+            <summary><div class="row-prompt"><div class="col-n"><span class="p-arrow">▶</span>Zoom pricing for 500 users</div><div class="col-k">22,000</div><div class="col-k" style="color:#ca8a04;">48%</div><div class="col-k">21,800</div><div class="col-k">98</div><div class="col-s">6.8/10</div></div></summary>
             <div class="prompt-body">
               <div><div class="src-mini-title">Cited Sources</div><div class="src-row"><span class="src-domain">trustradius.com</span><span class="src-cnt">980 cit.</span></div><div class="src-row"><span class="src-domain">capterra.com</span><span class="src-cnt">380 cit.</span></div><div class="src-row"><span class="src-domain">getapp.com</span><span class="src-cnt">220 cit.</span></div></div>
               <div><div class="src-mini-title">Driving Activity — Pages</div><div class="src-row"><span class="src-domain">/products/zoom-workplace/pricing</span><span class="src-cnt">540</span></div><div class="src-row"><span class="src-domain">/compare/zoom-vs-microsoft-teams</span><span class="src-cnt">320</span></div><div class="src-row"><span class="src-domain">/products/zoom-workplace/reviews</span><span class="src-cnt">200</span></div></div>
             </div>
           </details>
           <details class="prompt-dr">
-            <summary><div class="row-prompt"><div class="col-n"><span class="p-arrow">▶</span>Best alternatives to Zoom for enterprise</div><div class="col-k">9,100</div><div class="col-k" style="color:#dc2626;">44%</div><div class="col-k">8,800</div><div class="col-k">62</div><div class="col-e"><span class="badge b-red" style="font-size:9px;">✗ Not set up</span><label for="main-alerts" style="display:block;font-size:10px;color:#ca8a04;cursor:pointer;margin-top:2px;">→ Configure</label></div></div></summary>
+            <summary><div class="row-prompt"><div class="col-n"><span class="p-arrow">▶</span>Best alternatives to Zoom for enterprise</div><div class="col-k">9,100</div><div class="col-k" style="color:#dc2626;">44%</div><div class="col-k">8,800</div><div class="col-k">62</div><div class="col-s">5.9/10</div></div></summary>
             <div class="prompt-body">
               <div><div class="src-mini-title">Cited Sources</div><div style="font-size:11px;color:#6b7280;font-style:italic;padding:6px 0;">No custom questions configured yet.</div></div>
               <div><div class="src-mini-title">Driving Activity — Pages</div><div style="font-size:11px;color:#6b7280;font-style:italic;padding:6px 0;">Content placement pending configuration.</div></div>
@@ -1420,15 +1419,21 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
   <div id="subpane-trvalue">
     <!-- KPI summary cards -->
     <div class="kpi-grid">
-      <div class="kpi-card"><div class="kpi-label">Avg. TR Content Views</div><div class="kpi-val">48,200</div><div class="kpi-chg up">↑ +12% MoM</div><div class="kpi-sub">Per month across all pages</div></div>
-      <div class="kpi-card"><div class="kpi-label">Review Score</div><div class="kpi-val">8.4<span style="font-size:13px;color:#9ca3af;">/10</span></div><div class="kpi-sub">Based on 342 reviews</div></div>
-      <div class="kpi-card"><div class="kpi-label">Top Rated Badge</div><div class="kpi-val" style="color:#10b981;">✓</div><div class="kpi-sub">2025 Video Conferencing</div></div>
+      <div class="kpi-card"><div class="kpi-label">TR-Driven Mentions</div><div class="kpi-val" style="color:#25C5FE;">94,800</div><div class="kpi-sub">AI responses where at least one TrustRadius page was cited as a source</div></div>
+      <div class="kpi-card"><div class="kpi-label">TR-Driven Citations</div><div class="kpi-val" style="color:#f59e0b;">4,880</div><div class="kpi-sub">Specific TrustRadius URLs included as links in AI-generated responses</div></div>
+      <div class="kpi-card"><div class="kpi-label">TR Mention Sentiment</div><div class="kpi-val" style="color:#10b981;">8.1<span style="font-size:11px;color:#9ca3af;">/10</span></div><div class="kpi-sub">Tone score of AI responses that cite TR — 0.5pts above your overall average</div></div>
     </div>
-
-        <div class="kpi-card"><div class="kpi-label">Avg. TR Sentiment</div><div class="kpi-val" style="color:#10b981;">7.4<span style="font-size:11px;color:#9ca3af;">/10</span></div><div class="kpi-chg dn">↓ −0.2 MoM · Pricing drag</div><div class="kpi-sub">Positive: 71% · Neg: 12%</div></div>
-    <div class="two-col">
-      <div class="section"><div class="sec-hd"><div class="sec-title">TR Page Performance</div></div><div class="sec-body np"><table class="dt"><thead><tr><th>Page</th><th>Views/Mo</th><th>AI Citations</th><th>Trend</th></tr></thead><tbody><tr><td style="color:#0074EF;font-size:12px;">/products/zoom-workplace/reviews</td><td>18,200</td><td>1,820</td><td><span class="up">↑ +34%</span></td></tr><tr><td style="color:#0074EF;font-size:12px;">/compare/zoom-vs-microsoft-teams</td><td>14,800</td><td>1,580</td><td><span class="up">↑ +28%</span></td></tr><tr><td style="color:#0074EF;font-size:12px;">/categories/video-conferencing</td><td>9,400</td><td>940</td><td><span class="up">↑ +19%</span></td></tr><tr><td style="color:#0074EF;font-size:12px;">/products/zoom-workplace/pricing</td><td>5,800</td><td>540</td><td><span class="dn">↓ −8%</span></td></tr></tbody></table></div></div>
-      <div class="section"><div class="sec-hd"><div class="sec-title">Review Activity</div></div><div class="sec-body"><div class="pt-row"><div class="pt-lbl">Total reviews</div><div class="pt-bar-outer"><div class="pt-bar-inner" style="width:100%;"></div></div><div class="pt-stats">342</div></div><div class="pt-row"><div class="pt-lbl">Custom Q answers</div><div class="pt-bar-outer"><div class="pt-bar-inner" style="width:20%;background:#10b981;"></div></div><div class="pt-stats">70</div></div><div class="pt-row"><div class="pt-lbl">Last 90 days</div><div class="pt-bar-outer"><div class="pt-bar-inner" style="width:33%;background:#25C5FE;"></div></div><div class="pt-stats">114</div></div></div></div>
+    <div class="section" style="margin-bottom:16px;">
+      <div class="sec-hd"><div><div class="sec-title">TR Page Performance</div><div class="sec-sub">AI-cited TrustRadius pages · last 30 days</div></div></div>
+      <div class="sec-body">
+        <div style="height:160px;position:relative;margin-bottom:12px;"><canvas id="tr-pages-chart"></canvas></div>
+        <table class="dt"><thead><tr><th>Page</th><th>Views/Mo</th><th>AI Citations</th></tr></thead><tbody>
+          <tr><td style="color:#0074EF;font-size:12px;">/products/zoom-workplace/reviews</td><td>18,200</td><td>1,820</td></tr>
+          <tr><td style="color:#0074EF;font-size:12px;">/compare/zoom-vs-microsoft-teams</td><td>14,800</td><td>1,580</td></tr>
+          <tr><td style="color:#0074EF;font-size:12px;">/categories/video-conferencing</td><td>9,400</td><td>940</td></tr>
+          <tr><td style="color:#0074EF;font-size:12px;">/products/zoom-workplace/pricing</td><td>5,800</td><td>540</td></tr>
+        </tbody></table>
+      </div>
     </div>
 
     <!-- TR Value by Topic & Prompt table -->
@@ -1444,10 +1449,8 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
 
         <div class="perf-table">
           <!-- thead -->
-          <div class="perf-thead" style="grid-template-columns:minmax(200px,2.2fr) 70px 90px 90px 90px 90px 80px 160px;">
+          <div class="perf-thead" style="grid-template-columns:minmax(200px,2.2fr) 90px 90px 90px 80px 160px;">
             <div class="col-n">Topic / Prompt</div>
-            <div class="col-k">Stage</div>
-            <div class="col-k">TR Vol</div>
             <div class="col-k">TR SoV</div>
             <div class="col-k">TR Mentions</div>
             <div class="col-k">TR Citations</div>
@@ -1458,10 +1461,8 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
           <!-- ── Topic 1: Enterprise Video Conferencing ── -->
           <details class="topic-dr">
             <summary>
-              <div class="row-topic" style="grid-template-columns:minmax(200px,2.2fr) 70px 90px 90px 90px 90px 80px 160px;">
+              <div class="row-topic" style="grid-template-columns:minmax(200px,2.2fr) 90px 90px 90px 80px 160px;">
                 <div class="col-n"><span class="t-arrow">▶</span><strong>Enterprise Video Conferencing</strong><span class="badge b-blue">3 prompts</span></div>
-                <div class="col-k"></div>
-                <div class="col-k" style="font-weight:700;">41.6K</div>
                 <div class="col-k" style="font-weight:700;color:#10b981;">28%<span style="font-size:9px;color:#9ca3af;font-weight:400;display:block;">of 52% total</span></div>
                 <div class="col-k" style="font-weight:700;">37.4K</div>
                 <div class="col-k" style="font-weight:700;color:#f59e0b;">241</div>
@@ -1480,10 +1481,8 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
             <!-- Prompt 1.1 -->
             <details class="prompt-dr">
               <summary>
-                <div class="row-prompt" style="grid-template-columns:minmax(200px,2.2fr) 70px 90px 90px 90px 90px 80px 160px;">
-                  <div class="col-n prompt-name" style="padding-left:32px;">What is the best video conferencing software for enterprise?<span class="fsb fsb-tofu">ToFu</span></div>
-                  <div class="col-k"></div>
-                  <div class="col-k">11.2K</div>
+                <div class="row-prompt" style="grid-template-columns:minmax(200px,2.2fr) 90px 90px 90px 80px 160px;">
+                  <div class="col-n prompt-name" style="padding-left:32px;">What is the best video conferencing software for enterprise?</div>
                   <div class="col-k" style="color:#10b981;font-weight:600;">22%</div>
                   <div class="col-k">10.1K</div>
                   <div class="col-k" style="color:#f59e0b;font-weight:600;">65</div>
@@ -1506,10 +1505,8 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
             <!-- Prompt 1.2 -->
             <details class="prompt-dr">
               <summary>
-                <div class="row-prompt" style="grid-template-columns:minmax(200px,2.2fr) 70px 90px 90px 90px 90px 80px 160px;">
-                  <div class="col-n prompt-name" style="padding-left:32px;">Best enterprise video conferencing platforms 2025<span class="fsb fsb-tofu">ToFu</span></div>
-                  <div class="col-k"></div>
-                  <div class="col-k">18.5K</div>
+                <div class="row-prompt" style="grid-template-columns:minmax(200px,2.2fr) 90px 90px 90px 80px 160px;">
+                  <div class="col-n prompt-name" style="padding-left:32px;">Best enterprise video conferencing platforms 2025</div>
                   <div class="col-k" style="color:#10b981;font-weight:600;">31%</div>
                   <div class="col-k">16.7K</div>
                   <div class="col-k" style="color:#f59e0b;font-weight:600;">108</div>
@@ -1532,10 +1529,8 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
             <!-- Prompt 1.3 -->
             <details class="prompt-dr">
               <summary>
-                <div class="row-prompt" style="grid-template-columns:minmax(200px,2.2fr) 70px 90px 90px 90px 90px 80px 160px;">
-                  <div class="col-n prompt-name" style="padding-left:32px;">Best video conferencing for large distributed teams<span class="fsb fsb-mofu">MoFu</span></div>
-                  <div class="col-k"></div>
-                  <div class="col-k">11.9K</div>
+                <div class="row-prompt" style="grid-template-columns:minmax(200px,2.2fr) 90px 90px 90px 80px 160px;">
+                  <div class="col-n prompt-name" style="padding-left:32px;">Best video conferencing for large distributed teams</div>
                   <div class="col-k" style="color:#10b981;font-weight:600;">27%</div>
                   <div class="col-k">10.6K</div>
                   <div class="col-k" style="color:#f59e0b;font-weight:600;">68</div>
@@ -1559,10 +1554,8 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
           <!-- ── Topic 2: Competitive Comparisons ── -->
           <details class="topic-dr">
             <summary>
-              <div class="row-topic" style="grid-template-columns:minspace(200px,2.2fr) 70px 90px 90px 90px 90px 160px;grid-template-columns:minmax(200px,2.2fr) 70px 90px 90px 90px 90px 80px 160px;">
+              <div class="row-topic" style="grid-template-columns:minmax(200px,2.2fr) 90px 90px 90px 80px 160px;">
                 <div class="col-n"><span class="t-arrow">▶</span><strong>Competitive Comparisons</strong><span class="badge b-blue">2 prompts</span></div>
-                <div class="col-k"></div>
-                <div class="col-k" style="font-weight:700;">34.2K</div>
                 <div class="col-k" style="font-weight:700;color:#10b981;">43%<span style="font-size:9px;color:#9ca3af;font-weight:400;display:block;">of 61% total</span></div>
                 <div class="col-k" style="font-weight:700;">31.0K</div>
                 <div class="col-k" style="font-weight:700;color:#f59e0b;">139</div>
@@ -1581,10 +1574,8 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
             <!-- Prompt 2.1 -->
             <details class="prompt-dr">
               <summary>
-                <div class="row-prompt" style="grid-template-columns:minmax(200px,2.2fr) 70px 90px 90px 90px 90px 80px 160px;">
-                  <div class="col-n prompt-name" style="padding-left:32px;">Zoom vs Microsoft Teams comparison<span class="fsb fsb-mofu">MoFu</span></div>
-                  <div class="col-k"></div>
-                  <div class="col-k">18.1K</div>
+                <div class="row-prompt" style="grid-template-columns:minmax(200px,2.2fr) 90px 90px 90px 80px 160px;">
+                  <div class="col-n prompt-name" style="padding-left:32px;">Zoom vs Microsoft Teams comparison</div>
                   <div class="col-k" style="color:#10b981;font-weight:700;">46%</div>
                   <div class="col-k">16.4K</div>
                   <div class="col-k" style="color:#f59e0b;font-weight:700;">74</div>
@@ -1607,10 +1598,8 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
             <!-- Prompt 2.2 -->
             <details class="prompt-dr">
               <summary>
-                <div class="row-prompt" style="grid-template-columns:minmax(200px,2.2fr) 70px 90px 90px 90px 90px 80px 160px;">
-                  <div class="col-n prompt-name" style="padding-left:32px;">Is Zoom or Teams better for enterprise?<span class="fsb fsb-mofu">MoFu</span></div>
-                  <div class="col-k"></div>
-                  <div class="col-k">16.1K</div>
+                <div class="row-prompt" style="grid-template-columns:minmax(200px,2.2fr) 90px 90px 90px 80px 160px;">
+                  <div class="col-n prompt-name" style="padding-left:32px;">Is Zoom or Teams better for enterprise?</div>
                   <div class="col-k" style="color:#10b981;font-weight:600;">40%</div>
                   <div class="col-k">14.6K</div>
                   <div class="col-k" style="color:#f59e0b;font-weight:600;">65</div>
@@ -1634,10 +1623,8 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
           <!-- ── Topic 3: Pricing & Alternatives ── -->
           <details class="topic-dr">
             <summary>
-              <div class="row-topic" style="grid-template-columns:minmax(200px,2.2fr) 70px 90px 90px 90px 90px 80px 160px;border-bottom:none;">
+              <div class="row-topic" style="grid-template-columns:minmax(200px,2.2fr) 90px 90px 90px 80px 160px;border-bottom:none;">
                 <div class="col-n"><span class="t-arrow">▶</span><strong>Pricing &amp; Alternatives</strong><span class="badge b-yellow">2 prompts</span></div>
-                <div class="col-k"></div>
-                <div class="col-k" style="font-weight:700;">2.6K</div>
                 <div class="col-k" style="font-weight:700;color:#f59e0b;">25%<span style="font-size:9px;color:#9ca3af;font-weight:400;display:block;">of 42% total</span></div>
                 <div class="col-k" style="font-weight:700;">2.4K</div>
                 <div class="col-k" style="font-weight:700;color:#f59e0b;">25</div>
@@ -1656,10 +1643,8 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
             <!-- Prompt 3.1 -->
             <details class="prompt-dr">
               <summary>
-                <div class="row-prompt" style="grid-template-columns:minmax(200px,2.2fr) 70px 90px 90px 90px 90px 80px 160px;">
-                  <div class="col-n prompt-name" style="padding-left:32px;">Zoom pricing for 500 users<span class="fsb fsb-bofu">BoFu</span></div>
-                  <div class="col-k"></div>
-                  <div class="col-k">1.8K</div>
+                <div class="row-prompt" style="grid-template-columns:minmax(200px,2.2fr) 90px 90px 90px 80px 160px;">
+                  <div class="col-n prompt-name" style="padding-left:32px;">Zoom pricing for 500 users</div>
                   <div class="col-k" style="color:#10b981;font-weight:600;">32%</div>
                   <div class="col-k">1.6K</div>
                   <div class="col-k" style="color:#f59e0b;font-weight:600;">18</div>
@@ -1682,10 +1667,8 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
             <!-- Prompt 3.2 -->
             <details class="prompt-dr">
               <summary>
-                <div class="row-prompt" style="grid-template-columns:minmax(200px,2.2fr) 70px 90px 90px 90px 90px 80px 160px;border-bottom:none;">
-                  <div class="col-n prompt-name" style="padding-left:32px;">Best alternatives to Zoom for enterprise<span class="fsb fsb-mofu">MoFu</span><span class="badge" style="background:#fee2e2;color:#dc2626;font-size:9px;">Low TR coverage</span></div>
-                  <div class="col-k"></div>
-                  <div class="col-k" style="color:#9ca3af;">0.8K</div>
+                <div class="row-prompt" style="grid-template-columns:minmax(200px,2.2fr) 90px 90px 90px 80px 160px;border-bottom:none;">
+                  <div class="col-n prompt-name" style="padding-left:32px;">Best alternatives to Zoom for enterprise<span class="badge" style="background:#fee2e2;color:#dc2626;font-size:9px;">Low TR coverage</span></div>
                   <div class="col-k" style="color:#ef4444;font-weight:700;">5%</div>
                   <div class="col-k" style="color:#9ca3af;">0.7K</div>
                   <div class="col-k" style="color:#ef4444;font-weight:700;">7</div>
@@ -1716,14 +1699,12 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
 
     <!-- Competitive KPI summary -->
     <div class="kpi-grid" style="margin-bottom:16px;">
-      <div class="kpi-card"><div class="kpi-label">Zoom Workplace SoV</div><div class="kpi-val">52%</div><div class="kpi-chg up">↑ +2pts MoM · #1 rank</div></div>
-      <div class="kpi-card"><div class="kpi-label">Microsoft Teams SoV</div><div class="kpi-val" style="color:#25C5FE;">34%</div><div class="kpi-chg up">↑ +1pt MoM · #2 rank</div></div>
-      <div class="kpi-card"><div class="kpi-label">Google Meet SoV</div><div class="kpi-val" style="color:#10b981;">14%</div><div class="kpi-chg">→ Flat MoM · #3 rank</div></div>
-      <div class="kpi-card"><div class="kpi-label">Cisco Webex SoV</div><div class="kpi-val" style="color:#f59e0b;">9%</div><div class="kpi-chg dn">↓ –1pt MoM · #4 rank</div></div>
+      <div class="kpi-card"><div class="kpi-label">Zoom Workplace SoV</div><div class="kpi-val">52%</div><div class="kpi-chg" style="color:#6b7280;">#1 rank</div><div class="kpi-sub">Leading share across all tracked competitive prompts</div></div>
+      <div class="kpi-card"><div class="kpi-label">Microsoft Teams SoV</div><div class="kpi-val" style="color:#25C5FE;">34%</div><div class="kpi-chg" style="color:#6b7280;">#2 rank</div><div class="kpi-sub">Closest competitor — strongest in comparison and enterprise queries</div></div>
+      <div class="kpi-card"><div class="kpi-label">Google Meet SoV</div><div class="kpi-val" style="color:#10b981;">14%</div><div class="kpi-chg" style="color:#6b7280;">#3 rank</div><div class="kpi-sub">Growing presence in ToFu "best tool" queries and free-tier searches</div></div>
+      <div class="kpi-card"><div class="kpi-label">Cisco Webex SoV</div><div class="kpi-val" style="color:#f59e0b;">9%</div><div class="kpi-chg" style="color:#6b7280;">#4 rank</div><div class="kpi-sub">Declining share — losing ground in enterprise security and compliance prompts</div></div>
     </div>
 
-    <!-- KPI toggle chart -->
-        <div class="kpi-card" style="border-top:3px solid #10b981;"><div class="kpi-label">Your Sentiment Score</div><div class="kpi-val" style="color:#10b981;">7.9<span style="font-size:11px;color:#9ca3af;">/10</span></div><div class="kpi-chg up">↑ +0.3 MoM · vs Teams 7.1, GMeet 7.4</div><div class="kpi-sub">Positive: 78% · Negative: 8%</div></div>
 
     <div class="section" style="margin-bottom:16px;">
       <div class="sec-hd">
@@ -1755,12 +1736,11 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
         <div class="comp-table">
           <div class="comp-thead">
             <div>Topic / Prompt</div>
-            <div>Stage</div>
             <div class="ch-brand" style="color:#0074EF;">Zoom</div>
             <div class="ch-brand">Teams</div>
             <div class="ch-brand">G Meet</div>
             <div class="ch-brand">Webex</div>
-            <div class="ch-brand" style="color:#10b981;">Sentiment</div>
+
           </div>
 
           <!-- Topic 1: Enterprise Video Conferencing -->
@@ -1768,7 +1748,6 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
             <summary>
               <div class="row-comp-topic">
                 <div style="font-weight:700;"><span class="c-arrow">▶</span>Enterprise Video Conferencing <span class="badge b-blue" style="font-size:9px;">3 prompts</span></div>
-                <div></div>
                 <div class="comp-kpi-cell you"><div class="cv">52%</div><div class="cd">+2pts</div></div>
                 <div class="comp-kpi-cell them"><div class="cv">34%</div><div class="cd">+1pt</div></div>
                 <div class="comp-kpi-cell lag"><div class="cv">14%</div><div class="cd">flat</div></div>
@@ -1777,31 +1756,25 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
             </summary>
             <div class="comp-prompt-rows">
               <div class="row-comp-prompt">
-                <div>What is the best video conferencing software for enterprise? <span class="fsb fsb-tofu">ToFu</span></div>
-                <div></div>
+                <div>What is the best video conferencing software for enterprise? </div>
                 <div class="comp-kpi-cell you"><div class="cv">58%</div></div>
                 <div class="comp-kpi-cell them"><div class="cv">28%</div></div>
                 <div class="comp-kpi-cell lag"><div class="cv">10%</div></div>
                 <div class="comp-kpi-cell lag"><div class="cv">4%</div></div>
               </div>
               <div class="row-comp-prompt">
-                <div>Best enterprise video conferencing platforms 2025 <span class="fsb fsb-tofu">ToFu</span></div>
-                <div></div>
+                <div>Best enterprise video conferencing platforms 2025 </div>
                 <div class="comp-kpi-cell you"><div class="cv">54%</div></div>
                 <div class="comp-kpi-cell them"><div class="cv">30%</div></div>
                 <div class="comp-kpi-cell lag"><div class="cv">12%</div></div>
                 <div class="comp-kpi-cell lag"><div class="cv">4%</div></div>
               </div>
               <div class="row-comp-prompt">
-                <div>Best video conferencing for large distributed teams <span class="fsb fsb-mofu">MoFu</span></div>
-                <div></div>
+                <div>Best video conferencing for large distributed teams </div>
                 <div class="comp-kpi-cell you"><div class="cv">44%</div></div>
                 <div class="comp-kpi-cell them" style="font-weight:700;"><div class="cv" style="color:#25C5FE;">38%</div></div>
                 <div class="comp-kpi-cell lag"><div class="cv">14%</div></div>
-                <div class="comp-kpi-cell lag"><div class="cv">4%</div>
-              <div class="comp-kpi-cell"><div class="cv"><span class="sent-s s-great">8.1↑</span></div></div>
-              <div class="comp-kpi-cell"><div class="cv"><span class="sent-s s-good">7.9↑</span></div></div>
-              <div class="comp-kpi-cell"><div class="cv"><span class="sent-s s-good">7.4→</span></div></div></div>
+                <div class="comp-kpi-cell lag"><div class="cv">4%</div></div>
               </div>
             </div>
           </details>
@@ -1811,7 +1784,6 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
             <summary>
               <div class="row-comp-topic">
                 <div style="font-weight:700;"><span class="c-arrow">▶</span>Competitive Comparisons <span class="badge b-blue" style="font-size:9px;">2 prompts</span></div>
-                <div></div>
                 <div class="comp-kpi-cell you"><div class="cv">61%</div><div class="cd">+3pts</div></div>
                 <div class="comp-kpi-cell them"><div class="cv">31%</div><div class="cd">flat</div></div>
                 <div class="comp-kpi-cell lag"><div class="cv">6%</div><div class="cd">–1pt</div></div>
@@ -1820,22 +1792,18 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
             </summary>
             <div class="comp-prompt-rows">
               <div class="row-comp-prompt">
-                <div>Zoom vs Microsoft Teams comparison <span class="fsb fsb-mofu">MoFu</span></div>
-                <div></div>
+                <div>Zoom vs Microsoft Teams comparison </div>
                 <div class="comp-kpi-cell you"><div class="cv">63%</div></div>
                 <div class="comp-kpi-cell them"><div class="cv">30%</div></div>
                 <div class="comp-kpi-cell lag"><div class="cv">5%</div></div>
                 <div class="comp-kpi-cell lag"><div class="cv">2%</div></div>
               </div>
               <div class="row-comp-prompt">
-                <div>Is Zoom or Teams better for enterprise? <span class="fsb fsb-mofu">MoFu</span></div>
-                <div></div>
+                <div>Is Zoom or Teams better for enterprise? </div>
                 <div class="comp-kpi-cell you"><div class="cv">59%</div></div>
                 <div class="comp-kpi-cell them"><div class="cv">32%</div></div>
                 <div class="comp-kpi-cell lag"><div class="cv">7%</div></div>
-                <div class="comp-kpi-cell lag"><div class="cv">2%</div>
-              <div class="comp-kpi-cell"><div class="cv"><span class="sent-s s-good">7.8↑</span></div></div>
-              <div class="comp-kpi-cell"><div class="cv"><span class="sent-s s-good">7.6→</span></div></div></div>
+                <div class="comp-kpi-cell lag"><div class="cv">2%</div></div>
               </div>
             </div>
           </details>
@@ -1845,7 +1813,6 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
             <summary>
               <div class="row-comp-topic" style="border-bottom:none;">
                 <div style="font-weight:700;"><span class="c-arrow">▶</span>Pricing &amp; Alternatives <span class="badge b-yellow" style="font-size:9px;">2 prompts</span></div>
-                <div></div>
                 <div class="comp-kpi-cell you"><div class="cv">42%</div><div class="cd">–1pt</div></div>
                 <div class="comp-kpi-cell lag"><div class="cv">22%</div><div class="cd">+2pts</div></div>
                 <div class="comp-kpi-cell lag"><div class="cv">18%</div><div class="cd">flat</div></div>
@@ -1854,36 +1821,24 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
             </summary>
             <div class="comp-prompt-rows">
               <div class="row-comp-prompt">
-                <div>Zoom pricing for 500 users <span class="fsb fsb-bofu">BoFu</span></div>
-                <div></div>
+                <div>Zoom pricing for 500 users </div>
                 <div class="comp-kpi-cell you"><div class="cv" style="color:#0074EF;font-weight:800;">71%</div></div>
                 <div class="comp-kpi-cell lag"><div class="cv">15%</div></div>
                 <div class="comp-kpi-cell lag"><div class="cv">8%</div></div>
                 <div class="comp-kpi-cell lag"><div class="cv">6%</div></div>
               </div>
               <div class="row-comp-prompt" style="border-bottom:none;">
-                <div>Best alternatives to Zoom for enterprise <span class="fsb fsb-mofu">MoFu</span> <span class="badge b-red" style="font-size:9px;background:#fee2e2;color:#dc2626;">⚠ Competitive Risk</span></div>
-                <div></div>
+                <div>Best alternatives to Zoom for enterprise  <span class="badge b-red" style="font-size:9px;background:#fee2e2;color:#dc2626;">⚠ Competitive Risk</span></div>
                 <div class="comp-kpi-cell lag"><div class="cv" style="color:#ef4444;font-weight:800;">13%</div></div>
                 <div class="comp-kpi-cell them"><div class="cv">29%</div></div>
                 <div class="comp-kpi-cell them"><div class="cv">31%</div></div>
-                <div class="comp-kpi-cell them"><div class="cv">27%</div>
-              <div class="comp-kpi-cell"><div class="cv"><span class="sent-s s-warn">6.8↓</span></div></div>
-              <div class="comp-kpi-cell"><div class="cv"><span class="sent-s s-crit">5.9↓</span></div></div></div>
+                <div class="comp-kpi-cell them"><div class="cv">27%</div></div>
               </div>
             </div>
           </details>
 
         </div><!-- /comp-table -->
 
-        <!-- Competitive insight callout -->
-        <div style="background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:12px 14px;margin-top:12px;display:flex;gap:10px;align-items:flex-start;">
-          <span style="font-size:16px;">⚠️</span>
-          <div>
-            <div style="font-size:11px;font-weight:700;color:#92400e;margin-bottom:3px;">Risk: "Best alternatives to Zoom" — You own only 13% SoV</div>
-            <div style="font-size:11px;color:#374151;line-height:1.5;">Google Meet (31%) and Microsoft Teams (29%) dominate this intent. This is a high-volume MoFu prompt where buyers are actively comparing. Add a TR comparison page specifically addressing switching from competitors to capture this demand.</div>
-          </div>
-        </div>
       </div>
     </div>
   </div><!-- /comp -->
@@ -1897,7 +1852,7 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
       <div class="section">
         <div class="sec-hd"><div><div class="sec-title">Requests by Operator Over Time</div><div class="sec-sub">Daily AI requests by LLM operator · Apr 8–May 6</div></div></div>
         <div class="sec-body" style="padding-bottom:8px;">
-          <canvas id="crawl-ops-chart" style="max-height:160px;margin-bottom:10px;"></canvas>
+          <div style="height:160px;position:relative;margin-bottom:10px;"><canvas id="crawl-ops-chart"></canvas></div>
           <table class="dt" style="margin-top:6px;"><thead><tr><th>Operator</th><th>Type</th><th>Requests</th><th>Share</th></tr></thead><tbody>
             <tr><td><span style="color:#10b981;font-weight:700;">●</span> OpenAI (ChatGPT / Copilot)</td><td>Grounding</td><td><strong>6,209</strong></td><td>75.2%</td></tr>
             <tr><td><span style="color:#25C5FE;font-weight:700;">●</span> Anthropic (Claude)</td><td>Grounding</td><td><strong>1,047</strong></td><td>12.7%</td></tr>
@@ -1910,14 +1865,14 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
       <div class="section">
         <div class="sec-hd"><div><div class="sec-title">Requests by Page Type Over Time</div><div class="sec-sub">Daily AI requests by content type · Apr 8–May 6</div></div></div>
         <div class="sec-body" style="padding-bottom:8px;">
-          <canvas id="crawl-ptype-chart" style="max-height:160px;margin-bottom:10px;"></canvas>
-          <table class="dt" style="margin-top:6px;"><thead><tr><th>Page Type</th><th>Stage</th><th>Requests</th><th>Share</th></tr></thead><tbody>
-            <tr><td>🔀 Comparison</td><td><span class="badge b-purple">BoFu</span></td><td><strong>6,559</strong></td><td>79.4%</td></tr>
-            <tr><td>📦 Product</td><td><span class="badge b-blue">MoFu</span></td><td><strong>1,035</strong></td><td>12.5%</td></tr>
-            <tr><td>⭐ Reviews</td><td><span class="badge b-blue">MoFu</span></td><td><strong>325</strong></td><td>3.9%</td></tr>
-            <tr><td>📋 Full Review</td><td><span class="badge b-blue">MoFu</span></td><td><strong>285</strong></td><td>3.5%</td></tr>
-            <tr><td>💰 Pricing</td><td><span class="badge b-purple">BoFu</span></td><td><strong>57</strong></td><td>0.7%</td></tr>
-            <tr style="background:#f8fafc;font-weight:700;"><td>Total</td><td></td><td><strong>8,261</strong></td><td>Apr 8–May 6</td></tr>
+          <div style="height:160px;position:relative;margin-bottom:10px;"><canvas id="crawl-ptype-chart"></canvas></div>
+          <table class="dt" style="margin-top:6px;"><thead><tr><th>Page Type</th><th>Requests</th><th>Share</th></tr></thead><tbody>
+            <tr><td>🔀 Comparison</td><td><strong>6,559</strong></td><td>79.4%</td></tr>
+            <tr><td>📦 Product</td><td><strong>1,035</strong></td><td>12.5%</td></tr>
+            <tr><td>⭐ Reviews</td><td><strong>325</strong></td><td>3.9%</td></tr>
+            <tr><td>📋 Full Review</td><td><strong>285</strong></td><td>3.5%</td></tr>
+            <tr><td>💰 Pricing</td><td><strong>57</strong></td><td>0.7%</td></tr>
+            <tr style="background:#f8fafc;font-weight:700;"><td>Total</td><td><strong>8,261</strong></td><td>Apr 8–May 6</td></tr>
           </tbody></table>
         </div>
       </div>
@@ -1927,30 +1882,31 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
     <!-- 4. TOP PAGES + CO-EVAL side-by-side -->
     <div class="two-col" style="margin-bottom:16px;">
       <div class="section">
-        <div class="sec-hd"><div><div class="sec-title">Top Pages Crawled</div><div class="sec-sub">Most-visited TrustRadius pages by AI crawlers</div></div></div>
+        <div class="sec-hd"><div><div class="sec-title">Top Pages Crawled</div><div class="sec-sub">Most-visited TrustRadius pages by AI crawlers · 5-week trend</div></div></div>
         <div class="sec-body np">
-          <table class="dt"><thead><tr><th>#</th><th>Page URL</th><th>Stage</th><th>AI Visits</th><th>Share</th></tr></thead><tbody>
-            <tr><td style="color:#9ca3af;font-weight:700;">1</td><td style="font-size:11px;color:#0074EF;">trustradius.com/zoom-workplace/reviews</td><td><span class="badge b-blue">MoFu</span></td><td><strong>1,842</strong></td><td>22.3%</td></tr>
-            <tr><td style="color:#9ca3af;font-weight:700;">2</td><td style="font-size:11px;color:#0074EF;">trustradius.com/zoom-workplace/vs/microsoft-teams</td><td><span class="badge b-purple">BoFu</span></td><td><strong>1,654</strong></td><td>20.0%</td></tr>
-            <tr><td style="color:#9ca3af;font-weight:700;">3</td><td style="font-size:11px;color:#0074EF;">trustradius.com/zoom-workplace/vs/google-meet</td><td><span class="badge b-purple">BoFu</span></td><td><strong>1,287</strong></td><td>15.6%</td></tr>
-            <tr><td style="color:#9ca3af;font-weight:700;">4</td><td style="font-size:11px;color:#0074EF;">trustradius.com/zoom-workplace</td><td><span class="badge b-blue">MoFu</span></td><td><strong>1,043</strong></td><td>12.6%</td></tr>
-            <tr><td style="color:#9ca3af;font-weight:700;">5</td><td style="font-size:11px;color:#0074EF;">trustradius.com/zoom-workplace/vs/webex</td><td><span class="badge b-purple">BoFu</span></td><td><strong>876</strong></td><td>10.6%</td></tr>
-            <tr><td style="color:#9ca3af;font-weight:700;">6</td><td style="font-size:11px;color:#0074EF;">trustradius.com/zoom-workplace/pricing</td><td><span class="badge b-purple">BoFu</span></td><td><strong>543</strong></td><td>6.6%</td></tr>
-            <tr><td style="color:#9ca3af;font-weight:700;">7</td><td style="font-size:11px;color:#0074EF;">trustradius.com/zoom-workplace/alternatives</td><td><span class="badge b-purple">BoFu</span></td><td><strong>487</strong></td><td>5.9%</td></tr>
-            <tr><td style="color:#9ca3af;font-weight:700;">8</td><td style="font-size:11px;color:#0074EF;">trustradius.com/zoom-workplace/vs/slack</td><td><span class="badge b-purple">BoFu</span></td><td><strong>321</strong></td><td>3.9%</td></tr>
+          <div style="height:130px;position:relative;margin-bottom:10px;"><canvas id="top-pages-chart"></canvas></div>
+          <table class="dt"><thead><tr><th>#</th><th>Page URL</th><th>AI Visits</th><th>Share</th></tr></thead><tbody>
+            <tr><td style="color:#9ca3af;font-weight:700;">1</td><td style="font-size:11px;color:#0074EF;">trustradius.com/zoom-workplace/reviews</td><td><strong>1,842</strong></td><td>22.3%</td></tr>
+            <tr><td style="color:#9ca3af;font-weight:700;">2</td><td style="font-size:11px;color:#0074EF;">trustradius.com/zoom-workplace/vs/microsoft-teams</td><td><strong>1,654</strong></td><td>20.0%</td></tr>
+            <tr><td style="color:#9ca3af;font-weight:700;">3</td><td style="font-size:11px;color:#0074EF;">trustradius.com/zoom-workplace/vs/google-meet</td><td><strong>1,287</strong></td><td>15.6%</td></tr>
+            <tr><td style="color:#9ca3af;font-weight:700;">4</td><td style="font-size:11px;color:#0074EF;">trustradius.com/zoom-workplace</td><td><strong>1,043</strong></td><td>12.6%</td></tr>
+            <tr><td style="color:#9ca3af;font-weight:700;">5</td><td style="font-size:11px;color:#0074EF;">trustradius.com/zoom-workplace/vs/webex</td><td><strong>876</strong></td><td>10.6%</td></tr>
+            <tr><td style="color:#9ca3af;font-weight:700;">6</td><td style="font-size:11px;color:#0074EF;">trustradius.com/zoom-workplace/pricing</td><td><strong>543</strong></td><td>6.6%</td></tr>
+            <tr><td style="color:#9ca3af;font-weight:700;">7</td><td style="font-size:11px;color:#0074EF;">trustradius.com/zoom-workplace/alternatives</td><td><strong>487</strong></td><td>5.9%</td></tr>
+            <tr><td style="color:#9ca3af;font-weight:700;">8</td><td style="font-size:11px;color:#0074EF;">trustradius.com/zoom-workplace/vs/slack</td><td><strong>321</strong></td><td>3.9%</td></tr>
           </tbody></table>
         </div>
       </div>
       <div class="section">
         <div class="sec-hd"><div><div class="sec-title">Who is Your Product Compared Against? <span class="badge b-blue" style="font-size:9px;">NEW</span></div><div class="sec-sub">Competitors most frequently mentioned alongside Zoom in AI responses</div></div></div>
         <div class="sec-body np">
-          <table class="dt"><thead><tr><th>#</th><th>Competitor</th><th>Co-eval Mentions</th><th>30-Day Trend</th></tr></thead><tbody>
-            <tr><td style="color:#9ca3af;font-weight:700;">1</td><td><strong>Microsoft Teams</strong></td><td><strong>847</strong></td><td><span class="up">↑ +12%</span></td></tr>
-            <tr><td style="color:#9ca3af;font-weight:700;">2</td><td><strong>Google Meet</strong></td><td><strong>623</strong></td><td><span class="up">↑ +8%</span></td></tr>
-            <tr><td style="color:#9ca3af;font-weight:700;">3</td><td><strong>Webex by Cisco</strong></td><td><strong>412</strong></td><td><span class="dn">↓ -3%</span></td></tr>
-            <tr><td style="color:#9ca3af;font-weight:700;">4</td><td><strong>Slack</strong></td><td><strong>389</strong></td><td><span class="up" style="color:#16a34a;font-weight:800;">↑ +21%</span></td></tr>
-            <tr><td style="color:#9ca3af;font-weight:700;">5</td><td><strong>GoToMeeting</strong></td><td><strong>201</strong></td><td><span class="dn">↓ -8%</span></td></tr>
-            <tr><td style="color:#9ca3af;font-weight:700;">6</td><td><strong>RingCentral Video</strong></td><td><strong>156</strong></td><td><span class="up">↑ +5%</span></td></tr>
+          <table class="dt"><thead><tr><th>#</th><th>Competitor</th><th>Co-eval Mentions</th></tr></thead><tbody>
+            <tr><td style="color:#9ca3af;font-weight:700;">1</td><td><strong>Microsoft Teams</strong></td><td><strong>847</strong></td></tr>
+            <tr><td style="color:#9ca3af;font-weight:700;">2</td><td><strong>Google Meet</strong></td><td><strong>623</strong></td></tr>
+            <tr><td style="color:#9ca3af;font-weight:700;">3</td><td><strong>Webex by Cisco</strong></td><td><strong>412</strong></td></tr>
+            <tr><td style="color:#9ca3af;font-weight:700;">4</td><td><strong>Slack</strong></td><td><strong>389</strong></td></tr>
+            <tr><td style="color:#9ca3af;font-weight:700;">5</td><td><strong>GoToMeeting</strong></td><td><strong>201</strong></td></tr>
+            <tr><td style="color:#9ca3af;font-weight:700;">6</td><td><strong>RingCentral Video</strong></td><td><strong>156</strong></td></tr>
           </tbody></table>
           <div style="padding:10px 12px;font-size:11px;color:#6b7280;border-top:1px solid #f3f4f6;">Based on AI-generated comparison queries · last 30 days</div>
         </div>
@@ -1961,6 +1917,7 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
     <div class="section" style="margin-bottom:16px;">
       <div class="sec-hd"><div><div class="sec-title">Category Share of Voice</div><div class="sec-sub">Your AI crawl presence vs competitors across video conferencing · Category: Video Conferencing</div></div></div>
       <div class="sec-body">
+        <div style="height:150px;position:relative;margin-bottom:16px;"><canvas id="cat-sov-chart"></canvas></div>
         <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px;">
           <div style="background:#f8fafc;border:1px solid #e5e7eb;border-radius:8px;padding:12px;"><div style="font-size:10px;font-weight:700;color:#6b7280;text-transform:uppercase;margin-bottom:4px;">Category Total Crawls</div><div style="font-size:22px;font-weight:900;color:#111827;">485K</div><div style="font-size:11px;color:#6b7280;margin-top:3px;">7 products shown + others</div></div>
           <div style="background:#f0f0ff;border:1px solid #c7d2fe;border-radius:8px;padding:12px;"><div style="font-size:10px;font-weight:700;color:#6b7280;text-transform:uppercase;margin-bottom:4px;">Your Total Crawls</div><div style="font-size:22px;font-weight:900;color:#0074EF;">89.2K</div><div style="font-size:11px;color:#16a34a;font-weight:600;margin-top:3px;">↑ 15% vs last month</div></div>
@@ -1989,6 +1946,7 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
       <div class="section">
         <div class="sec-hd"><div><div class="sec-title">🌐 Grounding vs. Training <span class="badge b-blue" style="font-size:9px;">NEW</span></div><div class="sec-sub">Live buyer demand vs model training crawls</div></div></div>
         <div class="sec-body">
+          <div style="height:140px;position:relative;margin-bottom:14px;"><canvas id="grounding-trend-chart"></canvas></div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
             <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:12px;">
               <div style="font-size:11px;font-weight:700;color:#15803d;margin-bottom:4px;">🌐 Live Buyer Demand</div>
@@ -2015,24 +1973,6 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
     </div>
 
 
-    <!-- Actions note -->
-    <div class="section" style="margin-bottom:16px;background:#f0f9ff;border:1px solid #bae6fd;border-radius:10px;">
-      <div style="padding:14px 20px;display:flex;align-items:center;justify-content:space-between;">
-        <div>
-          <div style="font-size:13px;font-weight:700;color:#0369a1;margin-bottom:4px;">🗺️ Content Gap Map &amp; Operator Strategy</div>
-          <div style="font-size:12px;color:#0c4a6e;">Detailed content briefs and per-LLM optimization plans are now in the <strong>Actions &amp; Alerts</strong> tab for your execution workflow.</div>
-        </div>
-        <label for="main-alerts" style="cursor:pointer;background:#0ea5e9;color:#fff;padding:6px 14px;border-radius:6px;font-size:11px;font-weight:700;">→ Go to Actions</label>
-      </div>
-    </div>
-<!-- 10. GEO HEALTH — moved to GEO Health tab -->
-    <div style="background:#f0f9ff;border:1px solid #bae6fd;border-radius:10px;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;margin-bottom:0;">
-      <div>
-        <div style="font-size:13px;font-weight:700;color:#0369a1;margin-bottom:3px;">GEO Health Score — Powered by Conductor</div>
-        <div style="font-size:12px;color:#0c4a6e;">Full page-type health analysis, signal matrix, and engine heatmap are in the <strong>GEO Health</strong> tab.</div>
-      </div>
-      <label for="mon-geo" style="cursor:pointer;background:#0ea5e9;color:#fff;padding:6px 14px;border-radius:6px;font-size:11px;font-weight:700;white-space:nowrap;">→ GEO Health</label>
-    </div>
   </div><!-- /subpane-crawl -->
 
   <!-- GEO HEALTH -->
@@ -2417,7 +2357,7 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
                 <div style="font-size:10px;color:#6b7280;margin-bottom:8px;">Primary ICP · Mid-to-Large Enterprise · 500–10,000 employees</div>
                 <div style="font-size:10px;color:#374151;margin-bottom:6px;"><strong>Key prompts:</strong> Best enterprise video conferencing · Security &amp; compliance · Admin controls</div>
                 <div style="display:flex;gap:6px;flex-wrap:wrap;">
-                  <span class="fsb fsb-tofu">ToFu</span><span class="fsb fsb-mofu">MoFu</span><span class="fsb fsb-bofu">BoFu</span>
+                  
                   <span style="font-size:9px;color:#0074EF;font-weight:700;">3 topics · 7 prompts</span>
                 </div>
               </div>
@@ -2426,7 +2366,7 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
                 <div style="font-size:10px;color:#6b7280;margin-bottom:8px;">Budget Decision Maker · All Enterprise Sizes</div>
                 <div style="font-size:10px;color:#374151;margin-bottom:6px;"><strong>Key prompts:</strong> Pricing for teams · Contract terms · ROI &amp; TCO analysis</div>
                 <div style="display:flex;gap:6px;flex-wrap:wrap;">
-                  <span class="fsb fsb-bofu">BoFu</span>
+                  
                   <span style="font-size:9px;color:#10b981;font-weight:700;">1 topic · 2 prompts</span>
                 </div>
               </div>
@@ -2435,7 +2375,7 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
                 <div style="font-size:10px;color:#6b7280;margin-bottom:8px;">Executive Sponsor · Strategic Vision</div>
                 <div style="font-size:10px;color:#374151;margin-bottom:6px;"><strong>Key prompts:</strong> Platform comparisons · Long-term roadmap · Integration ecosystem</div>
                 <div style="display:flex;gap:6px;flex-wrap:wrap;">
-                  <span class="fsb fsb-mofu">MoFu</span><span class="fsb fsb-bofu">BoFu</span>
+                  
                   <span style="font-size:9px;color:#f59e0b;font-weight:700;">2 topics · 3 prompts</span>
                 </div>
               </div>
@@ -2458,3 +2398,240 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
      GEO AI ASSISTANT
      Data sources: Conductor (GEO) + Cloudflare (Crawl) + TrustRadius
      ══════════════════════════════════════════════════════ -->
+
+<script>
+(function(){
+// ── Shared defaults ────────────────────────────────────────────
+Chart.defaults.font.family = 'Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif';
+Chart.defaults.font.size = 11;
+var MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+var WEEKS5 = ["Apr 8","Apr 15","Apr 22","Apr 29","May 5"];
+var baseOpts = {
+  responsive: true, maintainAspectRatio: false,
+  plugins: {
+    legend: { display: true, position: 'bottom', labels: { boxWidth:10, padding:8, font:{size:10} } },
+    tooltip: { mode: 'index', intersect: false }
+  },
+  scales: {
+    x: { grid: { display: false }, ticks: { font: { size: 10 } } },
+    y: { grid: { color: '#f3f4f6' }, ticks: { font: { size: 10 } } }
+  }
+};
+function mk(id, type, data, opts) {
+  var el = document.getElementById(id); if (!el) return null;
+  return new Chart(el, { type: type, data: data, options: Object.assign({}, baseOpts, opts || {}) });
+}
+function line(color, data, label, fill) {
+  return { label: label, data: data, borderColor: color,
+    backgroundColor: fill ? color.replace(')',',0.12)').replace('rgb','rgba') : 'transparent',
+    fill: !!fill, tension: 0.4, pointRadius: 2, borderWidth: 2 };
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+
+  // ── 1. PERFORMANCE: Individual KPI charts (tab-toggled) ─────────────────
+  var sharedKpiOpts = {
+    plugins: {
+      legend: { display: true, position: 'bottom', labels: { boxWidth: 10, padding: 8, font: { size: 10 } } },
+      tooltip: { mode: 'index', intersect: false }
+    },
+    scales: {
+      x: { grid: { display: false }, ticks: { font: { size: 10 } } },
+      y: { grid: { color: '#f3f4f6' }, ticks: { font: { size: 10 } } }
+    }
+  };
+  // SoV chart — Zoom vs competitors
+  mk('sov-chart', 'line', {
+    labels: MONTHS,
+    datasets: [
+      Object.assign(line('#10b981', [38,40,42,44,46,47,49,50,51,52,53,52], 'Zoom Workplace', true), { pointRadius: 3 }),
+      line('#25C5FE', [30,31,32,33,34,35,34,34,33,33,34,34], 'Microsoft Teams'),
+      line('#f59e0b', [12,12,13,13,14,13,14,14,14,14,14,14], 'Google Meet'),
+      line('#9ca3af', [9,9,9,9,9,9,9,9,9,9,9,9], 'Cisco Webex')
+    ]
+  }, Object.assign({}, sharedKpiOpts, {
+    scales: {
+      x: { grid: { display: false }, ticks: { font: { size: 10 } } },
+      y: { grid: { color: '#f3f4f6' }, ticks: { font: { size: 10 }, callback: function(v){ return v+'%'; } }, min: 0, max: 60 }
+    }
+  }));
+  // Volume chart — monthly query volume
+  mk('vol-chart', 'line', {
+    labels: MONTHS,
+    datasets: [
+      Object.assign(line('#0074EF', [85,90,95,102,108,115,120,125,128,130,133,136.4], 'Monthly Queries (K)', true), { pointRadius: 3 })
+    ]
+  }, Object.assign({}, sharedKpiOpts, {
+    plugins: { legend: { display: false }, tooltip: { mode: 'index', intersect: false, callbacks: { label: function(c){ return c.parsed.y.toFixed(0)+'K queries'; } } } },
+    scales: {
+      x: { grid: { display: false }, ticks: { font: { size: 10 } } },
+      y: { grid: { color: '#f3f4f6' }, ticks: { font: { size: 10 }, callback: function(v){ return v+'K'; } } }
+    }
+  }));
+  // Mentions chart
+  mk('men-chart', 'line', {
+    labels: MONTHS,
+    datasets: [
+      Object.assign(line('#25C5FE', [72,76,80,86,92,98,104,112,116,120,125,128.4], 'AI Mentions (K)', true), { pointRadius: 3 })
+    ]
+  }, Object.assign({}, sharedKpiOpts, {
+    plugins: { legend: { display: false }, tooltip: { mode: 'index', intersect: false, callbacks: { label: function(c){ return c.parsed.y.toFixed(0)+'K mentions'; } } } },
+    scales: {
+      x: { grid: { display: false }, ticks: { font: { size: 10 } } },
+      y: { grid: { color: '#f3f4f6' }, ticks: { font: { size: 10 }, callback: function(v){ return v+'K'; } } }
+    }
+  }));
+  // Citations chart
+  mk('cit-chart', 'line', {
+    labels: MONTHS,
+    datasets: [
+      Object.assign(line('#f59e0b', [420,450,480,510,540,580,640,700,730,760,800,842], 'Citations', true), { pointRadius: 3 })
+    ]
+  }, Object.assign({}, sharedKpiOpts, {
+    plugins: { legend: { display: false }, tooltip: { mode: 'index', intersect: false } },
+    scales: {
+      x: { grid: { display: false }, ticks: { font: { size: 10 } } },
+      y: { grid: { color: '#f3f4f6' }, ticks: { font: { size: 10 } }, min: 0 }
+    }
+  }));
+
+  // ── 2. COMPETITIVE: KPI Trend charts ────────────────────────────────────
+  var compLabels = MONTHS;
+  function compChart(id, datasets) {
+    mk(id, 'line', { labels: compLabels, datasets: datasets }, {
+      plugins: { legend: { display: true, position: 'bottom', labels: { boxWidth: 8, padding: 6, font: { size: 10 } } } }
+    });
+  }
+  compChart('comp-sov-chart', [
+    Object.assign(line('#0074EF', [38,40,42,44,46,47,49,50,51,52,53,52], 'Zoom Workplace', true), {}),
+    line('#25C5FE', [30,31,32,33,34,35,34,34,33,33,34,34], 'Microsoft Teams'),
+    line('#10b981', [12,12,13,13,14,13,14,14,14,14,14,14], 'Google Meet'),
+    line('#f59e0b', [9,9,9,9,9,9,9,9,9,9,9,9], 'Cisco Webex')
+  ]);
+  compChart('comp-vol-chart', [
+    Object.assign(line('#0074EF', [51.8,54.5,57.4,60,62.6,64,66.6,68,69.4,70.7,72,71.3], 'Zoom Workplace', true), {}),
+    line('#25C5FE', [38.1,39.6,41.1,42.2,42.2,43.5,44.9,44.9,46.3,46.3,46.3,46.3], 'Microsoft Teams'),
+    line('#10b981', [24.5,23.2,21.8,20.4,20.4,19.1,19.1,19.1,19.1,19.1,19.1,19.1], 'Google Meet'),
+    line('#f59e0b', [21.8,19.1,16.4,13.6,10.9,9.5,5.5,4.1,1.4,0,12.2,12.2], 'Cisco Webex')
+  ]);
+  compChart('comp-men-chart', [
+    Object.assign(line('#0074EF', [46,48.3,50.9,53.2,55.5,56.8,59,60.3,61.5,62.7,63.8,63.2], 'Zoom Workplace', true), {}),
+    line('#25C5FE', [33.8,35.1,36.4,37.4,37.4,38.6,39.9,39.9,41.1,41.1,41.1,41.1], 'Microsoft Teams'),
+    line('#10b981', [21.7,20.6,19.3,18.1,18.1,16.9,16.9,16.9,16.9,16.9,16.9,16.9], 'Google Meet'),
+    line('#f59e0b', [19.3,16.9,14.5,12.1,9.7,8.4,4.8,3.6,1.2,0,10.8,10.8], 'Cisco Webex')
+  ]);
+  compChart('comp-cit-chart', [
+    Object.assign(line('#0074EF', [280,310,340,375,400,430,470,520,555,585,625,642], 'Zoom Workplace', true), {}),
+    line('#25C5FE', [185,200,215,230,230,245,265,265,280,280,280,280], 'Microsoft Teams'),
+    line('#10b981', [120,110,100,90,90,80,80,80,80,80,80,80], 'Google Meet'),
+    line('#f59e0b', [105,90,75,60,45,38,22,16,5,0,55,55], 'Cisco Webex')
+  ]);
+
+  // ── 3. TR VALUE: Page views trend ───────────────────────────────────────
+  mk('tr-pages-chart', 'line', {
+    labels: MONTHS,
+    datasets: [
+      Object.assign(line('#0074EF', [9800,10400,11200,12100,13200,14100,14900,15800,16400,17000,17600,18200], 'Reviews page', true), {}),
+      line('#10b981', [7200,7800,8400,9200,10100,10900,11600,12400,13100,13700,14200,14800], 'Comparison page'),
+      line('#25C5FE', [4200,4600,5000,5600,6200,6900,7400,8000,8400,8800,9100,9400], 'Category page'),
+      line('#f59e0b', [6400,6200,6000,5900,5800,5700,5800,5700,5900,5800,5900,5800], 'Pricing page')
+    ]
+  }, {
+    plugins: {
+      legend: { display: true, position: 'bottom', labels: { boxWidth: 8, padding: 6, font: { size: 10 } } },
+      tooltip: { mode: 'index', intersect: false, callbacks: { label: function(c){ return c.dataset.label+': '+c.parsed.y.toLocaleString()+' views'; } } }
+    },
+    scales: {
+      x: { grid: { display: false }, ticks: { font: { size: 10 } } },
+      y: { grid: { color: '#f3f4f6' }, ticks: { font: { size: 10 }, callback: function(v){ return (v/1000).toFixed(0)+'K'; } } }
+    }
+  });
+
+  // ── 4. CRAWL: Operator requests over time ───────────────────────────────
+  mk('crawl-ops-chart', 'line', {
+    labels: WEEKS5,
+    datasets: [
+      Object.assign(line('#10b981', [980,1120,1240,1410,1459], 'OpenAI', true), { pointRadius: 3 }),
+      line('#25C5FE', [165,195,218,246,223], 'Anthropic'),
+      line('#f59e0b', [98,118,130,142,130], 'Google'),
+      line('#06b6d4', [61,74,84,96,72], 'Perplexity')
+    ]
+  }, {
+    plugins: { legend: { display: true, position: 'bottom', labels: { boxWidth: 8, padding: 6, font: { size: 10 } } } }
+  });
+
+  // ── 5. CRAWL: Page type requests over time ──────────────────────────────
+  mk('crawl-ptype-chart', 'line', {
+    labels: WEEKS5,
+    datasets: [
+      Object.assign(line('#0074EF', [1050,1240,1380,1510,1379], 'Comparison', true), { pointRadius: 3 }),
+      line('#10b981', [165,195,220,245,210], 'Product'),
+      line('#25C5FE', [52,62,70,80,61], 'Reviews'),
+      line('#f59e0b', [9,11,12,14,11], 'Pricing')
+    ]
+  }, {
+    plugins: { legend: { display: true, position: 'bottom', labels: { boxWidth: 8, padding: 6, font: { size: 10 } } } }
+  });
+
+  // ── 6. CRAWL: Top pages crawled trend ──────────────────────────────────
+  mk('top-pages-chart', 'line', {
+    labels: WEEKS5,
+    datasets: [
+      Object.assign(line('#0074EF', [340,378,402,442,280], '/reviews', true), { pointRadius: 3 }),
+      line('#10b981', [290,322,354,392,296], '/vs/teams'),
+      line('#25C5FE', [224,258,286,322,197], '/vs/g-meet'),
+      line('#f59e0b', [182,212,240,272,137], '/zoom (product)')
+    ]
+  }, {
+    plugins: { legend: { display: true, position: 'bottom', labels: { boxWidth: 8, padding: 6, font: { size: 10 } } } },
+    scales: {
+      x: { grid: { display: false }, ticks: { font: { size: 10 } } },
+      y: { grid: { color: '#f3f4f6' }, ticks: { font: { size: 10 }, callback: function(v){ return v+' visits'; } } }
+    }
+  });
+
+  // ── 7. CRAWL: Category SoV trend ───────────────────────────────────────
+  mk('cat-sov-chart', 'line', {
+    labels: MONTHS,
+    datasets: [
+      Object.assign(line('#0074EF', [14.8,15.2,15.6,16.1,16.4,16.8,17.2,17.6,17.9,18.1,18.3,18.4], 'Zoom Workplace', true), { pointRadius: 3 }),
+      line('#25C5FE', [16.2,16.0,15.9,15.8,15.8,15.9,15.8,15.8,15.8,15.8,15.8,15.8], 'Microsoft Teams'),
+      line('#10b981', [12.4,12.2,12.0,11.8,11.6,11.4,11.3,11.2,11.2,11.2,11.2,11.2], 'Google Meet'),
+      line('#f59e0b', [10.2,9.8,9.4,9.2,9.1,9.0,9.0,8.9,8.9,8.9,8.9,8.9], 'Cisco Webex')
+    ]
+  }, {
+    plugins: { legend: { display: true, position: 'bottom', labels: { boxWidth: 8, padding: 6, font: { size: 10 } } } },
+    scales: {
+      x: { grid: { display: false }, ticks: { font: { size: 10 } } },
+      y: { grid: { color: '#f3f4f6' }, ticks: { font: { size: 10 }, callback: function(v){ return v+'%'; } }, min: 6 }
+    }
+  });
+
+  // ── 8. CRAWL: Grounding % trend ─────────────────────────────────────────
+  mk('grounding-trend-chart', 'line', {
+    labels: ["Feb 10","Feb 17","Feb 24","Mar 3","Mar 10","Mar 17","Mar 24","Mar 31","Apr 7","Apr 14","Apr 21","Apr 28","May 5"],
+    datasets: [
+      Object.assign(line('#16a34a', [18.2,19.1,20.4,21.8,22.3,23.1,24.8,25.6,26.9,27.8,28.5,29.2,29.9], 'Grounding %', true), { pointRadius: 3, borderWidth: 2.5 })
+    ]
+  }, {
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { grid: { display: false }, ticks: { font: { size: 9 } } },
+      y: { min: 15, max: 35, grid: { color: '#f3f4f6' }, ticks: { font: { size: 10 }, callback: function(v){ return v+'%'; } } }
+    }
+  });
+
+  // ── 9. CONFIG: ROI chart ─────────────────────────────────────────────────
+  mk('roi-chart', 'line', {
+    labels: ["Jan","Feb","Mar","Apr","May","Jun"],
+    datasets: [
+      Object.assign(line('#0074EF', [180,220,290,340,410,480], 'Est. Pipeline ($K)', true), {}),
+      line('#10b981', [42,58,76,95,118,142], 'Est. Revenue ($K)')
+    ]
+  }, {
+    plugins: { legend: { display: true, position: 'bottom', labels: { boxWidth: 8, padding: 6, font: { size: 10 } } } }
+  });
+
+}); // DOMContentLoaded
+})();
+</script>
