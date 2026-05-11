@@ -1096,6 +1096,63 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
 .src-bar-footer{padding:6px 16px 8px 40px;border-top:1px solid #eef0f6;background:#f5f3ff;display:flex;gap:20px;}
 .prompt-cta-bar{padding:4px 16px 8px 56px;background:#EBF4FE;display:flex;gap:16px;}
 
+
+/* ── Multi-select LLM pills ─────────────────────────────── */
+.llm-multi{display:flex;align-items:center;gap:4px;flex-wrap:wrap;}
+.llm-pill{font-size:11px;padding:4px 10px;border-radius:5px;cursor:pointer;color:#374151;font-weight:500;background:#f3f4f6;border:none;transition:background .12s,color .12s;white-space:nowrap;}
+.llm-pill:hover{background:#e5e7eb;}
+.llm-pill.active{background:#0074EF;color:#fff;}
+.llm-more-wrap{position:relative;display:inline-block;}
+.llm-more-btn{font-size:11px;padding:4px 10px;border-radius:5px;cursor:pointer;color:#374151;font-weight:500;background:#f3f4f6;border:none;white-space:nowrap;}
+.llm-more-btn:hover{background:#e5e7eb;}
+.llm-more-btn.has-active{background:#dbeafe;color:#0074EF;}
+.llm-dropdown{position:absolute;top:calc(100% + 4px);left:0;background:#fff;border:1px solid #e5e7eb;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,.1);z-index:200;min-width:180px;padding:4px;display:none;}
+.llm-dropdown.open{display:block;}
+.llm-drop-item{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:5px;cursor:pointer;font-size:12px;color:#374151;font-weight:500;}
+.llm-drop-item:hover{background:#f3f4f6;}
+.llm-drop-item.active{color:#0074EF;font-weight:700;}
+.llm-drop-check{width:14px;height:14px;border:1.5px solid #d1d5db;border-radius:3px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.llm-drop-item.active .llm-drop-check{background:#0074EF;border-color:#0074EF;color:#fff;font-size:9px;}
+/* ── Product selector ────────────────────────────────────── */
+.prod-select-wrap{position:relative;display:inline-block;}
+.prod-select-btn{display:flex;align-items:center;gap:6px;padding:4px 10px;background:#f3f4f6;border:none;border-radius:5px;font-size:11px;font-weight:600;color:#374151;cursor:pointer;white-space:nowrap;}
+.prod-select-btn:hover{background:#e5e7eb;}
+.prod-select-btn .prod-count{background:#0074EF;color:#fff;font-size:9px;font-weight:700;padding:1px 5px;border-radius:8px;margin-left:2px;}
+.prod-dropdown{position:absolute;top:calc(100% + 4px);left:0;background:#fff;border:1px solid #e5e7eb;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,.1);z-index:200;min-width:200px;padding:4px;display:none;}
+.prod-dropdown.open{display:block;}
+.prod-drop-item{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:5px;cursor:pointer;font-size:12px;color:#374151;font-weight:500;}
+.prod-drop-item:hover{background:#f3f4f6;}
+.prod-drop-item.active{color:#0074EF;font-weight:700;}
+.prod-drop-check{width:14px;height:14px;border:1.5px solid #d1d5db;border-radius:3px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:9px;color:#fff;}
+.prod-drop-item.active .prod-drop-check{background:#0074EF;border-color:#0074EF;}
+.prod-drop-cat{font-size:9px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.05em;padding:6px 10px 2px;}
+/* ── Crawl sub-filter bar ───────────────────────────────── */
+.crawl-filter-bar{display:flex;align-items:center;gap:8px;margin-bottom:14px;padding:10px 14px;background:#f8fafc;border:1px solid #e5e7eb;border-radius:8px;flex-wrap:wrap;}
+/* ── Competitor crawl breakdown ─────────────────────────── */
+.comp-crawl-table{width:100%;border-collapse:collapse;}
+.comp-crawl-table th{font-size:10px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.04em;padding:6px 10px;text-align:left;border-bottom:1px solid #e5e7eb;}
+.comp-crawl-table td{font-size:12px;padding:8px 10px;border-bottom:1px solid #f3f4f6;vertical-align:middle;}
+.comp-crawl-table tr:last-child td{border-bottom:none;}
+.crawl-bar-cell{width:120px;}
+.crawl-bar-outer{height:8px;background:#f3f4f6;border-radius:4px;overflow:hidden;}
+.crawl-bar-inner{height:8px;border-radius:4px;}
+.crawl-total-kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px;}
+.ctk{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:12px 14px;}
+.ctk-label{font-size:10px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;}
+.ctk-val{font-size:20px;font-weight:900;color:#111827;line-height:1.1;}
+.ctk-sub{font-size:10px;color:#6b7280;margin-top:3px;}
+
+
+/* ── Crawl-type filter active states ──────────────────── */
+#ct-all:checked     ~ .app-shell .layout-body label[for=ct-all]        {background:#0074EF;color:#fff;}
+#ct-ground:checked  ~ .app-shell .layout-body label[for=ct-ground]     {background:#0074EF;color:#fff;}
+#ct-train:checked   ~ .app-shell .layout-body label[for=ct-train]      {background:#0074EF;color:#fff;}
+#pt-all:checked        ~ .app-shell .layout-body label[for=pt-all]        {background:#0074EF;color:#fff;}
+#pt-comparison:checked ~ .app-shell .layout-body label[for=pt-comparison] {background:#0074EF;color:#fff;}
+#pt-product:checked    ~ .app-shell .layout-body label[for=pt-product]    {background:#0074EF;color:#fff;}
+#pt-reviews:checked    ~ .app-shell .layout-body label[for=pt-reviews]    {background:#0074EF;color:#fff;}
+#pt-pricing:checked    ~ .app-shell .layout-body label[for=pt-pricing]    {background:#0074EF;color:#fff;}
+
 </style></head><body>
 <input type="radio" name="main" id="main-home">
 <input type="radio" name="main" id="main-monitoring" checked>
@@ -1110,10 +1167,15 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
 <input type="radio" name="period" id="period-monthly" checked>
 <input type="radio" name="period" id="period-quarterly">
 <input type="radio" name="period" id="period-yearly">
-<input type="radio" name="llm" id="llm-all" checked>
-<input type="radio" name="llm" id="llm-chatgpt">
-<input type="radio" name="llm" id="llm-gemini">
-<input type="radio" name="llm" id="llm-perplexity">
+<input type="radio" name="crawl-type" id="ct-all" checked>
+<input type="radio" name="crawl-type" id="ct-ground">
+<input type="radio" name="crawl-type" id="ct-train">
+<input type="radio" name="page-type" id="pt-all" checked>
+<input type="radio" name="page-type" id="pt-comparison">
+<input type="radio" name="page-type" id="pt-product">
+<input type="radio" name="page-type" id="pt-reviews">
+<input type="radio" name="page-type" id="pt-pricing">
+
 <input type="radio" name="kpi-chart" id="kpi-chart-sov" checked>
 <input type="radio" name="kpi-chart" id="kpi-chart-vol">
 <input type="radio" name="kpi-chart" id="kpi-chart-men">
@@ -1272,12 +1334,40 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
       <label for="period-quarterly">Quarterly</label>
       <label for="period-yearly">Yearly</label>
     </div>
+    <span class="filter-label" style="margin-left:10px;">Product</span>
+    <div class="prod-select-wrap" id="prodSelectWrap">
+      <button class="prod-select-btn" onclick="toggleProdDropdown(event)">
+        <span id="prodBtnLabel">Zoom Workplace</span>
+        <span id="prodCount" class="prod-count" style="display:none;"></span>
+        <span style="font-size:9px;color:#9ca3af;">▾</span>
+      </button>
+      <div class="prod-dropdown" id="prodDropdown">
+        <div class="prod-drop-cat">Video Conferencing</div>
+        <div class="prod-drop-item active" onclick="toggleProduct(this,'Zoom Workplace')"><div class="prod-drop-check">✓</div>Zoom Workplace</div>
+        <div class="prod-drop-cat">Unified Communications</div>
+        <div class="prod-drop-item" onclick="toggleProduct(this,'Zoom Phone')"><div class="prod-drop-check"></div>Zoom Phone</div>
+        <div class="prod-drop-item" onclick="toggleProduct(this,'Zoom Contact Center')"><div class="prod-drop-check"></div>Zoom Contact Center</div>
+        <div class="prod-drop-cat">Events &amp; Spaces</div>
+        <div class="prod-drop-item" onclick="toggleProduct(this,'Zoom Events')"><div class="prod-drop-check"></div>Zoom Events</div>
+        <div class="prod-drop-item" onclick="toggleProduct(this,'Zoom Rooms')"><div class="prod-drop-check"></div>Zoom Rooms</div>
+      </div>
+    </div>
     <span class="filter-label" style="margin-left:10px;">LLM</span>
-    <div class="filter-group">
-      <label for="llm-all">All LLMs</label>
-      <label for="llm-chatgpt">ChatGPT</label>
-      <label for="llm-gemini">Gemini</label>
-      <label for="llm-perplexity">Perplexity</label>
+    <div class="llm-multi" id="llmPills">
+      <button class="llm-pill active" data-llm="all" onclick="toggleLLM('all')">All LLMs</button>
+      <button class="llm-pill" data-llm="chatgpt" onclick="toggleLLM('chatgpt')">ChatGPT</button>
+      <button class="llm-pill" data-llm="gemini" onclick="toggleLLM('gemini')">Gemini</button>
+      <button class="llm-pill" data-llm="perplexity" onclick="toggleLLM('perplexity')">Perplexity</button>
+      <div class="llm-more-wrap">
+        <button class="llm-more-btn" id="llmMoreBtn" onclick="toggleLLMDropdown(event)">More ▾</button>
+        <div class="llm-dropdown" id="llmDropdown">
+          <div class="llm-drop-item" data-llm="claude" onclick="toggleLLM('claude',this)"><div class="llm-drop-check"></div>Claude (Anthropic)</div>
+          <div class="llm-drop-item" data-llm="copilot" onclick="toggleLLM('copilot',this)"><div class="llm-drop-check"></div>Microsoft Copilot</div>
+          <div class="llm-drop-item" data-llm="grok" onclick="toggleLLM('grok',this)"><div class="llm-drop-check"></div>Grok (xAI)</div>
+          <div class="llm-drop-item" data-llm="llama" onclick="toggleLLM('llama',this)"><div class="llm-drop-check"></div>Llama (Meta)</div>
+          <div class="llm-drop-item" data-llm="mistral" onclick="toggleLLM('mistral',this)"><div class="llm-drop-check"></div>Mistral</div>
+        </div>
+      </div>
     </div>
   </div>
   <div class="sub-nav">
@@ -1917,6 +2007,120 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
     <!-- CRAWL ANALYTICS -->
   <div id="subpane-crawl">
 
+    <!-- CRAWL FILTERS -->
+    <div class="crawl-filter-bar">
+      <span class="filter-label">Crawl Type</span>
+      <div class="filter-group">
+        <label for="ct-all" style="padding:4px 10px;">All Crawls</label>
+        <label for="ct-ground" style="padding:4px 10px;">🌐 Grounding</label>
+        <label for="ct-train" style="padding:4px 10px;">🤖 Model Training</label>
+      </div>
+      <span class="filter-label" style="margin-left:12px;">Page Type</span>
+      <div class="filter-group">
+        <label for="pt-all" style="padding:4px 10px;">All Pages</label>
+        <label for="pt-comparison" style="padding:4px 10px;">🔀 Comparison</label>
+        <label for="pt-product" style="padding:4px 10px;">📦 Product</label>
+        <label for="pt-reviews" style="padding:4px 10px;">⭐ Reviews</label>
+        <label for="pt-pricing" style="padding:4px 10px;">💰 Pricing</label>
+      </div>
+    </div>
+
+    <!-- CRAWL TOTALS KPI STRIP -->
+    <div class="crawl-total-kpi">
+      <div class="ctk">
+        <div class="ctk-label">Total AI Crawls</div>
+        <div class="ctk-val">27,661</div>
+        <div class="ctk-sub">All pages · last 30 days</div>
+      </div>
+      <div class="ctk" style="border-color:#c7d2fe;background:#f0f0ff;">
+        <div class="ctk-label">Your Pages Crawled</div>
+        <div class="ctk-val" style="color:#0074EF;">8,261</div>
+        <div class="ctk-sub" style="color:#16a34a;font-weight:600;">↑ +15% vs last month</div>
+      </div>
+      <div class="ctk">
+        <div class="ctk-label">Competitor Pages Crawled</div>
+        <div class="ctk-val" style="color:#374151;">19,400</div>
+        <div class="ctk-sub">4 tracked competitors</div>
+      </div>
+      <div class="ctk" style="border-color:#bbf7d0;background:#f0fdf4;">
+        <div class="ctk-label">Your Crawl Share</div>
+        <div class="ctk-val" style="color:#16a34a;">29.9%</div>
+        <div class="ctk-sub" style="color:#16a34a;font-weight:600;">#1 among tracked</div>
+      </div>
+    </div>
+
+    <!-- COMPETITOR CRAWL BREAKDOWN -->
+    <div class="section" style="margin-bottom:16px;">
+      <div class="sec-hd"><div><div class="sec-title">Crawl Breakdown by Competitor</div><div class="sec-sub">AI crawler activity on your pages vs tracked competitors · last 30 days</div></div></div>
+      <div class="sec-body">
+        <div style="height:150px;position:relative;margin-bottom:16px;"><canvas id="cat-sov-chart"></canvas></div>
+      </div>
+      <div class="sec-body np">
+        <table class="comp-crawl-table">
+          <thead><tr>
+            <th>#</th><th>Product</th><th>Total Crawls</th><th>Grounding</th><th>Training</th><th>SoV</th><th style="width:120px;">Crawl Volume</th>
+          </tr></thead>
+          <tbody>
+            <tr style="background:#f0f0ff;">
+              <td style="color:#0074EF;font-weight:800;">YOU</td>
+              <td><strong>Zoom Workplace</strong></td>
+              <td><strong>8,261</strong></td>
+              <td style="color:#16a34a;font-weight:600;">2,471 <span style="font-size:10px;color:#9ca3af;">(29.9%)</span></td>
+              <td style="color:#6b7280;">5,790</td>
+              <td><span class="badge b-green">29.9%</span></td>
+              <td class="crawl-bar-cell"><div class="crawl-bar-outer"><div class="crawl-bar-inner" style="width:100%;background:#0074EF;"></div></div></td>
+            </tr>
+            <tr>
+              <td style="color:#9ca3af;font-weight:700;">1</td>
+              <td>Microsoft Teams</td>
+              <td>7,420</td>
+              <td style="color:#16a34a;">2,100</td>
+              <td style="color:#6b7280;">5,320</td>
+              <td>26.8%</td>
+              <td class="crawl-bar-cell"><div class="crawl-bar-outer"><div class="crawl-bar-inner" style="width:89.8%;background:#6b7280;"></div></div></td>
+            </tr>
+            <tr>
+              <td style="color:#9ca3af;font-weight:700;">2</td>
+              <td>Google Meet</td>
+              <td>5,130</td>
+              <td style="color:#16a34a;">1,440</td>
+              <td style="color:#6b7280;">3,690</td>
+              <td>18.5%</td>
+              <td class="crawl-bar-cell"><div class="crawl-bar-outer"><div class="crawl-bar-inner" style="width:62.1%;background:#6b7280;"></div></div></td>
+            </tr>
+            <tr>
+              <td style="color:#9ca3af;font-weight:700;">3</td>
+              <td>Webex by Cisco</td>
+              <td>3,980</td>
+              <td style="color:#16a34a;">1,120</td>
+              <td style="color:#6b7280;">2,860</td>
+              <td>14.4%</td>
+              <td class="crawl-bar-cell"><div class="crawl-bar-outer"><div class="crawl-bar-inner" style="width:48.2%;background:#6b7280;"></div></div></td>
+            </tr>
+            <tr>
+              <td style="color:#9ca3af;font-weight:700;">4</td>
+              <td>Slack</td>
+              <td>2,870</td>
+              <td style="color:#16a34a;">810</td>
+              <td style="color:#6b7280;">2,060</td>
+              <td>10.4%</td>
+              <td class="crawl-bar-cell"><div class="crawl-bar-outer"><div class="crawl-bar-inner" style="width:34.7%;background:#6b7280;"></div></div></td>
+            </tr>
+            <tr style="background:#f8fafc;font-weight:700;border-top:2px solid #e5e7eb;">
+              <td colspan="2">Total (all tracked)</td>
+              <td>27,661</td>
+              <td style="color:#16a34a;">7,941</td>
+              <td style="color:#6b7280;">19,720</td>
+              <td>100%</td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="padding:8px 14px;font-size:11px;color:#6b7280;border-top:1px solid #f3f4f6;">
+          <span style="color:#16a34a;font-weight:600;">🌐 Grounding</span> = real-time buyer queries · <span style="color:#374151;font-weight:600;">🤖 Training</span> = model training bots (GPTBot, ClaudeBot, etc.)
+        </div>
+      </div>
+    </div>
 
     <!-- 2. Requests by Operator + Page Type charts side-by-side -->
     <div class="two-col" style="margin-bottom:16px;">
@@ -1980,34 +2184,6 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
             <tr><td style="color:#9ca3af;font-weight:700;">6</td><td><strong>RingCentral Video</strong></td><td><strong>156</strong></td></tr>
           </tbody></table>
           <div style="padding:10px 12px;font-size:11px;color:#6b7280;border-top:1px solid #f3f4f6;">Based on AI-generated comparison queries · last 30 days</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 5. CATEGORY SHARE OF VOICE -->
-    <div class="section" style="margin-bottom:16px;">
-      <div class="sec-hd"><div><div class="sec-title">Category Share of Voice</div><div class="sec-sub">Your AI crawl presence vs competitors across video conferencing · Category: Video Conferencing</div></div></div>
-      <div class="sec-body">
-        <div style="height:150px;position:relative;margin-bottom:16px;"><canvas id="cat-sov-chart"></canvas></div>
-        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px;">
-          <div style="background:#f8fafc;border:1px solid #e5e7eb;border-radius:8px;padding:12px;"><div style="font-size:10px;font-weight:700;color:#6b7280;text-transform:uppercase;margin-bottom:4px;">Category Total Crawls</div><div style="font-size:22px;font-weight:900;color:#111827;">485K</div><div style="font-size:11px;color:#6b7280;margin-top:3px;">7 products shown + others</div></div>
-          <div style="background:#f0f0ff;border:1px solid #c7d2fe;border-radius:8px;padding:12px;"><div style="font-size:10px;font-weight:700;color:#6b7280;text-transform:uppercase;margin-bottom:4px;">Your Total Crawls</div><div style="font-size:22px;font-weight:900;color:#0074EF;">89.2K</div><div style="font-size:11px;color:#16a34a;font-weight:600;margin-top:3px;">↑ 15% vs last month</div></div>
-          <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:12px;"><div style="font-size:10px;font-weight:700;color:#6b7280;text-transform:uppercase;margin-bottom:4px;">Your Share of Voice</div><div style="font-size:22px;font-weight:900;color:#16a34a;">18.4%</div><div style="font-size:11px;color:#16a34a;font-weight:600;margin-top:3px;">#1 in category</div></div>
-          <div style="background:#f8fafc;border:1px solid #e5e7eb;border-radius:8px;padding:12px;"><div style="font-size:10px;font-weight:700;color:#6b7280;text-transform:uppercase;margin-bottom:4px;">Category Avg SoV</div><div style="font-size:22px;font-weight:900;color:#374151;">14.3%</div><div style="font-size:11px;color:#16a34a;font-weight:600;margin-top:3px;">You're +4.1pp above avg</div></div>
-        </div>
-        <div class="two-col">
-          <div>
-            <div style="font-size:11px;font-weight:700;color:#374151;margin-bottom:8px;text-transform:uppercase;letter-spacing:.04em;">Total Volume &amp; SoV</div>
-            <table class="dt"><thead><tr><th>Product</th><th>Total Crawls</th><th>SoV</th></tr></thead><tbody>
-              <tr style="background:#f0f0ff;"><td><strong>YOU · Zoom Workplace</strong></td><td><strong>89,234</strong></td><td><span class="badge b-green">18.4%</span></td></tr>
-              <tr><td>Microsoft Teams</td><td>76,543</td><td>15.8%</td></tr>
-              <tr><td>Google Meet</td><td>54,321</td><td>11.2%</td></tr>
-              <tr><td>Webex by Cisco</td><td>43,210</td><td>8.9%</td></tr>
-              <tr><td>Slack</td><td>38,432</td><td>7.9%</td></tr>
-              <tr><td>GoToMeeting</td><td>28,765</td><td>5.9%</td></tr>
-              <tr><td>RingCentral Video</td><td>21,543</td><td>4.4%</td></tr>
-            </tbody></table>
-          </div>
         </div>
       </div>
     </div>
@@ -2707,6 +2883,96 @@ document.addEventListener('DOMContentLoaded', function () {
 })();
 
 // ── Drawer data & logic ──────────────────────────────────────────────────────
+
+// ── LLM multi-select ─────────────────────────────────────────────────────────
+const LLM_EXTENDED = ['claude','copilot','grok','llama','mistral'];
+let _activeLLMs = new Set(['all']);
+
+function toggleLLM(key, dropItemEl) {
+  if (key === 'all') {
+    _activeLLMs = new Set(['all']);
+  } else {
+    _activeLLMs.delete('all');
+    if (_activeLLMs.has(key)) {
+      _activeLLMs.delete(key);
+      if (_activeLLMs.size === 0) _activeLLMs.add('all');
+    } else {
+      _activeLLMs.add(key);
+    }
+  }
+  renderLLMPills();
+}
+
+function renderLLMPills() {
+  // main pills
+  document.querySelectorAll('#llmPills .llm-pill').forEach(btn => {
+    btn.classList.toggle('active', _activeLLMs.has(btn.dataset.llm));
+  });
+  // dropdown items
+  document.querySelectorAll('#llmDropdown .llm-drop-item').forEach(item => {
+    const active = _activeLLMs.has(item.dataset.llm);
+    item.classList.toggle('active', active);
+    item.querySelector('.llm-drop-check').textContent = active ? '✓' : '';
+  });
+  // more button styling
+  const moreActive = LLM_EXTENDED.some(k => _activeLLMs.has(k));
+  document.getElementById('llmMoreBtn').classList.toggle('has-active', moreActive);
+}
+
+function toggleLLMDropdown(e) {
+  e.stopPropagation();
+  document.getElementById('llmDropdown').classList.toggle('open');
+  document.getElementById('prodDropdown').classList.remove('open');
+}
+
+// ── Product multi-select ──────────────────────────────────────────────────────
+let _activeProducts = new Set(['Zoom Workplace']);
+
+function toggleProdDropdown(e) {
+  e.stopPropagation();
+  document.getElementById('prodDropdown').classList.toggle('open');
+  document.getElementById('llmDropdown').classList.remove('open');
+}
+
+function toggleProduct(el, name) {
+  el.classList.toggle('active');
+  const check = el.querySelector('.prod-drop-check');
+  if (el.classList.contains('active')) {
+    _activeProducts.add(name);
+    check.textContent = '✓';
+  } else {
+    _activeProducts.delete(name);
+    check.textContent = '';
+  }
+  if (_activeProducts.size === 0) {
+    // always keep at least one selected — reselect last
+    _activeProducts.add(name);
+    el.classList.add('active');
+    check.textContent = '✓';
+  }
+  updateProdBtn();
+}
+
+function updateProdBtn() {
+  const label = document.getElementById('prodBtnLabel');
+  const count = document.getElementById('prodCount');
+  const arr = Array.from(_activeProducts);
+  if (arr.length === 1) {
+    label.textContent = arr[0];
+    count.style.display = 'none';
+  } else {
+    label.textContent = arr[0] + ' +' + (arr.length - 1);
+    count.style.display = 'none';
+  }
+}
+
+// Close dropdowns on outside click
+document.addEventListener('click', function() {
+  document.getElementById('llmDropdown').classList.remove('open');
+  document.getElementById('prodDropdown').classList.remove('open');
+});
+
+// ── Drawer ─────────────────
 const DRAWER_DATA = {
   t1: {
     label: 'Topic: Enterprise Video Conferencing',
