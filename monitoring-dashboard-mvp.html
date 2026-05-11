@@ -1057,6 +1057,45 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
 .sec-badge.b-crit { background: var(--dn-bg); color: var(--dn); }
 .sec-badge.b-good { background: var(--up-bg); color: var(--up); }
 
+
+/* ── Slide-in drawer ───────────────────────────────────────────────────────── */
+.src-drawer-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:900;opacity:0;pointer-events:none;transition:opacity .25s;}
+.src-drawer-overlay.open{opacity:1;pointer-events:all;}
+.src-drawer{position:fixed;top:0;right:0;bottom:0;width:560px;max-width:95vw;background:#fff;z-index:901;transform:translateX(100%);transition:transform .28s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;box-shadow:-8px 0 32px rgba(0,0,0,.12);}
+.src-drawer.open{transform:translateX(0);}
+.src-drawer-hd{display:flex;align-items:flex-start;justify-content:space-between;padding:20px 20px 16px 20px;border-bottom:1px solid #e5e7eb;flex-shrink:0;}
+.src-drawer-title{font-size:15px;font-weight:700;color:#111827;margin-bottom:3px;}
+.src-drawer-ctx{font-size:12px;color:#6b7280;}
+.src-drawer-close{background:none;border:none;font-size:18px;color:#6b7280;cursor:pointer;padding:2px 6px;border-radius:4px;line-height:1;flex-shrink:0;}
+.src-drawer-close:hover{background:#f3f4f6;color:#111827;}
+.src-drawer-tabs{display:flex;gap:0;border-bottom:1px solid #e5e7eb;flex-shrink:0;}
+.src-drawer-tab{padding:10px 20px;font-size:13px;font-weight:600;color:#6b7280;cursor:pointer;border-bottom:2px solid transparent;transition:color .15s,border-color .15s;}
+.src-drawer-tab.active{color:#0074EF;border-bottom-color:#0074EF;}
+.src-drawer-tab:hover:not(.active){color:#374151;}
+.src-drawer-search{padding:12px 16px;border-bottom:1px solid #f3f4f6;flex-shrink:0;}
+.src-drawer-search input{width:100%;box-sizing:border-box;border:1px solid #d1d5db;border-radius:6px;padding:7px 10px;font-size:12px;outline:none;color:#374151;}
+.src-drawer-search input:focus{border-color:#0074EF;box-shadow:0 0 0 2px rgba(0,116,239,.15);}
+.src-drawer-body{flex:1;overflow-y:auto;padding:0;}
+.drawer-row{display:flex;align-items:center;padding:9px 16px;border-bottom:1px solid #f3f4f6;gap:10px;}
+.drawer-row:hover{background:#f9fafb;}
+.drawer-rank{width:22px;text-align:center;font-size:11px;color:#9ca3af;font-weight:600;flex-shrink:0;}
+.drawer-name{flex:1;font-size:12px;color:#1f2937;font-weight:500;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.drawer-badge{font-size:9px;font-weight:700;padding:2px 5px;border-radius:3px;flex-shrink:0;}
+.badge-you{background:#dbeafe;color:#1d4ed8;}
+.badge-tr{background:#ede9fe;color:#6d28d9;}
+.drawer-bar-wrap{width:80px;flex-shrink:0;}
+.drawer-bar-bg{height:6px;background:#f3f4f6;border-radius:3px;overflow:hidden;}
+.drawer-bar-fill{height:6px;background:#0074EF;border-radius:3px;transition:width .3s;}
+.drawer-cnt{width:60px;text-align:right;font-size:11px;color:#6b7280;flex-shrink:0;}
+.src-drawer-footer{padding:12px 16px;border-top:1px solid #e5e7eb;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;}
+.drawer-total{font-size:11px;color:#6b7280;}
+.drawer-export{font-size:11px;color:#0074EF;font-weight:600;cursor:pointer;background:none;border:none;padding:0;}
+/* ── View-all CTAs ─────────────────────────────────────────────────────────── */
+.view-all-cta{display:inline-flex;align-items:center;gap:4px;font-size:11px;color:#0074EF;font-weight:600;cursor:pointer;background:none;border:none;padding:0;text-decoration:none;}
+.view-all-cta:hover{text-decoration:underline;}
+.src-bar-footer{padding:6px 16px 8px 40px;border-top:1px solid #eef0f6;background:#f5f3ff;display:flex;gap:20px;}
+.prompt-cta-bar{padding:4px 16px 8px 56px;background:#EBF4FE;display:flex;gap:16px;}
+
 </style></head><body>
 <input type="radio" name="main" id="main-home">
 <input type="radio" name="main" id="main-monitoring" checked>
@@ -1314,6 +1353,10 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
             <div><div class="src-mini-title">Top Cited Sources — this topic</div><div class="src-row"><span class="src-domain">trustradius.com</span><span class="src-cnt">3,060 citations</span></div><div class="src-row"><span class="src-domain">g2.com</span><span class="src-cnt">960 citations</span></div><div class="src-row"><span class="src-domain">forbes.com</span><span class="src-cnt">480 citations</span></div></div>
             <div><div class="src-mini-title">Top Cited Pages — this topic</div><div class="src-row"><span class="src-domain">/categories/video-conferencing</span><span class="src-cnt">1,480</span></div><div class="src-row"><span class="src-domain">/products/zoom-workplace/reviews</span><span class="src-cnt">1,240</span></div><div class="src-row"><span class="src-domain">/compare/zoom-vs-microsoft-teams</span><span class="src-cnt">820</span></div></div>
           </div>
+          <div class="src-bar-footer">
+            <button class="view-all-cta" onclick="openDrawer('t1','sources')">📋 View all 14 cited sources →</button>
+            <button class="view-all-cta" onclick="openDrawer('t1','pages')">🔗 View all 9 cited pages →</button>
+          </div>
           <!-- Prompt 1 -->
           <details class="prompt-dr">
             <summary><div class="row-prompt"><div class="col-n"><span class="p-arrow">▶</span>What is the best video conferencing software for enterprise?</div><div class="col-k">48,200</div><div class="col-k" style="color:#10b981;">54%</div><div class="col-k">42,400</div><div class="col-k">280</div><div class="col-s">7.7/10</div>
@@ -1322,6 +1365,10 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
               <div><div class="src-mini-title">Cited Sources</div><div class="src-row"><span class="src-domain">trustradius.com</span><span class="src-cnt">1,820 cit.</span></div><div class="src-row"><span class="src-domain">g2.com</span><span class="src-cnt">640 cit.</span></div><div class="src-row"><span class="src-domain">forbes.com</span><span class="src-cnt">280 cit.</span></div></div>
               <div><div class="src-mini-title">Driving Activity — Pages</div><div class="src-row"><span class="src-domain">/categories/video-conferencing</span><span class="src-cnt">940</span></div><div class="src-row"><span class="src-domain">/products/zoom-workplace/reviews</span><span class="src-cnt">820</span></div><div class="src-row"><span class="src-domain">/compare/zoom-vs-microsoft-teams</span><span class="src-cnt">380</span></div></div>
             </div>
+            <div class="prompt-cta-bar">
+              <button class="view-all-cta" onclick="openDrawer('p11','sources')">📋 View all 8 cited sources →</button>
+              <button class="view-all-cta" onclick="openDrawer('p11','pages')">🔗 View all 6 cited pages →</button>
+            </div>
           </details>
           <!-- Prompt 2 -->
           <details class="prompt-dr">
@@ -1329,6 +1376,10 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
             <div class="prompt-body">
               <div><div class="src-mini-title">Cited Sources</div><div class="src-row"><span class="src-domain">trustradius.com</span><span class="src-cnt">1,240 cit.</span></div><div class="src-row"><span class="src-domain">techradar.com</span><span class="src-cnt">480 cit.</span></div><div class="src-row"><span class="src-domain">g2.com</span><span class="src-cnt">320 cit.</span></div></div>
               <div><div class="src-mini-title">Driving Activity — Pages</div><div class="src-row"><span class="src-domain">/categories/video-conferencing</span><span class="src-cnt">540</span></div><div class="src-row"><span class="src-domain">/products/zoom-workplace/reviews</span><span class="src-cnt">420</span></div><div class="src-row"><span class="src-domain">/products/teams/reviews</span><span class="src-cnt">260</span></div></div>
+            </div>
+            <div class="prompt-cta-bar">
+              <button class="view-all-cta" onclick="openDrawer('p12','sources')">📋 View all 6 cited sources →</button>
+              <button class="view-all-cta" onclick="openDrawer('p12','pages')">🔗 View all 5 cited pages →</button>
             </div>
           </details>
           <!-- Prompt 3 – not set up -->
@@ -1359,11 +1410,19 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
             <div><div class="src-mini-title">Top Cited Sources — this topic</div><div class="src-row"><span class="src-domain">trustradius.com</span><span class="src-cnt">2,560 citations</span></div><div class="src-row"><span class="src-domain">pcmag.com</span><span class="src-cnt">620 citations</span></div><div class="src-row"><span class="src-domain">techradar.com</span><span class="src-cnt">340 citations</span></div></div>
             <div><div class="src-mini-title">Top Cited Pages — this topic</div><div class="src-row"><span class="src-domain">/compare/zoom-vs-microsoft-teams</span><span class="src-cnt">1,580</span></div><div class="src-row"><span class="src-domain">/products/zoom-workplace/reviews</span><span class="src-cnt">680</span></div><div class="src-row"><span class="src-domain">/categories/video-conferencing</span><span class="src-cnt">420</span></div></div>
           </div>
+          <div class="src-bar-footer">
+            <button class="view-all-cta" onclick="openDrawer('t2','sources')">📋 View all 10 cited sources →</button>
+            <button class="view-all-cta" onclick="openDrawer('t2','pages')">🔗 View all 6 cited pages →</button>
+          </div>
           <details class="prompt-dr">
             <summary><div class="row-prompt"><div class="col-n"><span class="p-arrow">▶</span>Zoom vs Microsoft Teams comparison</div><div class="col-k">38,200</div><div class="col-k" style="color:#10b981;">53%</div><div class="col-k">36,400</div><div class="col-k">224</div><div class="col-s">8.1/10</div></div></summary>
             <div class="prompt-body">
               <div><div class="src-mini-title">Cited Sources</div><div class="src-row"><span class="src-domain">trustradius.com</span><span class="src-cnt">1,580 cit.</span></div><div class="src-row"><span class="src-domain">pcmag.com</span><span class="src-cnt">620 cit.</span></div><div class="src-row"><span class="src-domain">techradar.com</span><span class="src-cnt">340 cit.</span></div></div>
               <div><div class="src-mini-title">Driving Activity — Pages</div><div class="src-row"><span class="src-domain">/compare/zoom-vs-microsoft-teams</span><span class="src-cnt">1,240</span></div><div class="src-row"><span class="src-domain">/products/zoom-workplace/reviews</span><span class="src-cnt">480</span></div><div class="src-row"><span class="src-domain">/categories/video-conferencing</span><span class="src-cnt">280</span></div></div>
+            </div>
+            <div class="prompt-cta-bar">
+              <button class="view-all-cta" onclick="openDrawer('p21','sources')">📋 View all 7 cited sources →</button>
+              <button class="view-all-cta" onclick="openDrawer('p21','pages')">🔗 View all 5 cited pages →</button>
             </div>
           </details>
           <details class="prompt-dr">
@@ -1371,6 +1430,10 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
             <div class="prompt-body">
               <div><div class="src-mini-title">Cited Sources</div><div class="src-row"><span class="src-domain">trustradius.com</span><span class="src-cnt">980 cit.</span></div><div class="src-row"><span class="src-domain">g2.com</span><span class="src-cnt">420 cit.</span></div><div class="src-row"><span class="src-domain">businessinsider.com</span><span class="src-cnt">260 cit.</span></div></div>
               <div><div class="src-mini-title">Driving Activity — Pages</div><div class="src-row"><span class="src-domain">/compare/zoom-vs-microsoft-teams</span><span class="src-cnt">680</span></div><div class="src-row"><span class="src-domain">/products/zoom-workplace/reviews</span><span class="src-cnt">340</span></div><div class="src-row"><span class="src-domain">/categories/video-conferencing</span><span class="src-cnt">190</span></div></div>
+            </div>
+            <div class="prompt-cta-bar">
+              <button class="view-all-cta" onclick="openDrawer('p22','sources')">📋 View all 6 cited sources →</button>
+              <button class="view-all-cta" onclick="openDrawer('p22','pages')">🔗 View all 4 cited pages →</button>
             </div>
           </details>
         </div>
@@ -1393,11 +1456,19 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
             <div><div class="src-mini-title">Top Cited Sources — this topic</div><div class="src-row"><span class="src-domain">trustradius.com</span><span class="src-cnt">1,360 citations</span></div><div class="src-row"><span class="src-domain">capterra.com</span><span class="src-cnt">380 citations</span></div><div class="src-row"><span class="src-domain">getapp.com</span><span class="src-cnt">220 citations</span></div></div>
             <div><div class="src-mini-title">Top Cited Pages — this topic</div><div class="src-row"><span class="src-domain">/products/zoom-workplace/pricing</span><span class="src-cnt">540</span></div><div class="src-row"><span class="src-domain">/compare/zoom-vs-microsoft-teams</span><span class="src-cnt">380</span></div><div class="src-row"><span class="src-domain">/products/zoom-workplace/alternatives</span><span class="src-cnt">260</span></div></div>
           </div>
+          <div class="src-bar-footer">
+            <button class="view-all-cta" onclick="openDrawer('t3','sources')">📋 View all 8 cited sources →</button>
+            <button class="view-all-cta" onclick="openDrawer('t3','pages')">🔗 View all 5 cited pages →</button>
+          </div>
           <details class="prompt-dr">
             <summary><div class="row-prompt"><div class="col-n"><span class="p-arrow">▶</span>Zoom pricing for 500 users</div><div class="col-k">22,000</div><div class="col-k" style="color:#ca8a04;">48%</div><div class="col-k">21,800</div><div class="col-k">98</div><div class="col-s">6.8/10</div></div></summary>
             <div class="prompt-body">
               <div><div class="src-mini-title">Cited Sources</div><div class="src-row"><span class="src-domain">trustradius.com</span><span class="src-cnt">980 cit.</span></div><div class="src-row"><span class="src-domain">capterra.com</span><span class="src-cnt">380 cit.</span></div><div class="src-row"><span class="src-domain">getapp.com</span><span class="src-cnt">220 cit.</span></div></div>
               <div><div class="src-mini-title">Driving Activity — Pages</div><div class="src-row"><span class="src-domain">/products/zoom-workplace/pricing</span><span class="src-cnt">540</span></div><div class="src-row"><span class="src-domain">/compare/zoom-vs-microsoft-teams</span><span class="src-cnt">320</span></div><div class="src-row"><span class="src-domain">/products/zoom-workplace/reviews</span><span class="src-cnt">200</span></div></div>
+            </div>
+            <div class="prompt-cta-bar">
+              <button class="view-all-cta" onclick="openDrawer('p31','sources')">📋 View all 5 cited sources →</button>
+              <button class="view-all-cta" onclick="openDrawer('p31','pages')">🔗 View all 4 cited pages →</button>
             </div>
           </details>
           <details class="prompt-dr">
@@ -2634,4 +2705,287 @@ document.addEventListener('DOMContentLoaded', function () {
 
 }); // DOMContentLoaded
 })();
+
+// ── Drawer data & logic ──────────────────────────────────────────────────────
+const DRAWER_DATA = {
+  t1: {
+    label: 'Topic: Enterprise Video Conferencing',
+    sources: [
+      {d:'trustradius.com', n:3060, you:true},
+      {d:'g2.com', n:960},
+      {d:'forbes.com', n:480},
+      {d:'techradar.com', n:380},
+      {d:'pcmag.com', n:320},
+      {d:'zdnet.com', n:260},
+      {d:'businessinsider.com', n:210},
+      {d:'cnbc.com', n:180},
+      {d:'gartner.com', n:160},
+      {d:'forrester.com', n:140},
+      {d:'cio.com', n:120},
+      {d:'computerworld.com', n:100},
+      {d:'venturebeat.com', n:80},
+      {d:'techcrunch.com', n:60}
+    ],
+    pages: [
+      {p:'/categories/video-conferencing', n:1480, you:true},
+      {p:'/products/zoom-workplace/reviews', n:1240, you:true},
+      {p:'/compare/zoom-vs-microsoft-teams', n:820, you:true},
+      {p:'/products/microsoft-teams/reviews', n:680},
+      {p:'/products/google-meet/reviews', n:420},
+      {p:'/products/zoom-workplace/alternatives', n:340, you:true},
+      {p:'/compare/zoom-vs-google-meet', n:280, you:true},
+      {p:'/products/webex/reviews', n:220},
+      {p:'/categories/web-conferencing', n:180, you:true}
+    ]
+  },
+  t2: {
+    label: 'Topic: Competitive Comparisons',
+    sources: [
+      {d:'trustradius.com', n:2560, you:true},
+      {d:'pcmag.com', n:620},
+      {d:'techradar.com', n:340},
+      {d:'g2.com', n:280},
+      {d:'businessinsider.com', n:220},
+      {d:'zdnet.com', n:180},
+      {d:'cnet.com', n:140},
+      {d:'forbes.com', n:120},
+      {d:'tomsguide.com', n:100},
+      {d:'techrepublic.com', n:80}
+    ],
+    pages: [
+      {p:'/compare/zoom-vs-microsoft-teams', n:1580, you:true},
+      {p:'/products/zoom-workplace/reviews', n:680, you:true},
+      {p:'/categories/video-conferencing', n:420, you:true},
+      {p:'/compare/zoom-vs-google-meet', n:340, you:true},
+      {p:'/products/microsoft-teams/reviews', n:260},
+      {p:'/compare/teams-vs-google-meet', n:180}
+    ]
+  },
+  t3: {
+    label: 'Topic: Pricing & Alternatives',
+    sources: [
+      {d:'trustradius.com', n:1360, you:true},
+      {d:'capterra.com', n:380},
+      {d:'getapp.com', n:220},
+      {d:'g2.com', n:180},
+      {d:'softwareadvice.com', n:140},
+      {d:'techradar.com', n:110},
+      {d:'pcmag.com', n:90},
+      {d:'forbes.com', n:70}
+    ],
+    pages: [
+      {p:'/products/zoom-workplace/pricing', n:540, you:true},
+      {p:'/compare/zoom-vs-microsoft-teams', n:380, you:true},
+      {p:'/products/zoom-workplace/alternatives', n:260, you:true},
+      {p:'/categories/video-conferencing', n:180, you:true},
+      {p:'/products/zoom-workplace/reviews', n:140, you:true}
+    ]
+  },
+  p11: {
+    label: 'Prompt: Best video conferencing for enterprise?',
+    sources: [
+      {d:'trustradius.com', n:1820, you:true},
+      {d:'g2.com', n:640},
+      {d:'forbes.com', n:280},
+      {d:'techradar.com', n:220},
+      {d:'pcmag.com', n:180},
+      {d:'zdnet.com', n:140},
+      {d:'businessinsider.com', n:100},
+      {d:'cio.com', n:80}
+    ],
+    pages: [
+      {p:'/categories/video-conferencing', n:940, you:true},
+      {p:'/products/zoom-workplace/reviews', n:820, you:true},
+      {p:'/compare/zoom-vs-microsoft-teams', n:380, you:true},
+      {p:'/products/microsoft-teams/reviews', n:280},
+      {p:'/categories/web-conferencing', n:200, you:true},
+      {p:'/products/zoom-workplace/alternatives', n:160, you:true}
+    ]
+  },
+  p12: {
+    label: 'Prompt: Best enterprise video conferencing platforms 2025',
+    sources: [
+      {d:'trustradius.com', n:1240, you:true},
+      {d:'techradar.com', n:480},
+      {d:'g2.com', n:320},
+      {d:'pcmag.com', n:240},
+      {d:'zdnet.com', n:180},
+      {d:'forbes.com', n:140}
+    ],
+    pages: [
+      {p:'/categories/video-conferencing', n:540, you:true},
+      {p:'/products/zoom-workplace/reviews', n:420, you:true},
+      {p:'/products/teams/reviews', n:260},
+      {p:'/compare/zoom-vs-microsoft-teams', n:200, you:true},
+      {p:'/products/zoom-workplace/alternatives', n:140, you:true}
+    ]
+  },
+  p21: {
+    label: 'Prompt: Zoom vs Microsoft Teams comparison',
+    sources: [
+      {d:'trustradius.com', n:1580, you:true},
+      {d:'pcmag.com', n:620},
+      {d:'techradar.com', n:340},
+      {d:'g2.com', n:240},
+      {d:'businessinsider.com', n:180},
+      {d:'zdnet.com', n:120},
+      {d:'cnet.com', n:80}
+    ],
+    pages: [
+      {p:'/compare/zoom-vs-microsoft-teams', n:1240, you:true},
+      {p:'/products/zoom-workplace/reviews', n:480, you:true},
+      {p:'/categories/video-conferencing', n:280, you:true},
+      {p:'/products/microsoft-teams/reviews', n:220},
+      {p:'/compare/zoom-vs-google-meet', n:160, you:true}
+    ]
+  },
+  p22: {
+    label: 'Prompt: Is Zoom or Teams better for enterprise?',
+    sources: [
+      {d:'trustradius.com', n:980, you:true},
+      {d:'g2.com', n:420},
+      {d:'businessinsider.com', n:260},
+      {d:'techradar.com', n:180},
+      {d:'pcmag.com', n:130},
+      {d:'zdnet.com', n:90}
+    ],
+    pages: [
+      {p:'/compare/zoom-vs-microsoft-teams', n:680, you:true},
+      {p:'/products/zoom-workplace/reviews', n:340, you:true},
+      {p:'/categories/video-conferencing', n:190, you:true},
+      {p:'/products/microsoft-teams/reviews', n:140}
+    ]
+  },
+  p31: {
+    label: 'Prompt: Zoom pricing for 500 users',
+    sources: [
+      {d:'trustradius.com', n:980, you:true},
+      {d:'capterra.com', n:380},
+      {d:'getapp.com', n:220},
+      {d:'g2.com', n:160},
+      {d:'softwareadvice.com', n:100}
+    ],
+    pages: [
+      {p:'/products/zoom-workplace/pricing', n:540, you:true},
+      {p:'/compare/zoom-vs-microsoft-teams', n:320, you:true},
+      {p:'/products/zoom-workplace/reviews', n:200, you:true},
+      {p:'/products/zoom-workplace/alternatives', n:120, you:true}
+    ]
+  }
+};
+
+let _drawerKey = null;
+let _drawerTab = 'sources';
+
+function openDrawer(key, tab) {
+  _drawerKey = key;
+  _drawerTab = tab || 'sources';
+  const data = DRAWER_DATA[key];
+  if (!data) return;
+  document.getElementById('drawerTitle').textContent = 'Cited Sources & Pages';
+  document.getElementById('drawerCtx').textContent = data.label;
+  document.getElementById('drawerSearch').value = '';
+  switchDrawerTab(_drawerTab, true);
+  document.getElementById('srcOverlay').classList.add('open');
+  document.getElementById('srcDrawer').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeDrawer() {
+  document.getElementById('srcOverlay').classList.remove('open');
+  document.getElementById('srcDrawer').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function switchDrawerTab(tab, skipRender) {
+  _drawerTab = tab;
+  document.getElementById('tabSrc').classList.toggle('active', tab === 'sources');
+  document.getElementById('tabPg').classList.toggle('active', tab === 'pages');
+  if (!skipRender) document.getElementById('drawerSearch').value = '';
+  renderDrawer();
+}
+
+function filterDrawer() {
+  renderDrawer();
+}
+
+function renderDrawer() {
+  if (!_drawerKey) return;
+  const data = DRAWER_DATA[_drawerKey];
+  const q = (document.getElementById('drawerSearch').value || '').toLowerCase();
+  const items = _drawerTab === 'sources' ? data.sources : data.pages;
+  const filtered = q ? items.filter(i => (i.d || i.p).toLowerCase().includes(q)) : items;
+  const maxN = items[0] ? items[0].n : 1;
+  const body = document.getElementById('drawerBody');
+  body.innerHTML = filtered.length === 0
+    ? '<div style="padding:24px 16px;text-align:center;color:#9ca3af;font-size:13px;">No results match your filter.</div>'
+    : filtered.map((item, idx) => {
+        const name = item.d || item.p;
+        const isYou = item.you;
+        const isTR = isYou && (name === 'trustradius.com' || name.startsWith('/'));
+        const pct = Math.round((item.n / maxN) * 100);
+        const label = _drawerTab === 'sources'
+          ? item.n.toLocaleString() + ' citations'
+          : item.n.toLocaleString() + ' visits';
+        const badge = isYou
+          ? (isTR ? '<span class="drawer-badge badge-tr">TR PAGE</span>' : '<span class="drawer-badge badge-you">YOUR DOMAIN</span>')
+          : '';
+        return `<div class="drawer-row">
+          <div class="drawer-rank">${idx + 1}</div>
+          <div class="drawer-name" title="${name}">${name}</div>
+          ${badge}
+          <div class="drawer-bar-wrap"><div class="drawer-bar-bg"><div class="drawer-bar-fill" style="width:${pct}%"></div></div></div>
+          <div class="drawer-cnt">${label}</div>
+        </div>`;
+      }).join('');
+  document.getElementById('drawerTotal').textContent =
+    filtered.length + ' of ' + items.length + ' ' + (_drawerTab === 'sources' ? 'sources' : 'pages');
+}
+
+function exportDrawer() {
+  if (!_drawerKey) return;
+  const data = DRAWER_DATA[_drawerKey];
+  const items = _drawerTab === 'sources' ? data.sources : data.pages;
+  const header = _drawerTab === 'sources' ? 'Rank,Domain,Citations,Your Domain' : 'Rank,Page Path,Visits,TR Page';
+  const rows = items.map((item, i) => {
+    const name = item.d || item.p;
+    return `${i+1},"${name}",${item.n},${item.you ? 'Yes' : 'No'}`;
+  });
+  const csv = [header, ...rows].join('\n');
+  const blob = new Blob([csv], {type:'text/csv'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = _drawerKey + '-' + _drawerTab + '.csv';
+  a.click();
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeDrawer();
+});
+
 </script>
+
+<!-- ── Slide-in Drawer ───────────────────────────────────────────────────── -->
+<div class="src-drawer-overlay" id="srcOverlay" onclick="closeDrawer()"></div>
+<div class="src-drawer" id="srcDrawer">
+  <div class="src-drawer-hd">
+    <div>
+      <div class="src-drawer-title" id="drawerTitle">Cited Sources &amp; Pages</div>
+      <div class="src-drawer-ctx" id="drawerCtx"></div>
+    </div>
+    <button class="src-drawer-close" onclick="closeDrawer()">✕</button>
+  </div>
+  <div class="src-drawer-tabs">
+    <div class="src-drawer-tab active" id="tabSrc" onclick="switchDrawerTab('sources')">📋 Cited Sources</div>
+    <div class="src-drawer-tab" id="tabPg" onclick="switchDrawerTab('pages')">🔗 Cited Pages</div>
+  </div>
+  <div class="src-drawer-search">
+    <input type="text" id="drawerSearch" placeholder="Filter sources or pages…" oninput="filterDrawer()">
+  </div>
+  <div class="src-drawer-body" id="drawerBody"></div>
+  <div class="src-drawer-footer">
+    <span class="drawer-total" id="drawerTotal"></span>
+    <button class="drawer-export" onclick="exportDrawer()">⬇ Export CSV</button>
+  </div>
+</div>
+
