@@ -9,7 +9,14 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "export:html": "vite build",
+    "share:dashboard": "npm run build && rm -f geo-dashboard-stakeholders.zip public/geo-dashboard-stakeholders.zip dist/geo-dashboard-stakeholders.zip 2>/dev/null; cd dist && zip -r ../geo-dashboard-stakeholders.zip . && cd .. && cp geo-dashboard-stakeholders.zip public/ && cp geo-dashboard-stakeholders.zip dist/ && echo 'Created geo-dashboard-stakeholders.zip (also in public/ for dev download).'",
+    "preview": "vite preview",
+    "deploy": "npx vercel --prod --yes",
+    "deploy:geo-mvp": "npm run build && VERCEL_ORG_ID=team_GOiRl9ivDHNrDJmV0E9XV5SN VERCEL_PROJECT_ID=prj_SepgDQIxDTfheLGqnbGLrHMv8qXo npx vercel dist --prod --yes --scope tannerjudges-projects",
+    "deploy:preview": "npx vercel --yes",
+    "deploy:netlify": "npm run build && npx --yes netlify-cli deploy --prod --dir=dist",
+    "deploy:surge": "npm run build && npx --yes surge dist"
   },
   "dependencies": {
     "react": "^18.3.1",

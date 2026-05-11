@@ -23,6 +23,7 @@ export default defineConfig({
         'competitive-intelligence': resolve(__dirname, 'competitive-intelligence.html'),
         'geo-dashboard': resolve(__dirname, 'geo-dashboard.html'),
         'monitoring-dashboard': resolve(__dirname, 'monitoring-dashboard.html'),
+        'monitoring-dashboard-mvp': resolve(__dirname, 'monitoring-dashboard-mvp.html'),
       }
     }
   }
