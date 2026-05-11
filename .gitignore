@@ -10,6 +10,8 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
+geo-dashboard-stakeholders.zip
+public/geo-dashboard-stakeholders.zip
 *.local
 
 # Editor directories and files
@@ -25,3 +27,4 @@ dist-ssr
 
 # Playwright
 .playwright-mcp
+.vercel

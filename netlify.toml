@@ -1,0 +1,19 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# Match vercel.json-style short paths (optional convenience URLs)
+[[redirects]]
+  from = "/geo"
+  to = "/geo-dashboard.html"
+  status = 200
+
+[[redirects]]
+  from = "/geo-dashboard"
+  to = "/geo-dashboard.html"
+  status = 200
+
+[[redirects]]
+  from = "/competitive-intelligence"
+  to = "/competitive-intelligence.html"
+  status = 200

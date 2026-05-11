@@ -80,6 +80,15 @@ body{background:#f3f4f6;color:#111827;}
 .chart-canvas-wrap{position:relative;height:280px;margin:12px 0 4px;}
 .source-note{font-size:11px;color:#9ca3af;margin-top:6px;}
 
+/* Category Share of Voice — filtered views */
+.cov-sov-tab-nav{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;border-bottom:2px solid #e5e7eb;padding-bottom:0;}
+.cov-sov-tab-btn{padding:10px 18px;font-size:13px;font-weight:600;border:2px solid transparent;border-bottom:none;background:#fff;color:#6b7280;border-radius:8px 8px 0 0;cursor:pointer;margin-bottom:-2px;transition:color .15s,border-color .15s,background .15s;}
+.cov-sov-tab-btn:hover{color:#111827;background:#f9fafb;}
+.cov-sov-tab-btn.is-active{color:#2563eb;border-color:#e5e7eb;border-bottom-color:#fff;background:#fff;box-shadow:0 -1px 0 #fff;position:relative;z-index:1;}
+.cov-sov-pane{display:none;}
+.cov-sov-pane.is-visible{display:block;}
+.cov-you-badge{display:inline-block;background:#6366f1;color:#fff;font-size:10px;font-weight:800;padding:2px 7px;border-radius:4px;margin-right:8px;vertical-align:middle;}
+
 body{margin:0;background:#f3f4f6;}
 </style>
 </head>
@@ -284,22 +293,74 @@ body{margin:0;background:#f3f4f6;}
         <div class="inj-body">
           <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px;">
             <div class="kpi-card"><div class="kpi-label">Category Total Crawls</div><div class="kpi-val">485K</div><div class="kpi-sub">7 products shown + others</div></div>
-            <div class="kpi-card"><div class="kpi-label">Your Total Crawls</div><div class="kpi-val" style="color:#6366f1;">89.2K</div><div class="kpi-sub">↑ 16% vs last month</div></div>
+            <div class="kpi-card"><div class="kpi-label">Your Total Crawls</div><div class="kpi-val" style="color:#6366f1;">89.2K</div><div class="kpi-sub">↑ 15% vs last month</div></div>
             <div class="kpi-card"><div class="kpi-label">Your Share of Voice</div><div class="kpi-val" style="color:#6366f1;">18.4%</div><div class="kpi-sub">#1 in category</div></div>
             <div class="kpi-card"><div class="kpi-label">Category Avg SoV</div><div class="kpi-val">14.3%</div><div class="kpi-sub">You're +4.1pp above avg</div></div>
           </div>
-          <table class="looker-table">
-            <thead><tr><th>Product</th><th>Product Pages</th><th>Reviews</th><th>Comparison</th><th>Alternative</th><th>Pricing</th></tr></thead>
-            <tbody>
-              <tr style="background:#f0f9ff;"><td><strong style="color:#6366f1;">YOU — Zoom Workplace</strong></td><td><strong>28,432</strong></td><td><strong>18,234</strong></td><td><strong>12,345</strong></td><td><strong>7,654</strong></td><td><strong>2,293</strong></td></tr>
-              <tr><td>Microsoft Teams</td><td>23,456</td><td>15,432</td><td>11,234</td><td>6,543</td><td>3,211</td></tr>
-              <tr><td>Google Meet</td><td>17,654</td><td>9,876</td><td>8,123</td><td>4,643</td><td>1,656</td></tr>
-              <tr><td>Webex by Cisco</td><td>14,321</td><td>7,654</td><td>5,432</td><td>4,321</td><td>1,482</td></tr>
-              <tr><td>Slack</td><td>12,345</td><td>6,543</td><td>5,432</td><td>3,765</td><td>1,458</td></tr>
-              <tr><td>GoToMeeting</td><td>9,876</td><td>5,432</td><td>3,456</td><td>2,789</td><td>1,410</td></tr>
-              <tr><td>RingCentral Video</td><td>7,654</td><td>3,765</td><td>2,876</td><td>2,109</td><td>583</td></tr>
-            </tbody>
-          </table>
+
+          <div class="cov-sov-tab-nav" role="tablist" aria-label="Category share of voice views">
+            <button type="button" class="cov-sov-tab-btn is-active" id="cov-tab-volume" role="tab" aria-selected="true" onclick="switchCovTab('volume')">Total Volume &amp; SoV</button>
+            <button type="button" class="cov-sov-tab-btn" id="cov-tab-funnel" role="tab" aria-selected="false" onclick="switchCovTab('funnel')">By Funnel Stage</button>
+            <button type="button" class="cov-sov-tab-btn" id="cov-tab-pagetype" role="tab" aria-selected="false" onclick="switchCovTab('pagetype')">By Page Type</button>
+          </div>
+
+          <!-- Pane 1: Total volume & share of voice -->
+          <div id="cov-pane-volume" class="cov-sov-pane is-visible" role="tabpanel">
+            <table class="looker-table">
+              <thead><tr><th>Product</th><th style="text-align:right;">Total Crawls</th><th>Share of Voice</th></tr></thead>
+              <tbody>
+                <tr style="background:#eff6ff;"><td><span class="cov-you-badge">YOU</span><strong style="color:#6366f1;">Zoom Workplace</strong></td><td style="text-align:right;font-weight:700;">89,234</td><td><div class="share-bar-wrap"><div class="share-bar"><div class="share-bar-fill" style="width:100%;background:#6366f1;"></div></div><span class="share-pct">18.4%</span></div></td></tr>
+                <tr><td>Microsoft Teams</td><td style="text-align:right;">76,543</td><td><div class="share-bar-wrap"><div class="share-bar"><div class="share-bar-fill" style="width:85.8%;background:#9ca3af;"></div></div><span class="share-pct">15.8%</span></div></td></tr>
+                <tr><td>Google Meet</td><td style="text-align:right;">54,321</td><td><div class="share-bar-wrap"><div class="share-bar"><div class="share-bar-fill" style="width:60.9%;background:#9ca3af;"></div></div><span class="share-pct">11.2%</span></div></td></tr>
+                <tr><td>Webex by Cisco</td><td style="text-align:right;">43,210</td><td><div class="share-bar-wrap"><div class="share-bar"><div class="share-bar-fill" style="width:48.4%;background:#9ca3af;"></div></div><span class="share-pct">8.9%</span></div></td></tr>
+                <tr><td>Slack</td><td style="text-align:right;">38,432</td><td><div class="share-bar-wrap"><div class="share-bar"><div class="share-bar-fill" style="width:43.1%;background:#9ca3af;"></div></div><span class="share-pct">7.9%</span></div></td></tr>
+                <tr><td>GoToMeeting</td><td style="text-align:right;">28,765</td><td><div class="share-bar-wrap"><div class="share-bar"><div class="share-bar-fill" style="width:32.2%;background:#9ca3af;"></div></div><span class="share-pct">5.9%</span></div></td></tr>
+                <tr><td>RingCentral Video</td><td style="text-align:right;">21,543</td><td><div class="share-bar-wrap"><div class="share-bar"><div class="share-bar-fill" style="width:24.1%;background:#9ca3af;"></div></div><span class="share-pct">4.4%</span></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Pane 2: By funnel stage -->
+          <div id="cov-pane-funnel" class="cov-sov-pane" role="tabpanel">
+            <p style="font-size:12px;color:#6b7280;margin:0 0 12px;line-height:1.45;">AI crawl requests attributed by buyer journey stage — ToFu (category), MoFu (product + reviews), BoFu (comparison, alternatives, pricing).</p>
+            <table class="looker-table">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th style="text-align:center;background:#fefce8;">ToFu<br/><span style="font-weight:500;font-size:10px;color:#92400e;">Category</span></th>
+                  <th style="text-align:center;background:#f0fdf4;">MoFu<br/><span style="font-weight:500;font-size:10px;color:#166534;">Product + Reviews</span></th>
+                  <th style="text-align:center;background:#eff6ff;">BoFu<br/><span style="font-weight:500;font-size:10px;color:#1e40af;">Compare + Alt + Pricing</span></th>
+                  <th style="text-align:right;">Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="background:#eff6ff;"><td><span class="cov-you-badge">YOU</span><strong style="color:#6366f1;">Zoom Workplace</strong></td><td style="text-align:center;background:#fffbeb;">9,234</td><td style="text-align:center;background:#f0fdf4;">31,400</td><td style="text-align:center;background:#eff6ff;">48,600</td><td style="text-align:right;font-weight:700;">89,234</td></tr>
+                <tr><td>Microsoft Teams</td><td style="text-align:center;background:#fffbeb;">8,100</td><td style="text-align:center;background:#f0fdf4;">26,800</td><td style="text-align:center;background:#eff6ff;">41,643</td><td style="text-align:right;">76,543</td></tr>
+                <tr><td>Google Meet</td><td style="text-align:center;background:#fffbeb;">6,200</td><td style="text-align:center;background:#f0fdf4;">19,500</td><td style="text-align:center;background:#eff6ff;">28,621</td><td style="text-align:right;">54,321</td></tr>
+                <tr><td>Webex by Cisco</td><td style="text-align:center;background:#fffbeb;">4,890</td><td style="text-align:center;background:#f0fdf4;">15,200</td><td style="text-align:center;background:#eff6ff;">23,120</td><td style="text-align:right;">43,210</td></tr>
+                <tr><td>Slack</td><td style="text-align:center;background:#fffbeb;">3,432</td><td style="text-align:center;background:#f0fdf4;">14,000</td><td style="text-align:center;background:#eff6ff;">21,000</td><td style="text-align:right;">38,432</td></tr>
+                <tr><td>GoToMeeting</td><td style="text-align:center;background:#fffbeb;">2,765</td><td style="text-align:center;background:#f0fdf4;">9,800</td><td style="text-align:center;background:#eff6ff;">16,200</td><td style="text-align:right;">28,765</td></tr>
+                <tr><td>RingCentral Video</td><td style="text-align:center;background:#fffbeb;">2,043</td><td style="text-align:center;background:#f0fdf4;">7,500</td><td style="text-align:center;background:#eff6ff;">12,000</td><td style="text-align:right;">21,543</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Pane 3: By page type (existing breakdown) -->
+          <div id="cov-pane-pagetype" class="cov-sov-pane" role="tabpanel">
+            <table class="looker-table">
+              <thead><tr><th>Product</th><th>Product Pages</th><th>Reviews</th><th>Comparison</th><th>Alternative</th><th>Pricing</th></tr></thead>
+              <tbody>
+                <tr style="background:#f0f9ff;"><td><span class="cov-you-badge">YOU</span><strong style="color:#6366f1;">Zoom Workplace</strong></td><td><strong>28,432</strong></td><td><strong>18,234</strong></td><td><strong>12,345</strong></td><td><strong>7,654</strong></td><td><strong>2,293</strong></td></tr>
+                <tr><td>Microsoft Teams</td><td>23,456</td><td>15,432</td><td>11,234</td><td>6,543</td><td>3,211</td></tr>
+                <tr><td>Google Meet</td><td>17,654</td><td>9,876</td><td>8,123</td><td>4,643</td><td>1,656</td></tr>
+                <tr><td>Webex by Cisco</td><td>14,321</td><td>7,654</td><td>5,432</td><td>4,321</td><td>1,482</td></tr>
+                <tr><td>Slack</td><td>12,345</td><td>6,543</td><td>5,432</td><td>3,765</td><td>1,458</td></tr>
+                <tr><td>GoToMeeting</td><td>9,876</td><td>5,432</td><td>3,456</td><td>2,789</td><td>1,410</td></tr>
+                <tr><td>RingCentral Video</td><td>7,654</td><td>3,765</td><td>2,876</td><td>2,109</td><td>583</td></tr>
+              </tbody>
+            </table>
+          </div>
+
           <div class="source-note">Category: Video Conferencing · Source: TrustRadius Cloudflare logs</div>
         </div>
       </div>
@@ -874,6 +935,23 @@ function switchTab(tab) {
     btn.className = 'sub-tab-btn' + (t === tab ? ' active-' + t : '');
   });
   window.scrollTo(0, 0);
+}
+
+// ── Category Share of Voice sub-views ─────────────────────────────────────────
+function switchCovTab(which) {
+  var ids = ['volume', 'funnel', 'pagetype'];
+  ids.forEach(function (id) {
+    var pane = document.getElementById('cov-pane-' + id);
+    var btn = document.getElementById('cov-tab-' + id);
+    var on = id === which;
+    if (pane) {
+      pane.classList.toggle('is-visible', on);
+    }
+    if (btn) {
+      btn.classList.toggle('is-active', on);
+      btn.setAttribute('aria-selected', on ? 'true' : 'false');
+    }
+  });
 }
 
 </script>
