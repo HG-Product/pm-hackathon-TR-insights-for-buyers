@@ -1105,6 +1105,19 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
 .llm-more-btn.has-active{background:#dbeafe;color:#0074EF;}
 .llm-dropdown{position:absolute;top:calc(100% + 4px);left:0;background:#fff;border:1px solid #e5e7eb;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,.1);z-index:200;min-width:180px;padding:4px;display:none;}
 .llm-dropdown.open{display:block;}
+/* ── TRV prompt dropdown ── */
+.trv-prompt-btn{font-size:12px;padding:5px 10px;border-radius:6px;cursor:pointer;color:#374151;font-weight:500;background:#f3f4f6;border:1px solid #e5e7eb;display:inline-flex;align-items:center;min-width:130px;justify-content:space-between;}
+.trv-prompt-btn:hover{background:#e5e7eb;}
+.trv-prompt-dropdown{position:absolute;top:calc(100% + 4px);left:0;background:#fff;border:1px solid #e5e7eb;border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,.12);z-index:300;min-width:280px;max-width:380px;max-height:260px;overflow-y:auto;padding:4px;display:none;}
+.trv-prompt-dropdown.open{display:block;}
+.trv-prompt-item{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:5px;cursor:pointer;font-size:12px;color:#374151;user-select:none;}
+.trv-prompt-item:hover{background:#f3f4f6;}
+.trv-prompt-item.selected{background:#eef2ff;}
+.trv-prompt-cb{width:14px;height:14px;border-radius:3px;border:2px solid #d1d5db;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+.trv-prompt-cb.checked{border-color:currentColor;background:currentColor;}
+.trv-prompt-cb.checked::after{content:"✓";color:#fff;font-size:9px;line-height:1;}
+.trv-legend-chip{display:inline-flex;align-items:center;gap:4px;font-size:11px;color:#374151;background:#f9fafb;border:1px solid #e5e7eb;border-radius:20px;padding:2px 8px;}
+.trv-legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
 .llm-drop-item{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:5px;cursor:pointer;font-size:12px;color:#374151;font-weight:500;}
 .llm-drop-item:hover{background:#f3f4f6;}
 .llm-drop-item.active{color:#0074EF;font-weight:700;}
@@ -1164,6 +1177,18 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
 .pt-sov-med { color:#374151; }
 .pt-sov-lo  { color:#9ca3af; }
 
+
+/* ── TR Value chart panes ───────────────────────────────── */
+.trv-chart-pane{display:none;}
+#trv-chart-sov:checked  ~ .app-shell .layout-body .trvp-sov  {display:block;}
+#trv-chart-men:checked  ~ .app-shell .layout-body .trvp-men  {display:block;}
+#trv-chart-cit:checked  ~ .app-shell .layout-body .trvp-cit  {display:block;}
+#trv-chart-sent:checked ~ .app-shell .layout-body .trvp-sent {display:block;}
+#trv-chart-sov:checked  ~ .app-shell .layout-body label[for=trv-chart-sov]  {background:#0074EF;color:#fff;}
+#trv-chart-men:checked  ~ .app-shell .layout-body label[for=trv-chart-men]  {background:#0074EF;color:#fff;}
+#trv-chart-cit:checked  ~ .app-shell .layout-body label[for=trv-chart-cit]  {background:#0074EF;color:#fff;}
+#trv-chart-sent:checked ~ .app-shell .layout-body label[for=trv-chart-sent] {background:#0074EF;color:#fff;}
+
 </style></head><body>
 <input type="radio" name="main" id="main-home">
 <input type="radio" name="main" id="main-monitoring" checked>
@@ -1177,6 +1202,10 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
 <input type="radio" name="period" id="period-monthly" checked>
 <input type="radio" name="period" id="period-quarterly">
 <input type="radio" name="period" id="period-yearly">
+<input type="radio" name="trv-chart" id="trv-chart-sov" checked>
+<input type="radio" name="trv-chart" id="trv-chart-men">
+<input type="radio" name="trv-chart" id="trv-chart-cit">
+<input type="radio" name="trv-chart" id="trv-chart-sent">
 <input type="radio" name="cc-tab" id="cc-tab-comp" checked>
 <input type="radio" name="cc-tab" id="cc-tab-ptype">
 <input type="radio" name="crawl-type" id="ct-all" checked>
@@ -1595,27 +1624,54 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
       <div class="kpi-card"><div class="kpi-label">TR-Driven Citations</div><div class="kpi-val" style="color:#f59e0b;">4,880</div><div class="kpi-sub">Specific TrustRadius URLs included as links in AI-generated responses</div></div>
       <div class="kpi-card"><div class="kpi-label">TR Mention Sentiment</div><div class="kpi-val" style="color:#10b981;">8.1<span style="font-size:11px;color:#9ca3af;">/10</span></div><div class="kpi-sub">Tone score of AI responses that cite TR — 0.5pts above your overall average</div></div>
     </div>
-    <div class="section" style="margin-bottom:16px;">
-      <div class="sec-hd"><div><div class="sec-title">TR Page Performance</div><div class="sec-sub">AI-cited TrustRadius pages · last 30 days</div></div></div>
-      <div class="sec-body">
-        <div style="height:160px;position:relative;margin-bottom:12px;"><canvas id="tr-pages-chart"></canvas></div>
-        <table class="dt"><thead><tr><th>Page</th><th>Views/Mo</th><th>AI Citations</th></tr></thead><tbody>
-          <tr><td style="color:#0074EF;font-size:12px;">/products/zoom-workplace/reviews</td><td>18,200</td><td>1,820</td></tr>
-          <tr><td style="color:#0074EF;font-size:12px;">/compare/zoom-vs-microsoft-teams</td><td>14,800</td><td>1,580</td></tr>
-          <tr><td style="color:#0074EF;font-size:12px;">/categories/video-conferencing</td><td>9,400</td><td>940</td></tr>
-          <tr><td style="color:#0074EF;font-size:12px;">/products/zoom-workplace/pricing</td><td>5,800</td><td>540</td></tr>
-        </tbody></table>
-      </div>
-    </div>
-
     <!-- TR Value by Topic & Prompt table -->
     <div class="section" style="margin-top:16px;">
       <div class="sec-hd">
         <div>
           <div class="sec-title">TR Value by Topic &amp; Prompt</div>
-          <div class="sec-sub">Volume, SoV, Mentions, and Citations attributed to TrustRadius pages · topic and prompt level</div>
+          <div class="sec-sub">TR SoV, Mentions, Citations, and Sentiment attributed to TrustRadius pages · topic and prompt level</div>
         </div>
-        <span class="badge b-green" style="font-size:10px;">TR-attributed only</span>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span class="badge b-green" style="font-size:10px;">TR-attributed only</span>
+        </div>
+      </div>
+      <!-- JS-driven line chart -->
+      <div class="sec-body" style="border-bottom:1px solid #f3f4f6;padding-bottom:16px;">
+        <!-- Row 1: Topic + KPI selectors -->
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px;">
+          <div style="display:flex;align-items:center;gap:6px;">
+            <span class="filter-label">Topic</span>
+            <div class="filter-group" id="trvTopicPills">
+              <button class="llm-pill active" data-topic="t1" onclick="trvSetTopic('t1')">Enterprise Video Conf.</button>
+              <button class="llm-pill" data-topic="t2" onclick="trvSetTopic('t2')">Competitive Comparisons</button>
+              <button class="llm-pill" data-topic="t3" onclick="trvSetTopic('t3')">Pricing &amp; Alternatives</button>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;">
+            <span class="filter-label">Metric</span>
+            <div class="filter-group" id="trvKpiPills">
+              <button class="llm-pill active" data-kpi="sov" onclick="trvSetKpi('sov')">TR SoV</button>
+              <button class="llm-pill" data-kpi="men" onclick="trvSetKpi('men')">TR Mentions</button>
+              <button class="llm-pill" data-kpi="cit" onclick="trvSetKpi('cit')">TR Citations</button>
+              <button class="llm-pill" data-kpi="sent" onclick="trvSetKpi('sent')">Sentiment</button>
+            </div>
+          </div>
+        </div>
+        <!-- Row 2: Prompt selector dropdown -->
+        <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
+          <span class="filter-label" style="padding-top:6px;">Prompts</span>
+          <div style="position:relative;" id="trvPromptWrap">
+            <button class="trv-prompt-btn" id="trvPromptBtn" onclick="trvTogglePromptDropdown(event)">
+              <span id="trvPromptBtnLabel">1 selected</span>
+              <span style="font-size:9px;color:#9ca3af;margin-left:4px;">▾</span>
+            </button>
+            <div class="trv-prompt-dropdown" id="trvPromptDropdown"></div>
+          </div>
+          <!-- Color-coded legend for selected prompts -->
+          <div id="trvPromptLegend" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;"></div>
+        </div>
+        <!-- Chart -->
+        <div style="height:180px;position:relative;"><canvas id="trv-line-chart"></canvas></div>
       </div>
       <div class="sec-body" style="padding:0;">
 
@@ -1643,11 +1699,15 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
               </div>
             </summary>
             <div class="topic-src-bar" style="grid-template-columns:1fr;">
-              <div style="font-size:10px;color:#6b7280;">
-                <strong style="color:#374151;">TR pages driving this topic:</strong>
-                <span style="margin-left:8px;color:#0074EF;">/categories/video-conferencing</span>
-                <span style="margin-left:8px;color:#0074EF;">/products/zoom-workplace/reviews</span>
+              <div>
+                <div class="src-mini-title">Top TR Pages — this topic</div>
+                <div class="src-row"><span class="src-domain" style="color:#0074EF;">/categories/video-conferencing</span><span class="src-cnt">1,480 visits</span></div>
+                <div class="src-row"><span class="src-domain" style="color:#0074EF;">/products/zoom-workplace/reviews</span><span class="src-cnt">1,240 visits</span></div>
+                <div class="src-row"><span class="src-domain" style="color:#0074EF;">/compare/zoom-vs-microsoft-teams</span><span class="src-cnt">820 visits</span></div>
               </div>
+            </div>
+            <div class="src-bar-footer">
+              <button class="view-all-cta" onclick="openDrawer('t1','pages')">🔗 View all 9 TR pages →</button>
             </div>
 
             <!-- Prompt 1.1 -->
@@ -1662,15 +1722,8 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
                 <div class="col-k" style="text-align:left;padding-left:8px;font-size:10px;color:#0074EF;">/categories/video-conferencing</div>
                 </div>
               </summary>
-              <div class="prompt-body" style="grid-template-columns:1fr 1fr;padding-left:48px;">
-                <div>
-                  <div style="font-size:10px;font-weight:700;color:#6b7280;margin-bottom:6px;">TR CONTRIBUTION</div>
-                  <div style="font-size:11px;color:#374151;">22% of SoV on this prompt comes from TR's category page. AI models cite TR as the authoritative list for "best" queries.</div>
-                </div>
-                <div>
-                  <div style="font-size:10px;font-weight:700;color:#6b7280;margin-bottom:6px;">IMPROVEMENT OPPORTUNITY</div>
-                  <div style="font-size:11px;color:#374151;">Add a custom review question asking about enterprise deployment scale to increase category page authority for this prompt.</div>
-                </div>
+              <div class="prompt-cta-bar" style="padding-left:48px;">
+                <button class="view-all-cta" onclick="openDrawer('p11','pages')">🔗 View all 6 TR pages →</button>
               </div>
             </details>
 
@@ -1686,15 +1739,8 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
                 <div class="col-k" style="text-align:left;padding-left:8px;font-size:10px;color:#0074EF;">/products/zoom-workplace/reviews</div>
                 </div>
               </summary>
-              <div class="prompt-body" style="grid-template-columns:1fr 1fr;padding-left:48px;">
-                <div>
-                  <div style="font-size:10px;font-weight:700;color:#6b7280;margin-bottom:6px;">TR CONTRIBUTION</div>
-                  <div style="font-size:11px;color:#374151;">Your reviews page is the #1 TR page cited here. 108 direct citations make this your highest-citation prompt on TR. Review recency is the key driver.</div>
-                </div>
-                <div>
-                  <div style="font-size:10px;font-weight:700;color:#6b7280;margin-bottom:6px;">IMPROVEMENT OPPORTUNITY</div>
-                  <div style="font-size:11px;color:#374151;">70 reviews have custom Q answers but only 342 total reviews have answered the 2025-relevant questions. Target 50 more responses to sustain recency signals.</div>
-                </div>
+              <div class="prompt-cta-bar" style="padding-left:48px;">
+                <button class="view-all-cta" onclick="openDrawer('p12','pages')">🔗 View all 5 TR pages →</button>
               </div>
             </details>
 
@@ -1710,15 +1756,8 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
                 <div class="col-k" style="text-align:left;padding-left:8px;font-size:10px;color:#0074EF;">/products/zoom-workplace/reviews</div>
                 </div>
               </summary>
-              <div class="prompt-body" style="grid-template-columns:1fr 1fr;padding-left:48px;">
-                <div>
-                  <div style="font-size:10px;font-weight:700;color:#6b7280;margin-bottom:6px;">TR CONTRIBUTION</div>
-                  <div style="font-size:11px;color:#374151;">Reviews mentioning distributed teams and remote work are being surfaced by AI. Reviewers who describe team size and global usage are the active drivers.</div>
-                </div>
-                <div>
-                  <div style="font-size:10px;font-weight:700;color:#6b7280;margin-bottom:6px;">IMPROVEMENT OPPORTUNITY</div>
-                  <div style="font-size:11px;color:#374151;">Add a custom question: "How has Zoom supported your distributed team's communication across time zones?" to directly address this prompt's intent.</div>
-                </div>
+              <div class="prompt-cta-bar" style="padding-left:48px;">
+                <button class="view-all-cta" onclick="openDrawer('p21','pages')">🔗 View all 5 TR pages →</button>
               </div>
             </details>
           </details>
@@ -1736,11 +1775,15 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
               </div>
             </summary>
             <div class="topic-src-bar" style="grid-template-columns:1fr;">
-              <div style="font-size:10px;color:#6b7280;">
-                <strong style="color:#374151;">TR pages driving this topic:</strong>
-                <span style="margin-left:8px;color:#0074EF;">/compare/zoom-vs-microsoft-teams</span>
-                <span style="margin-left:8px;color:#f59e0b;font-weight:600;">⚡ Top TR citation driver</span>
+              <div>
+                <div class="src-mini-title">Top TR Pages — this topic</div>
+                <div class="src-row"><span class="src-domain" style="color:#0074EF;">/compare/zoom-vs-microsoft-teams</span><span class="src-cnt">1,580 visits</span></div>
+                <div class="src-row"><span class="src-domain" style="color:#0074EF;">/products/zoom-workplace/reviews</span><span class="src-cnt">680 visits</span></div>
+                <div class="src-row"><span class="src-domain" style="color:#0074EF;">/categories/video-conferencing</span><span class="src-cnt">420 visits</span></div>
               </div>
+            </div>
+            <div class="src-bar-footer">
+              <button class="view-all-cta" onclick="openDrawer('t2','pages')">🔗 View all 6 TR pages →</button>
             </div>
 
             <!-- Prompt 2.1 -->
@@ -1755,15 +1798,8 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
                 <div class="col-k" style="text-align:left;padding-left:8px;font-size:10px;color:#0074EF;">/compare/zoom-vs-microsoft-teams</div>
                 </div>
               </summary>
-              <div class="prompt-body" style="grid-template-columns:1fr 1fr;padding-left:48px;">
-                <div>
-                  <div style="font-size:10px;font-weight:700;color:#6b7280;margin-bottom:6px;">TR CONTRIBUTION</div>
-                  <div style="font-size:11px;color:#374151;">TR's comparison page drives 46% of total SoV — the highest TR SoV of any single prompt. AI engines trust TR's side-by-side format as a neutral, authoritative source for comparison queries.</div>
-                </div>
-                <div>
-                  <div style="font-size:10px;font-weight:700;color:#6b7280;margin-bottom:6px;">IMPROVEMENT OPPORTUNITY</div>
-                  <div style="font-size:11px;color:#374151;">Update comparison page with 2025 feature parity data and add custom questions comparing specific use cases (video quality, security, integration depth) to defend this position.</div>
-                </div>
+              <div class="prompt-cta-bar" style="padding-left:48px;">
+                <button class="view-all-cta" onclick="openDrawer('p21','pages')">🔗 View all 5 TR pages →</button>
               </div>
             </details>
 
@@ -1779,15 +1815,8 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
                 <div class="col-k" style="text-align:left;padding-left:8px;font-size:10px;color:#0074EF;">/compare/zoom-vs-microsoft-teams</div>
                 </div>
               </summary>
-              <div class="prompt-body" style="grid-template-columns:1fr 1fr;padding-left:48px;">
-                <div>
-                  <div style="font-size:10px;font-weight:700;color:#6b7280;margin-bottom:6px;">TR CONTRIBUTION</div>
-                  <div style="font-size:11px;color:#374151;">Same comparison page drives this prompt. AI models treat the Zoom vs Teams comparison page as the reference source for enterprise-qualification questions.</div>
-                </div>
-                <div>
-                  <div style="font-size:10px;font-weight:700;color:#6b7280;margin-bottom:6px;">IMPROVEMENT OPPORTUNITY</div>
-                  <div style="font-size:11px;color:#374151;">Add a custom review question targeting "enterprise" context explicitly: "What makes Zoom better or worse than Teams for your company's size and use case?" to enrich the comparison with peer language.</div>
-                </div>
+              <div class="prompt-cta-bar" style="padding-left:48px;">
+                <button class="view-all-cta" onclick="openDrawer('p22','pages')">🔗 View all 4 TR pages →</button>
               </div>
             </details>
           </details>
@@ -1805,11 +1834,15 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
               </div>
             </summary>
             <div class="topic-src-bar" style="grid-template-columns:1fr;">
-              <div style="font-size:10px;color:#6b7280;">
-                <strong style="color:#374151;">TR pages driving this topic:</strong>
-                <span style="margin-left:8px;color:#0074EF;">/products/zoom-workplace/pricing</span>
-                <span style="margin-left:8px;color:#ef4444;font-weight:600;">⚠ Declining −8% MoM</span>
+              <div>
+                <div class="src-mini-title">Top TR Pages — this topic <span style="color:#ef4444;font-size:10px;font-weight:600;">⚠ Declining −8% MoM</span></div>
+                <div class="src-row"><span class="src-domain" style="color:#0074EF;">/products/zoom-workplace/pricing</span><span class="src-cnt">540 visits</span></div>
+                <div class="src-row"><span class="src-domain" style="color:#0074EF;">/compare/zoom-vs-microsoft-teams</span><span class="src-cnt">380 visits</span></div>
+                <div class="src-row"><span class="src-domain" style="color:#0074EF;">/products/zoom-workplace/alternatives</span><span class="src-cnt">260 visits</span></div>
               </div>
+            </div>
+            <div class="src-bar-footer">
+              <button class="view-all-cta" onclick="openDrawer('t3','pages')">🔗 View all 5 TR pages →</button>
             </div>
 
             <!-- Prompt 3.1 -->
@@ -1824,15 +1857,8 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
                 <div class="col-k" style="text-align:left;padding-left:8px;font-size:10px;color:#0074EF;">/products/zoom-workplace/pricing</div>
                 </div>
               </summary>
-              <div class="prompt-body" style="grid-template-columns:1fr 1fr;padding-left:48px;">
-                <div>
-                  <div style="font-size:10px;font-weight:700;color:#6b7280;margin-bottom:6px;">TR CONTRIBUTION</div>
-                  <div style="font-size:11px;color:#374151;">TR's pricing page contributes 32% of SoV but only 18 total citations — this prompt is high-value BoFu where AI answers are still stabilizing. Early content improvements will have outsized impact.</div>
-                </div>
-                <div>
-                  <div style="font-size:10px;font-weight:700;color:#6b7280;margin-bottom:6px;">IMPROVEMENT OPPORTUNITY</div>
-                  <div style="font-size:11px;color:#374151;">Pricing page is trending down (−8% MoM). Add custom review questions about pricing value, ROI, and cost vs. competitors. Premium content asset would directly address this BoFu intent gap.</div>
-                </div>
+              <div class="prompt-cta-bar" style="padding-left:48px;">
+                <button class="view-all-cta" onclick="openDrawer('p31','pages')">🔗 View all 4 TR pages →</button>
               </div>
             </details>
 
@@ -1848,15 +1874,8 @@ details.prompt-dr > summary:hover { background: #f0eeff; }
                 <div class="col-k" style="text-align:left;padding-left:8px;font-size:10px;color:#9ca3af;">No strong TR page</div>
                 </div>
               </summary>
-              <div class="prompt-body" style="grid-template-columns:1fr 1fr;padding-left:48px;">
-                <div>
-                  <div style="font-size:10px;font-weight:700;color:#6b7280;margin-bottom:6px;">TR CONTRIBUTION</div>
-                  <div style="font-size:11px;color:#374151;">TR drives only 5% SoV here — the lowest TR contribution across all tracked prompts. There is no dedicated "alternatives to Zoom" page on TR that AI models can cite for this intent.</div>
-                </div>
-                <div>
-                  <div style="font-size:10px;font-weight:700;color:#6b7280;margin-bottom:6px;">IMPROVEMENT OPPORTUNITY</div>
-                  <div style="font-size:11px;color:#374151;">Work with TR to publish a "Zoom alternatives" comparison landing page. This prompt is high-volume MoFu where competitors dominate (GMeet 31%, Teams 29%) — a dedicated TR page could shift this significantly.</div>
-                </div>
+              <div class="prompt-cta-bar" style="padding-left:48px;">
+                <button class="view-all-cta" onclick="openDrawer('p31','pages')">🔗 View all 2 TR pages →</button>
               </div>
             </details>
           </details>
@@ -2909,8 +2928,230 @@ document.addEventListener('DOMContentLoaded', function () {
     plugins: { legend: { display: true, position: 'bottom', labels: { boxWidth: 8, padding: 6, font: { size: 10 } } } }
   });
 
+
+
 }); // DOMContentLoaded
 })();
+
+// ── TR Value interactive line chart ────────────────────────────────────────
+
+  var MONTHS12 = ['Jun','Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar','Apr','May'];
+  var TRV_LINE_COLORS = ['#0074EF','#10b981','#f59e0b','#8b5cf6','#ef4444','#06b6d4','#ec4899'];
+
+  var TRV_TOPICS_DATA = {
+    t1: {
+      label: 'Enterprise Video Conf.',
+      prompts: [
+        { id:'p11', label:'Best video conf. for enterprise?',
+          sov:  [18,19,20,21,21,22,22,23,22,22,22,22],
+          men:  [7800,8200,8600,9000,9200,9600,9800,10100,9900,9800,10000,10100],
+          cit:  [42,46,50,53,55,58,60,63,64,64,65,65],
+          sent: [7.4,7.5,7.6,7.6,7.7,7.8,7.9,8.0,8.1,8.1,8.1,8.1] },
+        { id:'p12', label:'Best enterprise video conf. platforms 2025',
+          sov:  [24,26,27,28,29,30,31,31,31,31,31,31],
+          men:  [11200,12400,13600,14200,15000,15800,16200,16700,16700,16700,16700,16700],
+          cit:  [72,80,86,90,95,100,104,107,108,108,108,108],
+          sent: [7.4,7.5,7.6,7.7,7.8,7.8,7.9,7.9,7.9,7.9,7.9,7.9] },
+        { id:'p13', label:'Best video conf. for large distributed teams',
+          sov:  [20,21,22,23,24,25,26,27,27,27,27,27],
+          men:  [7800,8400,8900,9400,9800,10200,10400,10500,10600,10600,10600,10600],
+          cit:  [44,48,52,56,59,62,65,67,68,68,68,68],
+          sent: [7.0,7.1,7.2,7.3,7.3,7.4,7.4,7.4,7.4,7.4,7.4,7.4] }
+      ]
+    },
+    t2: {
+      label: 'Competitive Comparisons',
+      prompts: [
+        { id:'p21', label:'Zoom vs Microsoft Teams comparison',
+          sov:  [36,38,40,42,43,44,45,46,46,46,46,46],
+          men:  [11800,12600,13400,14200,14800,15400,15800,16200,16400,16400,16400,16400],
+          cit:  [50,55,59,63,66,69,71,73,74,74,74,74],
+          sent: [7.4,7.5,7.6,7.7,7.7,7.8,7.8,7.8,7.8,7.8,7.8,7.8] },
+        { id:'p22', label:'Is Zoom or Teams better for enterprise?',
+          sov:  [32,34,36,37,38,39,40,40,40,40,40,40],
+          men:  [11200,12000,12800,13400,13800,14200,14400,14500,14600,14600,14600,14600],
+          cit:  [44,48,52,55,58,60,62,64,65,65,65,65],
+          sent: [7.2,7.3,7.4,7.5,7.5,7.6,7.6,7.6,7.6,7.6,7.6,7.6] }
+      ]
+    },
+    t3: {
+      label: 'Pricing & Alternatives',
+      prompts: [
+        { id:'p31', label:'Zoom pricing for 500 users',
+          sov:  [36,35,34,34,33,33,33,32,32,32,32,32],
+          men:  [2000,1900,1820,1760,1720,1680,1660,1640,1620,1600,1600,1600],
+          cit:  [24,23,22,21,21,20,19,19,18,18,18,18],
+          sent: [7.4,7.3,7.2,7.1,7.0,6.9,6.9,6.8,6.8,6.8,6.8,6.8] },
+        { id:'p32', label:'Best alternatives to Zoom for enterprise',
+          sov:  [8,7,7,6,6,6,5,5,5,5,5,5],
+          men:  [1200,1100,1000,900,850,800,750,720,700,700,700,700],
+          cit:  [12,11,10,9,9,8,8,7,7,7,7,7],
+          sent: [6.4,6.3,6.2,6.1,6.1,6.0,5.9,5.9,5.9,5.9,5.9,5.9] }
+      ]
+    }
+  };
+
+  var _trvTopic = 't1';
+  var _trvKpi   = 'sov';
+  var _trvSelPrompts = new Set(['p11']);
+  var _trvChart = null;
+
+  window.trvSetTopic = function(tid) {
+    _trvTopic = tid;
+    _trvSelPrompts = new Set([TRV_TOPICS_DATA[tid].prompts[0].id]);
+    document.querySelectorAll('#trvTopicPills .llm-pill').forEach(function(b) {
+      b.classList.toggle('active', b.dataset.topic === tid);
+    });
+    trvRenderPromptPills();
+    trvRenderChart();
+  };
+
+  window.trvSetKpi = function(kpi) {
+    _trvKpi = kpi;
+    document.querySelectorAll('#trvKpiPills .llm-pill').forEach(function(b) {
+      b.classList.toggle('active', b.dataset.kpi === kpi);
+    });
+    trvRenderChart();
+  };
+
+  window.trvTogglePrompt = function(pid) {
+    if (_trvSelPrompts.has(pid)) {
+      if (_trvSelPrompts.size === 1) return;
+      _trvSelPrompts.delete(pid);
+    } else {
+      _trvSelPrompts.add(pid);
+    }
+    trvRenderPromptPills();
+    trvRenderChart();
+  };
+
+  window.trvTogglePromptDropdown = function(e) {
+    e.stopPropagation();
+    var dd = document.getElementById('trvPromptDropdown');
+    if (dd) dd.classList.toggle('open');
+  };
+
+  window.trvSelectAllPrompts = function() {
+    var prompts = TRV_TOPICS_DATA[_trvTopic].prompts;
+    if (_trvSelPrompts.size === prompts.length) {
+      // Deselect all → keep first
+      _trvSelPrompts = new Set([prompts[0].id]);
+    } else {
+      _trvSelPrompts = new Set(prompts.map(function(p){ return p.id; }));
+    }
+    trvRenderPromptPills();
+    trvRenderChart();
+  };
+
+  // Close dropdown when clicking outside
+  document.addEventListener('click', function(e) {
+    var wrap = document.getElementById('trvPromptWrap');
+    if (wrap && !wrap.contains(e.target)) {
+      var dd = document.getElementById('trvPromptDropdown');
+      if (dd) dd.classList.remove('open');
+    }
+  });
+
+  function trvRenderPromptPills() {
+    var prompts = TRV_TOPICS_DATA[_trvTopic].prompts;
+    var selCount = _trvSelPrompts.size;
+
+    // Update button label
+    var btnLabel = document.getElementById('trvPromptBtnLabel');
+    if (btnLabel) {
+      btnLabel.textContent = selCount === prompts.length ? 'All prompts' :
+                             selCount === 1 ? '1 prompt selected' : selCount + ' prompts selected';
+    }
+
+    // Render dropdown items
+    var dd = document.getElementById('trvPromptDropdown');
+    if (dd) {
+      var allChecked = selCount === prompts.length;
+      var allHtml = '<div class="trv-prompt-item" onclick="trvSelectAllPrompts()">'
+        + '<div class="trv-prompt-cb'+(allChecked?' checked':'')+'" style="color:#6b7280;"></div>'
+        + '<span style="font-weight:600;color:#374151;">All prompts ('+prompts.length+')</span>'
+        + '</div>'
+        + '<div style="height:1px;background:#f3f4f6;margin:2px 0;"></div>';
+      var itemsHtml = prompts.map(function(p, i) {
+        var active = _trvSelPrompts.has(p.id);
+        var col = TRV_LINE_COLORS[i % TRV_LINE_COLORS.length];
+        return '<div class="trv-prompt-item'+(active?' selected':'')+'" data-pid="'+p.id+'" onclick="trvTogglePrompt(this.dataset.pid)">'
+          + '<div class="trv-prompt-cb'+(active?' checked':'')+'" style="color:'+col+';"></div>'
+          + '<span style="'+(active?'color:#111827;font-weight:500;':'')+'">'+p.label+'</span>'
+          + '</div>';
+      }).join('');
+      dd.innerHTML = allHtml + itemsHtml;
+    }
+
+    // Render legend chips for selected prompts
+    var legend = document.getElementById('trvPromptLegend');
+    if (legend) {
+      legend.innerHTML = prompts
+        .filter(function(p){ return _trvSelPrompts.has(p.id); })
+        .map(function(p) {
+          var colorIdx = prompts.findIndex(function(tp){ return tp.id === p.id; });
+          var col = TRV_LINE_COLORS[colorIdx % TRV_LINE_COLORS.length];
+          var label = p.label.length > 42 ? p.label.substring(0,42)+'…' : p.label;
+          return '<span class="trv-legend-chip"><span class="trv-legend-dot" style="background:'+col+';"></span>'+label+'</span>';
+        }).join('');
+    }
+  }
+
+  function trvRenderChart() {
+    var ctx = document.getElementById('trv-line-chart');
+    if (!ctx) return;
+    var topicData = TRV_TOPICS_DATA[_trvTopic];
+    var kpiFormatters = {
+      sov:  { label:'TR SoV (%)',   fmt: function(v){ return v+'%'; } },
+      men:  { label:'TR Mentions',  fmt: function(v){ return v>=1000?(v/1000).toFixed(1)+'K':v; } },
+      cit:  { label:'TR Citations', fmt: function(v){ return v; } },
+      sent: { label:'Sentiment',    fmt: function(v){ return v+'/10'; } }
+    };
+    var kf = kpiFormatters[_trvKpi];
+    var datasets = topicData.prompts
+      .filter(function(p){ return _trvSelPrompts.has(p.id); })
+      .map(function(p) {
+        var colorIdx = topicData.prompts.findIndex(function(tp){ return tp.id === p.id; });
+        var col = TRV_LINE_COLORS[colorIdx % TRV_LINE_COLORS.length];
+        return {
+          label: p.label,
+          data: p[_trvKpi],
+          borderColor: col,
+          backgroundColor: col + '18',
+          borderWidth: 2,
+          pointRadius: 3,
+          tension: 0.35,
+          fill: false
+        };
+      });
+
+    if (_trvChart) { _trvChart.destroy(); _trvChart = null; }
+    _trvChart = new Chart(ctx, {
+      type: 'line',
+      data: { labels: MONTHS12, datasets: datasets },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { display: datasets.length > 1, position: 'bottom',
+            labels: { boxWidth: 10, padding: 8, font: { size: 10 } } },
+          tooltip: { callbacks: { label: function(c){ return c.dataset.label.substring(0,28)+': '+kf.fmt(c.raw); } } }
+        },
+        scales: {
+          x: { grid: { display: false }, ticks: { font: { size: 10 } } },
+          y: { grid: { color: '#f3f4f6' }, ticks: { font: { size: 10 },
+               callback: function(v){ return kf.fmt(v); } }, beginAtZero: false }
+        }
+      }
+    });
+  }
+
+  // Init — called directly, not via nested DOMContentLoaded
+  document.addEventListener('DOMContentLoaded', function() {
+    trvRenderPromptPills();
+    trvRenderChart();
+  });
+
+
 
 // ── Drawer data & logic ──────────────────────────────────────────────────────
 
