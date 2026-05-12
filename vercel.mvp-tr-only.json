@@ -1,0 +1,3 @@
+{
+  "rewrites": [{ "source": "/", "destination": "/monitoring-dashboard-tr-only.html" }]
+}

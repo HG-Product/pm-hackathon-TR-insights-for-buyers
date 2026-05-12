@@ -24,6 +24,7 @@ export default defineConfig({
         'geo-dashboard': resolve(__dirname, 'geo-dashboard.html'),
         'monitoring-dashboard': resolve(__dirname, 'monitoring-dashboard.html'),
         'monitoring-dashboard-mvp': resolve(__dirname, 'monitoring-dashboard-mvp.html'),
+        'monitoring-dashboard-tr-only': resolve(__dirname, 'monitoring-dashboard-tr-only.html'),
       }
     }
   }

@@ -14,6 +14,7 @@
     "preview": "vite preview",
     "deploy": "npx vercel --prod --yes",
     "deploy:geo-mvp": "npm run build && VERCEL_ORG_ID=team_GOiRl9ivDHNrDJmV0E9XV5SN VERCEL_PROJECT_ID=prj_SepgDQIxDTfheLGqnbGLrHMv8qXo npx vercel dist --prod --yes --scope tannerjudges-projects",
+    "deploy:mvp-tr-only": "npm run build && rm -f dist/index.html && cp vercel.mvp-tr-only.json dist/vercel.json && VERCEL_ORG_ID=team_GOiRl9ivDHNrDJmV0E9XV5SN VERCEL_PROJECT_ID=prj_435tD8xyMnLTecZWtKVPu7jNQoIL npx vercel dist --prod --yes --scope tannerjudges-projects",
     "deploy:preview": "npx vercel --yes",
     "deploy:netlify": "npm run build && npx --yes netlify-cli deploy --prod --dir=dist",
     "deploy:surge": "npm run build && npx --yes surge dist"
